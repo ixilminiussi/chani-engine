@@ -8,9 +8,11 @@ find_package(RapidJSON REQUIRED)
 
 add_executable(game 
     src/game.cpp
-    src/window.cpp
     src/log.cpp
     src/main.cpp
+    src/renderer.cpp
+    src/timer.cpp
+    src/window.cpp
     )
 
 include_directories(include)
