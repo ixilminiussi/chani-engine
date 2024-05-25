@@ -8,28 +8,43 @@ struct Vector2 {
     float x;
     float y;
     static const Vector2 zero;
+    static const Vector2 unitX;
+    static const Vector2 unitY;
+
+    void set(float xP, float yP);
+    float lengthSq() const;
+    float length() const;
+    void normalize();
+
+    static Vector2 normalize(Vector2 const& vec);
+    static float dot(Vector2 const& a, Vector2 const& b);
+    static Vector2 lerp(Vector2 const& a, Vector2 const& b, float f);
 
     Vector2 operator-() const {
         return Vector2(-x,-y);
     }
 
-    void operator+=(Vector2 const& v) {
+    Vector2& operator+=(Vector2 const& v) {
         x += v.x;
         y += v.y;
+        return *this;
     }
 
-    void operator/=(float f) {
+    Vector2& operator/=(float f) {
         x /= f;
         y /= f;
+        return *this;
     }
 
-    void operator*=(float f) {
+    Vector2& operator*=(float f) {
         x *= f;
         y *= f;
+        return *this;
     }
 
-    void operator-=(Vector2 const& v) {
+    Vector2& operator-=(Vector2 const& v) {
         *this += -v;
+        return *this;
     }
 };
 

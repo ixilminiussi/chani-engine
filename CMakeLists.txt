@@ -14,6 +14,8 @@ add_executable(game
     src/game.cpp
     src/log.cpp
     src/main.cpp
+    src/moveComponent.cpp
+    src/random.cpp
     src/rectangle.cpp
     src/renderer.cpp
     src/spriteComponent.cpp

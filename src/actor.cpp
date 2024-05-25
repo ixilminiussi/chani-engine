@@ -1,5 +1,6 @@
-#include "../include/actor.h"
 #include <algorithm>
+#include "../include/maths.h"
+#include "../include/actor.h"
 #include "../include/game.h"
 #include "../include/component.h"
 
@@ -29,6 +30,10 @@ void Actor::setScale(float scaleP) {
 
 void Actor::setRotation(float rotationP) {
     rotation = rotationP;
+}
+
+Vector2 Actor::getForward() const {
+    return Vector2(Maths::cos(rotation), -Maths::sin(rotation));
 }
 
 void Actor::update(float dt) {
