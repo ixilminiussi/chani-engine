@@ -10,7 +10,9 @@ find_package(RapidJSON REQUIRED)
 add_executable(game 
     src/actor.cpp
     src/assets.cpp
+    src/asteroid.cpp
     src/component.cpp
+    src/game.cpp
     src/game.cpp
     src/log.cpp
     src/main.cpp

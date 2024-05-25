@@ -68,14 +68,14 @@ void Renderer::drawSprite(const Actor& actor, const Texture& tex, Rectangle srcR
 }
 
 void Renderer::addSprite(class SpriteComponent* sprite) {
+    Log::info("sprite added ");
     int spriteDrawOrder = sprite -> getDrawOrder();
-    
-    for (auto iter = begin(sprites); iter != end(sprites); iter ++) {
-        if (spriteDrawOrder < (*iter) -> getDrawOrder()) {
-            sprites.insert(iter, sprite);
-            break;
-        } 
+
+    auto iter = begin(sprites);
+    for (; iter != end(sprites); iter ++) {
+        if (spriteDrawOrder < (*iter) -> getDrawOrder()) break; 
     }
+    sprites.insert(iter, sprite);
 }
 
 void Renderer::removeSprite(class SpriteComponent* sprite) {

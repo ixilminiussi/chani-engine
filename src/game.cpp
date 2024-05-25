@@ -1,5 +1,6 @@
 #include "../include/game.h"
 #include "../include/timer.h"
+#include "../include/asteroid.h"
 #include <algorithm>
 
 bool Game::initialize() {
@@ -11,9 +12,16 @@ bool Game::initialize() {
 
 void Game::load() {
     Assets::loadTexture(renderer, "../assets/Ship01.png", "ship01");
+    Assets::loadTexture(renderer, "../assets/Astroid.png", "Asteroid");
+
     Actor* actor = new Actor();
     SpriteComponent* sprite = new SpriteComponent(actor, Assets::getTexture("ship01"));
     actor -> setPosition(Vector2{ 100, 100 });
+
+    const int asteroidNumber = 20;
+    for (int i = 0; i < asteroidNumber; i ++) {
+        new Asteroid();
+    }
 }
 
 void Game::loop() {

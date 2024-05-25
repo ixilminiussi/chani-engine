@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../include/spriteComponent.h"
 #include "../include/actor.h"
 #include "../include/game.h"
