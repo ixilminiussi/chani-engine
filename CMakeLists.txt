@@ -3,18 +3,26 @@ project(simple-engine VERSION 0.1.0 LANGUAGES C CXX)
 
 find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(RapidJSON REQUIRED)
 
 add_executable(game 
+    src/actor.cpp
+    src/assets.cpp
+    src/component.cpp
     src/game.cpp
     src/log.cpp
     src/main.cpp
+    src/rectangle.cpp
     src/renderer.cpp
+    src/spriteComponent.cpp
+    src/texture.cpp
     src/timer.cpp
+    src/vector2.cpp
     src/window.cpp
     )
 
 include_directories(include)
 
-target_link_libraries(game RapidJSON OpenGL::GL SDL2::SDL2 GLEW::GLEW)
+target_link_libraries(game RapidJSON OpenGL::GL SDL2::SDL2 SDL2_image GLEW::GLEW)

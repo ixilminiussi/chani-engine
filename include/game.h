@@ -1,9 +1,14 @@
 #if !defined(GAME_H)
 #define GAME_H
 
+#include <vector>
+
+#include "spriteComponent.h"
 #include "window.h"
 #include "renderer.h"
+#include "assets.h"
 #include "vector2.h"
+#include "actor.h"
 
 class Game {
 public:
@@ -20,21 +25,20 @@ public:
 private:
     Game() : 
         isRunning(true),
-        ballPos({ 100, 100 }),
-        ballVelocity({ 500, 500 }),
-        paddlePos({ 50, 100 }),
-        paddleVelocity({ 0, 450 }),
-        paddleDirection(0),
-        wallThickness(10),
-        topWall(Rectangle()),
-        bottomWall(Rectangle()),
-        rightWall(Rectangle())
+        isUpdatingActors(false)
     {}
 
 public:
     bool initialize();
+    void load();
     void loop();
+    void unload();
     void close();
+
+    void addActor(Actor* actor);
+    void removeActor(Actor* actor);
+
+    Renderer& getRenderer() { return renderer; }
 
 private:
     void processInput();
@@ -45,20 +49,9 @@ private:
     bool isRunning;
     Renderer renderer;
 
-    Rectangle topWall;
-    Rectangle bottomWall;
-    Rectangle rightWall;
-    const float wallThickness = 10;
-
-    Vector2 ballPos;
-    Vector2 ballVelocity;
-    const float ballSize = 10;
-
-    Vector2 paddlePos;
-    Vector2 paddleVelocity;
-    const float paddleWidth = 10;
-    const float paddleHeight = 64;
-    float paddleDirection;
+    bool isUpdatingActors;
+    std::vector<Actor*> actors;
+    std::vector<Actor*> pendingActors;
 };
 
 #endif

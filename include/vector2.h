@@ -2,11 +2,12 @@
 #define VECTOR2_H
 
 struct Vector2 {
-    Vector2(): x(0), y(0) {}
+    Vector2() : x(0), y(0) {}
     Vector2(float xP, float yP) : x(xP), y(yP) {}
 
     float x;
     float y;
+    static const Vector2 zero;
 
     Vector2 operator-() const {
         return Vector2(-x,-y);
