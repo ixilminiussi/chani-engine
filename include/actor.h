@@ -2,6 +2,7 @@
 #define ACTOR_H
 
 #include <vector>
+#include <SDL2/SDL_stdinc.h>
 #include "vector2.h"
 
 class Game;
@@ -15,8 +16,8 @@ public:
 
     Actor();
     virtual ~Actor();
-    Actor(const Actor&) = delete;
-    Actor& operator=(const Actor&) = delete;
+    Actor(Actor const&) = delete;
+    Actor& operator=(Actor const&) = delete;
 
     Game& getGame() const { return game; }
     const ActorState getState() const { return state; }
@@ -32,8 +33,12 @@ public:
     void update(float dt);
     void updateComponents(float dt);
     virtual void updateActor(float dt);
+
     void addComponent(Component* component);
     void removeComponent(Component* component);
+
+    void processInput(Uint8 const* keyState);
+    virtual void actorInput(Uint8 const* keyState);
 
 private:
     Game& game;

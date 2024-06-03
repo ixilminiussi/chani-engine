@@ -1,6 +1,8 @@
-#include <algorithm>
-#include "../include/maths.h"
 #include "../include/actor.h"
+
+#include <algorithm>
+#include "../include/log.h"
+#include "../include/maths.h"
 #include "../include/game.h"
 #include "../include/component.h"
 
@@ -55,12 +57,11 @@ void Actor::updateActor(float dt) {
 
 void Actor::addComponent(Component* component) {
     int myOrder = component->getUpdateOrder();
-    for (auto iter = begin(components); iter != end(components); iter ++) {
-        if (myOrder < (*iter)->getUpdateOrder()) {
-            components.insert(iter, component);
-            break;
-        }
+    auto iter = begin(components);
+    for (; iter != end(components); iter ++) {
+        if (myOrder < (*iter)->getUpdateOrder()) break;
     }
+    components.insert(iter, component);
 }
 
 void Actor::removeComponent(Component* component) {
@@ -69,3 +70,14 @@ void Actor::removeComponent(Component* component) {
         components.erase(iter);
     }
 }
+
+void Actor::processInput(Uint8 const* keyState) {
+    if (state == Actor::ActorState::Active) {
+        for (Component* component : components) {
+            component -> processInput(keyState);
+        }
+        actorInput(keyState);
+    }
+}
+
+void Actor::actorInput(Uint8 const* keyState) {}

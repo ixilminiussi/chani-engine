@@ -1,6 +1,9 @@
 #include "../include/game.h"
+#include "../include/log.h"
 #include "../include/timer.h"
 #include "../include/asteroid.h"
+#include "../include/backgroundSpriteComponent.h"
+#include "../include/ship.h"
 #include <algorithm>
 
 bool Game::initialize() {
@@ -11,17 +14,30 @@ bool Game::initialize() {
 }
 
 void Game::load() {
-    Assets::loadTexture(renderer, "../assets/Ship01.png", "ship01");
-    Assets::loadTexture(renderer, "../assets/Astroid.png", "Asteroid");
+    Assets::loadTexture(renderer, "assets/Farback01.png", "Farback01");
+    Assets::loadTexture(renderer, "assets/Farback02.png", "Farback02");
+    Assets::loadTexture(renderer, "assets/Stars.png", "Stars");
+    Assets::loadTexture(renderer, "assets/Ship.png", "Ship");
+    Assets::loadTexture(renderer, "assets/Astroid.png", "Asteroid");
 
-    Actor* actor = new Actor();
-    SpriteComponent* sprite = new SpriteComponent(actor, Assets::getTexture("ship01"));
-    actor -> setPosition(Vector2{ 100, 100 });
+    // Ship
+    Ship* ship = new Ship();
+    ship -> setPosition(Vector2{ 100, 300 });
 
+    // Asteroid
     const int asteroidNumber = 20;
     for (int i = 0; i < asteroidNumber; i ++) {
         new Asteroid();
     }
+
+    // Background
+    Actor* bgClose = new Actor();
+    std::vector<Texture*> bgTexsClose {
+        &Assets::getTexture("Farback01"),
+        &Assets::getTexture("Farback02")
+    };
+    BackgroundSpriteComponent* bgSpritesClose = new BackgroundSpriteComponent(bgClose, bgTexsClose, 50);
+    bgSpritesClose -> setScrollSpeed(-200.f);
 }
 
 void Game::loop() {
@@ -67,6 +83,12 @@ void Game::processInput() {
     if (keyboardState[SDL_SCANCODE_ESCAPE]) {
         isRunning = false;
     }
+
+    isUpdatingActors = true;
+    for (Actor* actor : actors) {
+        actor -> processInput(keyboardState);
+    }
+    isUpdatingActors = false;
 }
 
 void Game::update(float dt) {
