@@ -19,6 +19,7 @@ add_executable(game
     src/component.cpp
     src/game.cpp
     src/inputComponent.cpp
+    src/laser.cpp
     src/log.cpp
     src/main.cpp
     src/moveComponent.cpp

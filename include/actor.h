@@ -29,6 +29,7 @@ public:
     void setPosition(Vector2 positionP);
     void setScale(float scaleP);
     void setRotation(float rotationP);
+    void setState(ActorState stateP);
 
     void update(float dt);
     void updateComponents(float dt);

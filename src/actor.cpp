@@ -34,6 +34,10 @@ void Actor::setRotation(float rotationP) {
     rotation = rotationP;
 }
 
+void Actor::setState(ActorState stateP) {
+    state = stateP;
+}
+
 Vector2 Actor::getForward() const {
     return Vector2(Maths::cos(rotation), -Maths::sin(rotation));
 }

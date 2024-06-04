@@ -7,6 +7,12 @@
 class Ship : public Actor {
 public:
     Ship();
+
+    void actorInput(Uint8 const* keyState) override;
+    void updateActor(float dt) override;
+
+private:
+    float laserCooldown;
 };
 
 #endif
