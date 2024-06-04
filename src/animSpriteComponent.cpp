@@ -1,5 +1,4 @@
-#include "../include/animSpriteComponent.h"
-#include "../include/log.h"
+#include "animSpriteComponent.h"
 
 AnimSpriteComponent::AnimSpriteComponent(Actor* ownerP, std::vector<Texture*> const& textureP, int drawOrderP) :
     SpriteComponent(ownerP, *textureP[0], drawOrderP),

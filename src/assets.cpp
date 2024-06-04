@@ -1,5 +1,6 @@
-#include "../include/assets.h"
-#include "../include/log.h"
+#include "assets.h"
+
+#include "log.h"
 #include <sstream>
 
 std::map<std::string, Texture> Assets::textures;

@@ -1,7 +1,7 @@
-#include "../include/backgroundSpriteComponent.h"
+#include "backgroundSpriteComponent.h"
 
-#include "../include/actor.h"
-#include "../include/log.h"
+#include "actor.h"
+#include "log.h"
 
 BackgroundSpriteComponent::BackgroundSpriteComponent(Actor* ownerP, std::vector<Texture*> const& texturesP, int drawOrderP) :
     SpriteComponent(ownerP, *texturesP[0], drawOrderP),

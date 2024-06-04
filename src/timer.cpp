@@ -1,6 +1,7 @@
+#include "timer.h"
+
 #include <SDL2/SDL.h>
 #include <algorithm>
-#include "../include/timer.h"
 
 Timer::Timer() : frameStart(0), lastFrame(0), frameTime(0) {}
 

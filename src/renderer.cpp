@@ -1,10 +1,11 @@
+#include "renderer.h"
+
 #include <SDL2/SDL_image.h>
 #include <algorithm>
-#include "../include/renderer.h"
-#include "../include/log.h"
-#include "../include/spriteComponent.h"
-#include "../include/actor.h"
-#include "../include/maths.h"
+#include "log.h"
+#include "spriteComponent.h"
+#include "actor.h"
+#include "maths.h"
 
 Renderer::Renderer() : SDLRenderer(nullptr) {}
 

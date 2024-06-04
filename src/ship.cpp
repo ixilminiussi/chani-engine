@@ -1,8 +1,9 @@
-#include "../include/ship.h"
-#include "../include/spriteComponent.h"
-#include "../include/assets.h"
-#include "../include/inputComponent.h"
-#include "../include/maths.h"
+#include "ship.h"
+
+#include "spriteComponent.h"
+#include "assets.h"
+#include "inputComponent.h"
+#include "maths.h"
 
 Ship::Ship() : Actor() {
     SpriteComponent* sc = new SpriteComponent(this, Assets::getTexture("Ship"));

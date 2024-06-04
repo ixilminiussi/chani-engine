@@ -1,5 +1,6 @@
-#include "../include/vector2.h"
-#include "../include/maths.h"
+#include "vector2.h"
+
+#include "maths.h"
 
 const Vector2 Vector2::zero(0, 0);
 const Vector2 Vector2::unitX(1.f, 0.f);

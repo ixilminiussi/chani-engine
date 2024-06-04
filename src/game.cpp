@@ -1,9 +1,10 @@
-#include "../include/game.h"
-#include "../include/log.h"
-#include "../include/timer.h"
-#include "../include/asteroid.h"
-#include "../include/backgroundSpriteComponent.h"
-#include "../include/ship.h"
+#include "game.h"
+
+#include "log.h"
+#include "timer.h"
+#include "asteroid.h"
+#include "backgroundSpriteComponent.h"
+#include "ship.h"
 #include <algorithm>
 
 bool Game::initialize() {
@@ -19,6 +20,7 @@ void Game::load() {
     Assets::loadTexture(renderer, "assets/Stars.png", "Stars");
     Assets::loadTexture(renderer, "assets/Ship.png", "Ship");
     Assets::loadTexture(renderer, "assets/Astroid.png", "Asteroid");
+    Assets::loadTexture(renderer, "assets/Laser.png", "Laser");
 
     // Ship
     Ship* ship = new Ship();
@@ -134,6 +136,21 @@ void Game::removeActor(Actor* actor) {
         std::iter_swap(iter, end(actors) - 1);
         actors.pop_back();
     }
+}
+
+void Game::addAsteroid(Asteroid* asteroid) {
+    asteroids.emplace_back(asteroid);
+}
+
+void Game::removeAsteroid(Asteroid* asteroid) {
+    auto iter = std::find(begin(asteroids), end(asteroids), asteroid);
+    if (iter != asteroids.end()) {
+        asteroids.erase(iter);
+    }
+}
+
+std::vector<Asteroid*>& Game::getAsteroids() {
+    return asteroids;
 }
 
 void Game::render() {

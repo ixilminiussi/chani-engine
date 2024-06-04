@@ -1,4 +1,5 @@
-#include "../include/log.h"
+#include "log.h"
+
 #include <SDL2/SDL_log.h>
 #include <SDL2/SDL_error.h>
 

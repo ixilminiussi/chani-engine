@@ -1,7 +1,8 @@
-#include "../include/moveComponent.h"
-#include "../include/maths.h"
-#include "../include/actor.h"
-#include "../include/window.h"
+#include "moveComponent.h"
+
+#include "maths.h"
+#include "actor.h"
+#include "window.h"
 
 MoveComponent::MoveComponent(Actor* ownerP, int updateOrderP) : 
     Component(ownerP, updateOrderP),

@@ -1,5 +1,6 @@
-#include "../include/window.h"
-#include "../include/log.h"
+#include "window.h"
+
+#include "log.h"
 
 Window::Window() : SDLWindow(nullptr), width(WINDOW_WIDTH), height(WINDOW_HEIGHT) {}
 

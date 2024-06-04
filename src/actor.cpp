@@ -1,10 +1,10 @@
-#include "../include/actor.h"
+#include "actor.h"
 
 #include <algorithm>
-#include "../include/log.h"
-#include "../include/maths.h"
-#include "../include/game.h"
-#include "../include/component.h"
+#include "log.h"
+#include "maths.h"
+#include "game.h"
+#include "component.h"
 
 Actor::Actor() :
     state(Actor::ActorState::Active),

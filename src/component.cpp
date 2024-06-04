@@ -1,6 +1,7 @@
-#include "../include/component.h"
-#include "../include/log.h"
-#include "../include/actor.h"
+#include "component.h"
+
+#include "log.h"
+#include "actor.h"
 
 Component::Component(Actor* ownerP, int updateOrderP) : 
     owner(*ownerP), 

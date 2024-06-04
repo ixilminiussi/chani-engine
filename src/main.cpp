@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include "../include/game.h"
+#include "game.h"
 
 int main(int argc, char** argv) {
     bool isGameInit = Game::instance().initialize();

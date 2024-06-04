@@ -1,7 +1,7 @@
-#include "../include/inputComponent.h"
+#include "inputComponent.h"
 
 #include <SDL2/SDL_scancode.h>
-#include "../include/log.h"
+#include "log.h"
 
 InputComponent::InputComponent(Actor* ownerP) :
     MoveComponent(ownerP),

@@ -9,6 +9,7 @@
 #include "assets.h"
 #include "vector2.h"
 #include "actor.h"
+#include "asteroid.h"
 
 class Game {
 public:
@@ -37,8 +38,11 @@ public:
 
     void addActor(Actor* actor);
     void removeActor(Actor* actor);
+    void addAsteroid(Asteroid* asteroid);
+    void removeAsteroid(Asteroid* asteroid);
 
     Renderer& getRenderer() { return renderer; }
+    std::vector<Asteroid*>& getAsteroids();
 
 private:
     void processInput();
@@ -51,6 +55,7 @@ private:
 
     bool isUpdatingActors;
     std::vector<Actor*> actors;
+    std::vector<Asteroid*> asteroids;
     std::vector<Actor*> pendingActors;
 };
 
