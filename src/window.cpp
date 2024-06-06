@@ -11,7 +11,7 @@ bool Window::initialize() {
         return false;
     }
 
-    SDLWindow = SDL_CreateWindow("Game", 100, 100, width, height, 0);
+    SDLWindow = SDL_CreateWindow("Tower Defense", 100, 100, width, height, 0);
     if (!SDLWindow) {
         Log::error(LogCategory::System, "Failed to create window");
         return false;

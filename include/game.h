@@ -4,12 +4,14 @@
 #include <vector>
 
 #include "spriteComponent.h"
+#include "asteroid.h"
+#include "enemy.h"
+#include "actor.h"
 #include "window.h"
 #include "renderer.h"
 #include "assets.h"
 #include "vector2.h"
-#include "actor.h"
-#include "asteroid.h"
+#include "grid.h"
 
 class Game {
 public:
@@ -26,7 +28,9 @@ public:
 private:
     Game() : 
         isRunning(true),
-        isUpdatingActors(false)
+        isUpdatingActors(false),
+        grid(nullptr),
+        nextEnemyTimer(0.f)
     {}
 
 public:
@@ -38,11 +42,15 @@ public:
 
     void addActor(Actor* actor);
     void removeActor(Actor* actor);
+
     void addAsteroid(Asteroid* asteroid);
     void removeAsteroid(Asteroid* asteroid);
 
     Renderer& getRenderer() { return renderer; }
-    std::vector<Asteroid*>& getAsteroids();
+    Grid& getGrid() { return *grid; }
+    std::vector<Enemy*>& getEnemies() { return enemies; }
+    std::vector<Asteroid*>& getAsteroids() { return asteroids; }
+    Enemy* getNearestEnemy(Vector2 const& position);
 
 private:
     void processInput();
@@ -52,11 +60,14 @@ private:
     Window window;
     bool isRunning;
     Renderer renderer;
+    Grid* grid;
+    std::vector<class Enemy*> enemies;
+    float nextEnemyTimer;
 
     bool isUpdatingActors;
     std::vector<Actor*> actors;
-    std::vector<Asteroid*> asteroids;
     std::vector<Actor*> pendingActors;
+    std::vector<Asteroid*> asteroids;
 };
 
 #endif

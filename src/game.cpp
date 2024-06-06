@@ -1,10 +1,8 @@
 #include "game.h"
 
 #include "log.h"
+#include "enemy.h"
 #include "timer.h"
-#include "asteroid.h"
-#include "backgroundSpriteComponent.h"
-#include "ship.h"
 #include <algorithm>
 
 bool Game::initialize() {
@@ -15,31 +13,23 @@ bool Game::initialize() {
 }
 
 void Game::load() {
-    Assets::loadTexture(renderer, "assets/Farback01.png", "Farback01");
-    Assets::loadTexture(renderer, "assets/Farback02.png", "Farback02");
-    Assets::loadTexture(renderer, "assets/Stars.png", "Stars");
-    Assets::loadTexture(renderer, "assets/Ship.png", "Ship");
-    Assets::loadTexture(renderer, "assets/Astroid.png", "Asteroid");
-    Assets::loadTexture(renderer, "assets/Laser.png", "Laser");
+    Assets::loadTexture(renderer, "assets/Airplane.png", "Airplane");
+    Assets::loadTexture(renderer, "assets/Base.png", "Base");
+    Assets::loadTexture(renderer, "assets/Missile.png", "Missile");
+    Assets::loadTexture(renderer, "assets/Projectile.png", "Projectile");
+    Assets::loadTexture(renderer, "assets/TileBrown.png", "TileBrown");
+    Assets::loadTexture(renderer, "assets/TileBrownSelected.png", "TileBrownSelected");
+    Assets::loadTexture(renderer, "assets/TileGreen.png", "TileGreen");
+    Assets::loadTexture(renderer, "assets/TileGreenSelected.png", "TileGreenSelected");
+    Assets::loadTexture(renderer, "assets/TileGrey.png", "TileGrey");
+    Assets::loadTexture(renderer, "assets/TileGreySelected.png", "TileGreySelected");
+    Assets::loadTexture(renderer, "assets/TileRed.png", "TileRed");
+    Assets::loadTexture(renderer, "assets/TileRedSelected.png", "TileRedSelected");
+    Assets::loadTexture(renderer, "assets/TileTan.png", "TileTan");
+    Assets::loadTexture(renderer, "assets/TileTanSelected.png", "TileTanSelected");
+    Assets::loadTexture(renderer, "assets/Tower.png", "Tower");
 
-    // Ship
-    Ship* ship = new Ship();
-    ship -> setPosition(Vector2{ 100, 300 });
-
-    // Asteroid
-    const int asteroidNumber = 20;
-    for (int i = 0; i < asteroidNumber; i ++) {
-        new Asteroid();
-    }
-
-    // Background
-    Actor* bgClose = new Actor();
-    std::vector<Texture*> bgTexsClose {
-        &Assets::getTexture("Farback01"),
-        &Assets::getTexture("Farback02")
-    };
-    BackgroundSpriteComponent* bgSpritesClose = new BackgroundSpriteComponent(bgClose, bgTexsClose, 50);
-    bgSpritesClose -> setScrollSpeed(-200.f);
+    grid = new Grid();
 }
 
 void Game::loop() {
@@ -86,6 +76,17 @@ void Game::processInput() {
         isRunning = false;
     }
 
+    // Mouse state
+    int x, y;
+    Uint32 buttons = SDL_GetMouseState(&x, &y);
+    if (SDL_BUTTON(buttons) & SDL_BUTTON_LEFT) {
+        grid -> processClick(x, y);
+    }
+
+    if (keyboardState[SDL_SCANCODE_B]) {
+        grid -> buildTower();
+    }
+
     isUpdatingActors = true;
     for (Actor* actor : actors) {
         actor -> processInput(keyboardState);
@@ -115,6 +116,24 @@ void Game::update(float dt) {
     for (Actor* deadActor : deadActors) {
         delete deadActor;
     }
+}
+
+Enemy* Game::getNearestEnemy(Vector2 const& position) {
+    Enemy* best = nullptr;
+
+    if (enemies.size() > 0) {
+        best = enemies[0];
+        float bestDistSq = (position - enemies[0] -> getPosition()). lengthSq();
+        for (size_t i = 1; i < enemies.size(); i ++) {
+            float newDistSq = (position - enemies[i] -> getPosition()).lengthSq();
+            if (newDistSq < bestDistSq) {
+                bestDistSq = newDistSq;
+                best = enemies[i];
+            }
+        }
+    }
+
+    return best;
 }
 
 void Game::addActor(Actor* actor) {
@@ -147,10 +166,6 @@ void Game::removeAsteroid(Asteroid* asteroid) {
     if (iter != asteroids.end()) {
         asteroids.erase(iter);
     }
-}
-
-std::vector<Asteroid*>& Game::getAsteroids() {
-    return asteroids;
 }
 
 void Game::render() {

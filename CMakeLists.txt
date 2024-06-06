@@ -9,30 +9,9 @@ find_package(SDL2_image REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(RapidJSON REQUIRED)
 
-add_executable(game 
-    src/actor.cpp
-    src/animSpriteComponent.cpp
-    src/assets.cpp
-    src/asteroid.cpp
-    src/backgroundSpriteComponent.cpp
-    src/circleCollisionComponent.cpp
-    src/component.cpp
-    src/game.cpp
-    src/inputComponent.cpp
-    src/laser.cpp
-    src/log.cpp
-    src/main.cpp
-    src/moveComponent.cpp
-    src/random.cpp
-    src/rectangle.cpp
-    src/renderer.cpp
-    src/ship.cpp
-    src/spriteComponent.cpp
-    src/texture.cpp
-    src/timer.cpp
-    src/vector2.cpp
-    src/window.cpp
-    )
+file(GLOB SOURCE_FILES CONFIGURE_DEPENDS "src/*.cpp")
+
+add_executable(game ${SOURCE_FILES})
 
 include_directories(include)
 
