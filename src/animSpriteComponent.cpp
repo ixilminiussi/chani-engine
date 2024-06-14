@@ -1,35 +1,43 @@
 #include "animSpriteComponent.h"
 
-AnimSpriteComponent::AnimSpriteComponent(Actor* ownerP, std::vector<Texture*> const& textureP, int drawOrderP) :
-    SpriteComponent(ownerP, *textureP[0], drawOrderP),
-    currentFrame(0.f),
-    animFPS(24.f) 
+AnimSpriteComponent::AnimSpriteComponent(Actor* ownerP, const std::vector<Texture*>& textureP, int drawOrderP):
+	SpriteComponent(ownerP, *textureP[0], drawOrderP),
+	currentFrame(0.0f),
+	animFPS(24.0f)
 {
-    setAnimTextures(textureP);
+	setAnimTextures(textureP);
 }
 
-AnimSpriteComponent::~AnimSpriteComponent() {}
-
-void AnimSpriteComponent::setAnimTextures(std::vector<Texture*> const& textureP) {
-    animTextures = textureP;
-    if (animTextures.size() > 0) {
-        currentFrame = 0.f;
-        setTexture(*animTextures[0]);
-    }
+AnimSpriteComponent::~AnimSpriteComponent()
+{
 }
 
-void AnimSpriteComponent::setAnimFPS(float animFPSP) {
-    animFPS = animFPSP;
+void AnimSpriteComponent::setAnimTextures(const std::vector<Texture*>& texturesP)
+{
+	animTextures = texturesP;
+	if (animTextures.size() > 0)
+	{
+		currentFrame = 0.f;
+		setTexture(*animTextures[0]);
+	}
 }
 
-void AnimSpriteComponent::update(float dt) {
-    SpriteComponent::update(dt);
+void AnimSpriteComponent::setAnimFPS(float animFPSP)
+{
+	animFPS = animFPSP;
+}
 
-    if (animTextures.size() > 0) {
-        currentFrame += animFPS * dt;
-        while (currentFrame >= animTextures.size()) {
-            currentFrame -= animTextures.size();
-        }
-        setTexture(*animTextures[static_cast<int>(currentFrame)]);
-    }
+void AnimSpriteComponent::update(float dt)
+{
+	SpriteComponent::update(dt);
+
+	if (animTextures.size() > 0)
+	{
+		currentFrame += animFPS * dt;
+		while (currentFrame >= animTextures.size())
+		{
+			currentFrame -= animTextures.size();
+		}
+		setTexture(*animTextures[static_cast<int>(currentFrame)]);
+	}
 }

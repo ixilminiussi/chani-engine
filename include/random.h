@@ -4,22 +4,28 @@
 #include <random>
 #include "vector2.h"
 
-class Random {
+class Random
+{
 public:
-    static void init();
+	static void init();
 
-    static void seed(unsigned int seed);
+	// Seed the generator with the specified int
+	// NOTE: You should generally not need to manually use this
+	static void seed(unsigned int seed);
 
-    static float getFloat();
+	// Get a float between 0.0f and 1.0f
+	static float getFloat();
 
-    static float getFloatRange(float min, float max);
+	// Get a float from the specified range
+	static float getFloatRange(float min, float max);
 
-    static int getIntRange(int min, int max);
+	// Get an int from the specified range
+	static int getIntRange(int min, int max);
 
-    static Vector2 getVector(const Vector2& min, const Vector2& max);
-
+	// Get a random vector given the min/max bounds
+	static Vector2 getVector(const Vector2& min, const Vector2& max);
 private:
-    static std::mt19937 sGenerator;
+	static std::mt19937 sGenerator;
 };
 
-#endif 
+#endif

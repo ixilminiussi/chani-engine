@@ -3,23 +3,27 @@
 
 #include "component.h"
 
-class MoveComponent : public Component {
+class MoveComponent : public Component
+{
 public:
-    MoveComponent(Actor* ownerP, int updateOrder = 10);
-    MoveComponent() = delete;
-    MoveComponent& operator=(const MoveComponent&) = delete;
+	MoveComponent(Actor* ownerP, int updateOrder = 10); // By default, update before other components
+	MoveComponent() = delete;
+	MoveComponent(const MoveComponent&) = delete;
+	MoveComponent& operator=(const MoveComponent&) = delete;
 
-    float getForwardSpeed() const { return forwardSpeed; }
-    float getAngularSpeed() const { return angularSpeed; }
+	float getForwardSpeed() const { return forwardSpeed; }
+	float getAngularSpeed() const { return angularSpeed; }
 
-    void setForwardSpeed(float forwardSpeedP);
-    void setAngularSpeed(float angularSpeedP);
+	void setForwardSpeed(float forwardSpeedP);
+	void setAngularSpeed(float angularSpeedP);
 
-    void update(float dt) override;
+	void update(float dt) override;
+
 
 private:
-    float forwardSpeed;
-    float angularSpeed;
+	float forwardSpeed;
+	float angularSpeed;
+
 };
 
 #endif

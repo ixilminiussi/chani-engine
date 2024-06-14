@@ -2,26 +2,32 @@
 
 #include "actor.h"
 
-CircleCollisionComponent::CircleCollisionComponent(Actor* owner) :
-    Component(owner),
-    radius(1.f)
-{}
-
-float CircleCollisionComponent::getRadius() const {
-    return owner.getScale() * radius;
+CircleCollisionComponent::CircleCollisionComponent(Actor* owner) : Component(owner), radius(1.0f)
+{
 }
 
-void CircleCollisionComponent::setRadius(float radiusP) {
-    radius = radiusP;
+float CircleCollisionComponent::getRadius() const
+{
+	return owner.getScale() * radius;
 }
 
-const Vector2 CircleCollisionComponent::getCenter() const {
-    return owner.getPosition();
+void CircleCollisionComponent::setRadius(float radiusP)
+{
+	radius = radiusP;
 }
 
-bool Intersect(CircleCollisionComponent const& a, CircleCollisionComponent const& b) {
-    Vector2 ab = b.getCenter() - a.getCenter();
-    float distSq = ab.lengthSq();
-    float sumOfRadius = a.getRadius() + b.getRadius();
-    return distSq <= sumOfRadius * sumOfRadius;
+const Vector2 CircleCollisionComponent::getCenter() const
+{
+	Vector3 position = owner.getPosition();
+	return Vector2(position.y, position.z);
+}
+
+bool Intersect(const CircleCollisionComponent& a, const CircleCollisionComponent& b)
+{
+	Vector2 aCenter = a.getCenter();
+	Vector2 bCenter = b.getCenter();
+	Vector2 ab = bCenter - aCenter;
+	float distSq = ab.lengthSq();
+	float sumOfRadius = a.getRadius() + b.getRadius();
+	return distSq <= sumOfRadius * sumOfRadius;
 }

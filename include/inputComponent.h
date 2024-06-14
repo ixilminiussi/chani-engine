@@ -1,33 +1,35 @@
 #if !defined(INPUT_COMPONENT_H)
 #define INPUT_COMPONENT_H
 
-#include <SDL2/SDL_stdinc.h>
 #include "moveComponent.h"
+#include <SDL_stdinc.h>
 
-class InputComponent : public MoveComponent {
+class InputComponent : public MoveComponent
+{
 public:
-    InputComponent(Actor* ownerP);
-    InputComponent() = delete;
-    InputComponent(InputComponent const&) = delete;
-    InputComponent& operator=(InputComponent const&) = delete;
+	InputComponent(Actor* ownerP);
+	InputComponent() = delete;
+	InputComponent(const InputComponent&) = delete;
+	InputComponent& operator=(const InputComponent&) = delete;
 
-    void processInput(Uint8 const* keyState);
+	void processInput(const Uint8* keyState);
 
-    void setMaxForwardSpeed(float maxForwardSpeedP);
-    void setMaxAngularSpeed(float maxAngularSpeedP);
-    void setForwardKey(int key);
-    void setBackKey(int key);
-    void setClockwiseKey(int key);
-    void setCounterClockwiseKey(int key);
+	void setMaxForwardSpeed(float maxForwardSpeedP);
+	void setMaxAngularSpeed(float maxAngularSpeedP);
+	void setForwardKey(int key);
+	void setBackKey(int key);
+	void setClockwiseKey(int key);
+	void setCounterClockwiseKey(int key);
+
 
 private:
-    float maxForwardSpeed;
-    float maxAngularSpeed;
+	float maxForwardSpeed;
+	float maxAngularSpeed;
 
-    int forwardKey;
-    int backKey;
-    int clockwiseKey;
-    int counterClockwiseKey;
+	int forwardKey;
+	int backKey;
+	int clockwiseKey;
+	int counterClockwiseKey;
 };
 
 #endif

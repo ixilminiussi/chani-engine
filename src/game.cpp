@@ -1,175 +1,239 @@
 #include "game.h"
 
-#include "log.h"
-#include "enemy.h"
+#include "actor.h"
 #include "timer.h"
+#include "assets.h"
+#include "meshComponent.h"
+#include "cube.h"
+#include "sphere.h"
+#include "plane.h"
+
 #include <algorithm>
 
-bool Game::initialize() {
-    bool isWindowInit = window.initialize();
-    bool isRenderInit = renderer.initialize(window);
-
-    return isWindowInit && isRenderInit;
+bool Game::initialize()
+{
+	bool isWindowInit = window.initialize();
+	bool isRendererInit = renderer.initialize(window);
+	return isWindowInit && isRendererInit; // Return bool && bool && bool ...to detect error
 }
 
-void Game::load() {
-    Assets::loadTexture(renderer, "assets/Airplane.png", "Airplane");
-    Assets::loadTexture(renderer, "assets/Base.png", "Base");
-    Assets::loadTexture(renderer, "assets/Missile.png", "Missile");
-    Assets::loadTexture(renderer, "assets/Projectile.png", "Projectile");
-    Assets::loadTexture(renderer, "assets/TileBrown.png", "TileBrown");
-    Assets::loadTexture(renderer, "assets/TileBrownSelected.png", "TileBrownSelected");
-    Assets::loadTexture(renderer, "assets/TileGreen.png", "TileGreen");
-    Assets::loadTexture(renderer, "assets/TileGreenSelected.png", "TileGreenSelected");
-    Assets::loadTexture(renderer, "assets/TileGrey.png", "TileGrey");
-    Assets::loadTexture(renderer, "assets/TileGreySelected.png", "TileGreySelected");
-    Assets::loadTexture(renderer, "assets/TileRed.png", "TileRed");
-    Assets::loadTexture(renderer, "assets/TileRedSelected.png", "TileRedSelected");
-    Assets::loadTexture(renderer, "assets/TileTan.png", "TileTan");
-    Assets::loadTexture(renderer, "assets/TileTanSelected.png", "TileTanSelected");
-    Assets::loadTexture(renderer, "assets/Tower.png", "Tower");
+void Game::load()
+{
+	Assets::loadShader("assets/shaders/Sprite.vert", "assets/shaders/Sprite.frag", "", "", "", "Sprite");
+	Assets::loadShader("assets/shaders/BasicMesh.vert", "assets/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
+	Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Phong");
 
-    grid = new Grid();
+	Assets::loadTexture(renderer, "assets/textures/Default.png", "Default");
+	Assets::loadTexture(renderer, "assets/textures/Cube.png", "Cube");
+	Assets::loadTexture(renderer, "assets/textures/HealthBar.png", "HealthBar");
+	Assets::loadTexture(renderer, "assets/textures/Plane.png", "Plane");
+	Assets::loadTexture(renderer, "assets/textures/Radar.png", "Radar");
+	Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Sphere");
+	
+	Assets::loadMesh("assets/meshes/Cube.gpmesh", "Mesh_Cube");
+	Assets::loadMesh("assets/meshes/Plane.gpmesh", "Mesh_Plane");
+	Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
+	
+	camera = new Camera();
+
+	Cube* a = new Cube();
+	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
+	a->setScale(100.0f);
+	Quaternion q(Vector3::unitY, -Maths::piOver2);
+	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
+	a->setRotation(q);
+	
+	Sphere* b = new Sphere();
+	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
+	b->setScale(3.0f);
+
+	// Floor and walls
+
+	// Setup floor
+	const float start = -1250.0f;
+	const float size = 250.0f;
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			Plane* p = new Plane();
+			p->setPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+	}
+
+	// Left/right walls
+	q = Quaternion(Vector3::unitX, Maths::piOver2);
+	for (int i = 0; i < 10; i++)
+	{
+		Plane* p = new Plane();
+		p->setPosition(Vector3(start + i * size, start - size, 0.0f));
+		p->setRotation(q);
+
+		p = new Plane();
+		p->setPosition(Vector3(start + i * size, -start + size, 0.0f));
+		p->setRotation(q);
+	}
+
+	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::piOver2));
+	// Forward/back walls
+	for (int i = 0; i < 10; i++)
+	{
+		Plane* p = new Plane();
+		p->setPosition(Vector3(start - size, start + i * size, 0.0f));
+		p->setRotation(q);
+
+		p = new Plane();
+		p->setPosition(Vector3(-start + size, start + i * size, 0.0f));
+		p->setRotation(q);
+	}
+
+	// Setup lights
+	renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
+	DirectionalLight& dir = renderer.getDirectionalLight();
+	dir.direction = Vector3(0.0f, -0.707f, -0.707f);
+	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
+	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
+
+	// UI elements
+	Actor* ui = new Actor();
+	ui->setPosition(Vector3(-350.0f, -350.0f, 0.0f));
+	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("HealthBar"));
+
+	ui = new Actor();
+	ui->setPosition(Vector3(375.0f, -275.0f, 0.0f));
+	ui->setScale(0.75f);
+	sc = new SpriteComponent(ui, Assets::getTexture("Radar"));
 }
 
-void Game::loop() {
-    Timer timer;
-    float dt = 0;
-
-    while(isRunning) {
-        float dt = timer.computeDeltaTime() / 1000.0f;
-        processInput();
-        update(dt);
-        render();
-        timer.delayTime();
-    }
+void Game::processInput()
+{
+	// SDL Event
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			isRunning = false;
+			break;
+		}
+	}
+	// Keyboard state
+	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+	// Escape: quit game
+	if (keyboardState[SDL_SCANCODE_ESCAPE])
+	{
+		isRunning = false;
+	}
+	// Actor input
+	isUpdatingActors = true;
+	for (auto actor : actors)
+	{
+		actor->processInput(keyboardState);
+	}
+	isUpdatingActors = false;
 }
 
-void Game::unload() {
-    while (!actors.empty()) {
-        delete actors.back();
-    }
+void Game::update(float dt)
+{
+	// Update actors 
+	isUpdatingActors = true;
+	for(auto actor: actors) 
+	{
+		actor->update(dt);
+	}
+	isUpdatingActors = false;
 
-    Assets::clear();
+	// Move pending actors to actors
+	for (auto pendingActor: pendingActors)
+	{
+		pendingActor->computeWorldTransform();
+		actors.emplace_back(pendingActor);
+	}
+	pendingActors.clear();
+
+	// Delete dead actors
+	vector<Actor*> deadActors;
+	for (auto actor : actors)
+	{
+		if (actor->getState() == Actor::ActorState::Dead)
+		{
+			deadActors.emplace_back(actor);
+		}
+	}
+	for (auto deadActor : deadActors)
+	{
+		delete deadActor;
+	}
 }
 
-void Game::close() {
-    renderer.close();
-    window.close();
-    SDL_Quit();
+void Game::render()
+{
+	renderer.beginDraw();
+	renderer.draw();
+	renderer.endDraw();
 }
 
-void Game::processInput() {
-    // SDL Event
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch(event.type) {
-            case SDL_QUIT:
-                isRunning = false;
-                break;
-        }
-    }
-    // Keyboard state
-    const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-    // Escape: quit game
-    if (keyboardState[SDL_SCANCODE_ESCAPE]) {
-        isRunning = false;
-    }
-
-    // Mouse state
-    int x, y;
-    Uint32 buttons = SDL_GetMouseState(&x, &y);
-    if (SDL_BUTTON(buttons) & SDL_BUTTON_LEFT) {
-        grid -> processClick(x, y);
-    }
-
-    if (keyboardState[SDL_SCANCODE_B]) {
-        grid -> buildTower();
-    }
-
-    isUpdatingActors = true;
-    for (Actor* actor : actors) {
-        actor -> processInput(keyboardState);
-    }
-    isUpdatingActors = false;
+void Game::loop()
+{
+	Timer timer;
+	float dt = 0;
+	while (isRunning)
+	{
+		float dt = timer.computeDeltaTime() / 1000.0f;
+		processInput();
+		update(dt);
+		render();
+		timer.delayTime();
+	}
 }
 
-void Game::update(float dt) {
-    isUpdatingActors = true;
-    for (Actor* actor : actors) {
-        actor -> update(dt);
-    }
-    isUpdatingActors = false;
+void Game::unload()
+{
+	// Delete actors
+	// Because ~Actor calls RemoveActor, have to use a different style loop
+	while (!actors.empty())
+	{
+		delete actors.back();
+	}
 
-    for (Actor* pendingActor : pendingActors) {
-        actors.emplace_back(pendingActor);
-    }
-    pendingActors.clear();
-
-    std::vector<Actor*> deadActors;
-    for (Actor* actor : actors) {
-        if (actor -> getState() == Actor::ActorState::Dead) {
-            deadActors.emplace_back(actor);
-        }
-    }
-
-    for (Actor* deadActor : deadActors) {
-        delete deadActor;
-    }
+	// assetsources
+	Assets::clear();
 }
 
-Enemy* Game::getNearestEnemy(Vector2 const& position) {
-    Enemy* best = nullptr;
-
-    if (enemies.size() > 0) {
-        best = enemies[0];
-        float bestDistSq = (position - enemies[0] -> getPosition()). lengthSq();
-        for (size_t i = 1; i < enemies.size(); i ++) {
-            float newDistSq = (position - enemies[i] -> getPosition()).lengthSq();
-            if (newDistSq < bestDistSq) {
-                bestDistSq = newDistSq;
-                best = enemies[i];
-            }
-        }
-    }
-
-    return best;
+void Game::close()
+{
+	renderer.close();
+	window.close();
+	SDL_Quit();
 }
 
-void Game::addActor(Actor* actor) {
-    if (isUpdatingActors) {
-        pendingActors.emplace_back(actor);
-    } else {
-        actors.emplace_back(actor);
-    }
+void Game::addActor(Actor* actor)
+{
+	if (isUpdatingActors)
+	{
+		pendingActors.emplace_back(actor);
+	}
+	else
+	{
+		actors.emplace_back(actor);
+	}
 }
 
-void Game::removeActor(Actor* actor) {
-    auto iter = std::find(begin(pendingActors), end(pendingActors), actor);
-    if (iter != end(pendingActors)) {
-        std::iter_swap(iter, end(pendingActors) - 1);
-        pendingActors.pop_back();
-    }
-    iter = std::find(begin(actors), end(actors), actor);
-    if (iter != end(actors)) {
-        std::iter_swap(iter, end(actors) - 1);
-        actors.pop_back();
-    }
-}
-
-void Game::addAsteroid(Asteroid* asteroid) {
-    asteroids.emplace_back(asteroid);
-}
-
-void Game::removeAsteroid(Asteroid* asteroid) {
-    auto iter = std::find(begin(asteroids), end(asteroids), asteroid);
-    if (iter != asteroids.end()) {
-        asteroids.erase(iter);
-    }
-}
-
-void Game::render() {
-    renderer.beginDraw();
-    renderer.draw();
-    renderer.endDraw();
+void Game::removeActor(Actor* actor)
+{
+	// Erase actor from the two vectors
+	auto iter = std::find(begin(pendingActors), end(pendingActors), actor);
+	if (iter != end(pendingActors))
+	{
+		// Swap to end of vector and pop off (avoid erase copies)
+		std::iter_swap(iter, end(pendingActors) - 1);
+		pendingActors.pop_back();
+	}
+	iter = std::find(begin(actors), end(actors), actor);
+	if (iter != end(actors))
+	{
+		std::iter_swap(iter, end(actors) - 1);
+		actors.pop_back();
+	}
 }

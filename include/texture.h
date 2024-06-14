@@ -2,27 +2,31 @@
 #define TEXTURE_H
 
 #include <string>
-#include "renderer.h"
-using std::string;
+#include "rendererOGL.h"
 
-class Texture {
+class Texture
+{
 public:
-    Texture();
-    ~Texture();
+	Texture();
+	~Texture();
 
-    void unload();
-    bool load(Renderer& rendererP, const std::string& filenameP);
-    inline SDL_Texture* toSDLTexture() const { return SDLTexture; }
-    void updateInfo(int& widthOut, int& heightOut);
+	void unload();
+	//bool loadSDL(RendererSDL& rendererP, const string& filenameP);
+	bool loadOGL(RendererOGL& rendererP, const std::string& filenameP);
 
-    inline int getWidth() const { return width; }
-    inline int getHeight() const { return height; }
+	inline SDL_Texture* toSDLTexture() const { return SDLTexture; }
+	void updateInfo(int& widthOut, int& heightOut);
+	void setActive() const;
+
+	inline int getWidth() const { return width; }
+	inline int getHeight() const { return height; }
 
 private:
-    string filename;
-    SDL_Texture* SDLTexture;
-    int width;
-    int height;
+	unsigned int textureID;
+    std::string filename;
+	int width;
+	int height;
+	SDL_Texture* SDLTexture = nullptr;
 };
 
 #endif

@@ -1,27 +1,26 @@
-#if !defined(COMPONENT_H)
-#define COMPONENT_H
+#pragma once
 
-#include <SDL2/SDL_stdinc.h>
+#include <SDL_stdinc.h>
 
 class Actor;
 
-class Component {
+class Component
+{
 public:
-    Component(Actor* ownerP, int updateOrderP = 100);
-    Component() = delete;
-    virtual ~Component();
-    Component(Component const&) = delete;
-    Component& operator=(Component const&) = delete;
+	Component(Actor* ownerP, int updateOrderP = 100);
+	Component() = delete;
+	virtual ~Component();
+	Component(const Component&) = delete;
+	Component& operator=(const Component&) = delete;
 
-    int getUpdateOrder() const { return updateOrder; }
+	int getUpdateOrder() const { return updateOrder; }
 
-    virtual void update(float dt);
-
-    virtual void processInput(Uint8 const* keyState);
+	virtual void processInput(const Uint8* keyState);
+	virtual void update(float dt);
+	virtual void onUpdateWorldTransform() {}
 
 protected:
-    Actor& owner;
-    int updateOrder;
+	Actor& owner;
+	int updateOrder;		// Order of the component in the actor's updateComponent method
 };
 
-#endif
