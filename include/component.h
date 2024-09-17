@@ -1,4 +1,5 @@
-#pragma once
+#if !defined(COMPONENT_H)
+#define COMPONENT_H
 
 #include <SDL_stdinc.h>
 
@@ -15,7 +16,7 @@ public:
 
 	int getUpdateOrder() const { return updateOrder; }
 
-	virtual void processInput(const Uint8* keyState);
+	virtual void processInput(const struct InputState& inputState);
 	virtual void update(float dt);
 	virtual void onUpdateWorldTransform() {}
 
@@ -24,3 +25,4 @@ protected:
 	int updateOrder;		// Order of the component in the actor's updateComponent method
 };
 
+#endif

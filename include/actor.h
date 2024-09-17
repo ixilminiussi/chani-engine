@@ -1,10 +1,11 @@
 #if !defined(ACTOR_H)
 #define ACTOR_H
 
+#include "matrix4.h"
+#include "vector2.h"
+
 #include <vector>
 #include <SDL_stdinc.h>
-#include "vector2.h"
-#include "matrix4.h"
 
 class Game;
 class Component;
@@ -35,11 +36,14 @@ public:
 	void setRotation(Quaternion rotationP);
 	void setState(ActorState stateP);
 
+	void setAngle(const Vector3& axis, float angle);
+	void rotate(const Vector3& axis, float angle);
 	Vector3 getForward() const;
+	Vector3 getRight() const;
 	void computeWorldTransform();
 
-	void processInput(const Uint8* keyState);
-	virtual void actorInput(const Uint8* keyState);
+	void processInput(const struct InputState& inputState);
+	virtual void actorInput(const struct InputState& inputState);
 	void update(float dt);
 	void updateComponents(float dt);
 	virtual void updateActor(float dt);

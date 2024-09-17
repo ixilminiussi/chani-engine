@@ -1,13 +1,15 @@
 #if !defined(GAME_H)
 #define GAME_H
 
-#include <vector>
 #include "actor.h"
 #include "spriteComponent.h"
 #include "window.h"
 #include "vector2.h"
 #include "rendererOGL.h"
-#include "camera.h"
+#include "audioSystem.h"
+#include "inputSystem.h"
+
+#include <vector>
 
 class Game
 {
@@ -24,7 +26,7 @@ public:
 	Game& operator=(Game&&) = delete;
 
 private:
-	Game() : isRunning(true), isUpdatingActors(false), camera(nullptr) {}
+	Game() : isRunning(true), isUpdatingActors(false), fps(nullptr), crosshair(nullptr), follow(nullptr), orbit (nullptr), path(nullptr) {}
 
 public:
 	bool initialize();
@@ -36,6 +38,8 @@ public:
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 	RendererOGL& getRenderer() { return renderer; }
+	AudioSystem& getAudioSystem() { return audioSystem; }
+
 
 private:
 	void processInput();
@@ -45,11 +49,22 @@ private:
 	bool isRunning;
 	Window window;
 	RendererOGL renderer;
+	AudioSystem audioSystem;
+	InputSystem inputSystem;
 
 	bool isUpdatingActors;
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
-	Camera* camera;
+
+	// Game specific
+	void changeCamera(int mode);
+
+	SoundEvent musicEvent;
+	class FPSActor* fps;
+	class SpriteComponent* crosshair;
+	class FollowActor* follow;
+	class OrbitActor* orbit;
+	class SplineActor* path;
 };
 
 #endif

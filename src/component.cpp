@@ -1,23 +1,15 @@
 #include "component.h"
 
 #include "actor.h"
+#include "inputSystem.h"
 
-Component::Component(Actor* ownerP, int updateOrderP):
-	owner(*ownerP),
-	updateOrder(updateOrderP)
-{
-	owner.addComponent(this);
+Component::Component(Actor *ownerP, int updateOrderP)
+    : owner(*ownerP), updateOrder(updateOrderP) {
+    owner.addComponent(this);
 }
 
-Component::~Component()
-{
-	owner.removeComponent(this);
-}
+Component::~Component() { owner.removeComponent(this); }
 
-void Component::processInput(const Uint8* keyState)
-{
-}
+void Component::processInput(const InputState &inputState) {}
 
-void Component::update(float dt)
-{
-}
+void Component::update(float dt) {}

@@ -7,6 +7,11 @@
 #include "cube.h"
 #include "sphere.h"
 #include "plane.h"
+#include "audioComponent.h"
+#include "FPSActor.h"
+#include "followActor.h"
+#include "orbitActor.h"
+#include "splineActor.h"
 
 #include <algorithm>
 
@@ -14,14 +19,19 @@ bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
-	return isWindowInit && isRendererInit; // Return bool && bool && bool ...to detect error
+	bool isAudioInit = audioSystem.initialize();
+	bool isInputInit = inputSystem.initialize();
+
+	return isWindowInit && isRendererInit && isAudioInit && isInputInit; // Return bool && bool && bool ...to detect error
 }
 
 void Game::load()
 {
+	inputSystem.setMouseRelativeMode(window.getSDLWindow(), true);
+
 	Assets::loadShader("assets/shaders/Sprite.vert", "assets/shaders/Sprite.frag", "", "", "", "Sprite");
-	Assets::loadShader("assets/shaders/BasicMesh.vert", "assets/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
 	Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Phong");
+	Assets::loadShader("assets/shaders/BasicMesh.vert", "assets/shaders/BasicMesh.frag", "", "", "", "BasicMesh");
 
 	Assets::loadTexture(renderer, "assets/textures/Default.png", "Default");
 	Assets::loadTexture(renderer, "assets/textures/Cube.png", "Cube");
@@ -29,12 +39,20 @@ void Game::load()
 	Assets::loadTexture(renderer, "assets/textures/Plane.png", "Plane");
 	Assets::loadTexture(renderer, "assets/textures/Radar.png", "Radar");
 	Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Sphere");
-	
+	Assets::loadTexture(renderer, "assets/textures/Crosshair.png", "Crosshair");
+	Assets::loadTexture(renderer, "assets/textures/RacingCar.png", "RacingCar");
+	Assets::loadTexture(renderer, "assets/textures/Rifle.png", "Rifle");
+
 	Assets::loadMesh("assets/meshes/Cube.gpmesh", "Mesh_Cube");
 	Assets::loadMesh("assets/meshes/Plane.gpmesh", "Mesh_Plane");
 	Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
-	
-	camera = new Camera();
+	Assets::loadMesh("assets/meshes/Rifle.gpmesh", "Mesh_Rifle");
+	Assets::loadMesh("assets/meshes/RacingCar.gpmesh", "Mesh_RacingCar");
+
+	fps = new FPSActor();
+	follow = new FollowActor();
+	orbit = new OrbitActor();
+	path = new SplineActor();
 
 	Cube* a = new Cube();
 	a->setPosition(Vector3(200.0f, 105.0f, 0.0f));
@@ -42,7 +60,7 @@ void Game::load()
 	Quaternion q(Vector3::unitY, -Maths::piOver2);
 	q = Quaternion::concatenate(q, Quaternion(Vector3::unitZ, Maths::pi + Maths::pi / 4.0f));
 	a->setRotation(q);
-	
+
 	Sphere* b = new Sphere();
 	b->setPosition(Vector3(200.0f, -75.0f, 0.0f));
 	b->setScale(3.0f);
@@ -94,48 +112,75 @@ void Game::load()
 	dir.diffuseColor = Vector3(0.78f, 0.88f, 1.0f);
 	dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 
-	// UI elements
-	Actor* ui = new Actor();
-	ui->setPosition(Vector3(-350.0f, -350.0f, 0.0f));
-	SpriteComponent* sc = new SpriteComponent(ui, Assets::getTexture("HealthBar"));
+	// Create spheres with audio components playing different sounds
+	Sphere* soundSphere = new Sphere();
+	soundSphere->setPosition(Vector3(500.0f, -75.0f, 0.0f));
+	soundSphere->setScale(1.0f);
+	AudioComponent* ac = new AudioComponent(soundSphere);
+	ac->playEvent("event:/FireLoop");
 
-	ui = new Actor();
-	ui->setPosition(Vector3(375.0f, -275.0f, 0.0f));
-	ui->setScale(0.75f);
-	sc = new SpriteComponent(ui, Assets::getTexture("Radar"));
+	// Corsshair
+	Actor* crosshairActor = new Actor();
+	crosshairActor->setScale(2.0f);
+	crosshair = new SpriteComponent(crosshairActor, Assets::getTexture("Crosshair"));
+
+	// Start music
+	musicEvent = audioSystem.playEvent("event:/Music");
+
+	changeCamera(1);
 }
 
 void Game::processInput()
 {
+	inputSystem.preUpdate();
+
 	// SDL Event
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			isRunning = false;
-			break;
-		}
+		isRunning = inputSystem.processEvent(event);
 	}
-	// Keyboard state
-	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+
+	inputSystem.update();
+	const InputState& input = inputSystem.getInputState();
+
 	// Escape: quit game
-	if (keyboardState[SDL_SCANCODE_ESCAPE])
+	if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
 	{
 		isRunning = false;
 	}
+
+	if (input.keyboard.getKeyState(SDL_SCANCODE_1) == ButtonState::Pressed)
+	{
+		changeCamera(1);
+	}
+	else if (input.keyboard.getKeyState(SDL_SCANCODE_2) == ButtonState::Pressed)
+	{
+		changeCamera(2);
+	}
+	else if (input.keyboard.getKeyState(SDL_SCANCODE_3) == ButtonState::Pressed)
+	{
+		changeCamera(3);
+	}
+	else if (input.keyboard.getKeyState(SDL_SCANCODE_4) == ButtonState::Pressed)
+	{
+		changeCamera(4);
+	}
+
 	// Actor input
 	isUpdatingActors = true;
 	for (auto actor : actors)
 	{
-		actor->processInput(keyboardState);
+		actor->processInput(input);
 	}
 	isUpdatingActors = false;
 }
 
 void Game::update(float dt)
 {
+	// Update audio
+	audioSystem.update(dt);
+
 	// Update actors 
 	isUpdatingActors = true;
 	for(auto actor: actors) 
@@ -153,7 +198,7 @@ void Game::update(float dt)
 	pendingActors.clear();
 
 	// Delete dead actors
-	vector<Actor*> deadActors;
+  std::vector<Actor*> deadActors;
 	for (auto actor : actors)
 	{
 		if (actor->getState() == Actor::ActorState::Dead)
@@ -172,6 +217,42 @@ void Game::render()
 	renderer.beginDraw();
 	renderer.draw();
 	renderer.endDraw();
+}
+
+void Game::changeCamera(int mode)
+{
+	// Disable everything
+	fps->setState(Actor::ActorState::Paused);
+	fps->setVisible(false);
+	crosshair->setVisible(false);
+	follow->setState(Actor::ActorState::Paused);
+	follow->setVisible(false);
+	orbit->setState(Actor::ActorState::Paused);
+	orbit->setVisible(false);
+	path->setState(Actor::ActorState::Paused);
+
+	// Enable the camera specified by the mode
+	switch (mode)
+	{
+	case 1:
+	default:
+		fps->setState(Actor::ActorState::Active);
+		fps->setVisible(true);
+		crosshair->setVisible(true);
+		break;
+	case 2:
+		follow->setState(Actor::ActorState::Active);
+		follow->setVisible(true);
+		break;
+	case 3:
+		orbit->setState(Actor::ActorState::Active);
+		orbit->setVisible(true);
+		break;
+	case 4:
+		path->setState(Actor::ActorState::Active);
+		path->restartSpline();
+		break;
+	}
 }
 
 void Game::loop()
@@ -197,13 +278,15 @@ void Game::unload()
 		delete actors.back();
 	}
 
-	// assetsources
+	// Resources
 	Assets::clear();
 }
 
 void Game::close()
 {
+	inputSystem.close();
 	renderer.close();
+	audioSystem.close();
 	window.close();
 	SDL_Quit();
 }

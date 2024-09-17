@@ -4,7 +4,7 @@
 #include "game.h"
 #include "mesh.h"
 
-MeshComponent::MeshComponent(Actor* owner) : Component(owner), mesh(nullptr), textureIndex(0)
+MeshComponent::MeshComponent(Actor* owner) : Component(owner), mesh(nullptr), textureIndex(0), isVisible(true)
 {
 	owner->getGame().getRenderer().addMesh(this);
 }
@@ -12,6 +12,11 @@ MeshComponent::MeshComponent(Actor* owner) : Component(owner), mesh(nullptr), te
 MeshComponent::~MeshComponent()
 {
 	owner.getGame().getRenderer().removeMesh(this);
+}
+
+void MeshComponent::setVisible(bool isVisibleP)
+{
+	isVisible = isVisibleP;
 }
 
 void MeshComponent::draw(Shader& shader)

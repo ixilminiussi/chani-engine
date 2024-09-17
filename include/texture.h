@@ -1,8 +1,9 @@
 #if !defined(TEXTURE_H)
 #define TEXTURE_H
 
-#include <string>
 #include "rendererOGL.h"
+
+#include <string>
 
 class Texture
 {

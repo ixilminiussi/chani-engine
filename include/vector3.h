@@ -1,7 +1,8 @@
-#if !defined(VECTOR3_H)
-#define VECTOR3_H
+#if !defined(VECTOR_3_H)
+#define VECTOR_3_H
 
 #include "maths.h"
+
 class Vector3
 {
 
@@ -11,7 +12,6 @@ public:
 	float z;
 
 	Vector3(): x(0.0f), y(0.0f), z(0.0f) {}
-
 
 	explicit Vector3(float xP, float yP, float zP)
 		:x(xP), y(yP), z(zP) {}

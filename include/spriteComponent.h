@@ -19,12 +19,16 @@ public:
 	int getDrawOrder() const { return drawOrder; }
 	int getTexWidth() const { return texWidth; }
 	int getTexHeight() const { return texHeight; }
+	int getVisible() const { return isVisible; }
+
+	void setVisible(bool isVisibleP);
 
 protected:
 	Texture texture;
 	int drawOrder;
 	int texWidth;
 	int texHeight;
+	bool isVisible;
 };
 
 #endif

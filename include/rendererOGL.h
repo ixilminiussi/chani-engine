@@ -6,6 +6,7 @@
 #include "vector2.h"
 #include "shader.h"
 #include "directionalLight.h"
+
 #include <vector>
 
 class RendererOGL : public IRenderer
@@ -25,7 +26,7 @@ public:
 
 	void addSprite(class SpriteComponent* sprite);
 	void removeSprite(class SpriteComponent* sprite);
-	void drawSprite(const Actor& actor, const class Texture& tex, struct Rectangle srcRect, Vector2 origin, Flip flip) const;
+	void drawSprite(const class Actor& actor, const class Texture& tex, struct Rectangle srcRect, Vector2 origin, Flip flip) const;
 
 	void addMesh(class MeshComponent* mesh);
 	void removeMesh(class MeshComponent* mesh);

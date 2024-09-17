@@ -1,5 +1,5 @@
-#if !defined(VECTOR2_H)
-#define VECTOR2_H
+#if !defined(VECTOR_2_H)
+#define VECTOR_2_H
 
 struct Vector2
 {

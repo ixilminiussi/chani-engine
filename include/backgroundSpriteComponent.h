@@ -3,6 +3,7 @@
 
 #include "spriteComponent.h"
 #include "vector2.h"
+
 #include <vector>
 
 class BackgroundSpriteComponent : public SpriteComponent

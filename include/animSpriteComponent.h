@@ -2,6 +2,7 @@
 #define ANIM_SPRITE_COMPONENT_H
 
 #include "spriteComponent.h"
+
 #include <vector>
 
 class AnimSpriteComponent :	public SpriteComponent

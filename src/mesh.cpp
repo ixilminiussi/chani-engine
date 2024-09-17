@@ -2,53 +2,37 @@
 
 #include "vertexArray.h"
 
-Mesh::Mesh() : vertexArray(nullptr), shaderName(""), radius(0.0f), specularPower(100.0f)
-{
+Mesh::Mesh()
+    : vertexArray(nullptr), shaderName(""), radius(0.0f),
+      specularPower(100.0f) {}
+
+Mesh::~Mesh() {}
+
+void Mesh::unload() {
+    delete vertexArray;
+    vertexArray = nullptr;
 }
 
-Mesh::~Mesh()
-{
+void Mesh::addTexture(Texture *texture) { textures.emplace_back(texture); }
+
+Texture *Mesh::getTexture(int index) {
+    if (index < textures.size()) {
+        return textures[index];
+    } else {
+        return nullptr;
+    }
 }
 
-void Mesh::unload()
-{
-	delete vertexArray;
-	vertexArray = nullptr;
+void Mesh::setVertexArray(VertexArray *vertexArrayP) {
+    vertexArray = vertexArrayP;
 }
 
-void Mesh::addTexture(Texture* texture)
-{
-	textures.emplace_back(texture);
+void Mesh::setShaderName(const std::string &shaderNameP) {
+    shaderName = shaderNameP;
 }
 
-Texture* Mesh::getTexture(int index)
-{
-	if (index < textures.size())
-	{
-		return textures[index];
-	}
-	else
-	{
-		return nullptr;
-	}
-}
+void Mesh::setRadius(float radiusP) { radius = radiusP; }
 
-void Mesh::setVertexArray(VertexArray* vertexArrayP)
-{
-	vertexArray = vertexArrayP;
-}
-
-void Mesh::setShaderName(const string& shaderNameP)
-{
-	shaderName = shaderNameP;
-}
-
-void Mesh::setRadius(float radiusP)
-{
-	radius = radiusP;
-}
-
-void Mesh::setSpecularPower(float specularPowerP)
-{
-	specularPower = specularPowerP;
+void Mesh::setSpecularPower(float specularPowerP) {
+    specularPower = specularPowerP;
 }

@@ -1,5 +1,5 @@
-#if !defined(MATRIX4_H)
-#define MATRIX4_H
+#if !defined(MATRIX_4_H)
+#define MATRIX_4_H
 
 #include "vector3.h"
 #include "quaternion.h"
@@ -10,8 +10,6 @@ class Matrix4
 {
 public:
 	float mat[4][4];
-
-	static const Matrix4 identity;
 
 	Matrix4()
 	{
@@ -328,6 +326,8 @@ public:
 		};
 		return Matrix4(temp);
 	}
+
+	static const Matrix4 identity;
 };
 
 #endif

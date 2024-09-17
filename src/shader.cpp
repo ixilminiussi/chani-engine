@@ -1,14 +1,10 @@
 #include "shader.h"
+
 #include "log.h"
 
 #include <SDL.h>
-
 #include <sstream>
 #include <string>
-
-#ifdef __linux__
-    #define sprintf_s(buffer, ...) snprintf((buffer), sizeof(buffer), __VA_ARGS__)
-#endif
 
 void Shader::unload()
 {
@@ -281,7 +277,7 @@ void Shader::printAllParams(GLuint id)
             for (int j = 0; j < size; j++)
             {
                 char long_name[77];
-                sprintf_s(long_name, "%s[%i]", name, j);
+                snprintf(long_name, sizeof(long_name), "%s[%i]", name, j);
                 int location = glGetAttribLocation(id, long_name);
                 std::ostringstream s;
                 s << "  " << i << ") type:" << GLTypeToString(type) << " name:" << long_name << " location:" << location;
@@ -314,7 +310,7 @@ void Shader::printAllParams(GLuint id)
             for (int j = 0; j < size; j++)
             {
                 char long_name[77];
-                sprintf_s(long_name, "%s[%i]", name, j);
+                snprintf(long_name, sizeof(long_name), "%s[%i]", name, j);
                 int location = glGetUniformLocation(id, long_name);
                 std::ostringstream s;
                 s << "  " << i << ") type:" << GLTypeToString(type) << " name:" << long_name << " location:" << location;

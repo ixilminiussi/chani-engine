@@ -1,8 +1,9 @@
 #if !defined(RANDOM_H)
 #define RANDOM_H
 
-#include <random>
 #include "vector2.h"
+
+#include <random>
 
 class Random
 {

@@ -1,11 +1,12 @@
 #if !defined(ASSETS_H)
 #define ASSETS_H
 
-#include <map>
-#include <string>
 #include "texture.h"
 #include "shader.h"
 #include "mesh.h"
+
+#include <map>
+#include <string>
 
 // A static singleton Assets class that hosts several
 // functions to load resources. Each loaded resource is also 
@@ -19,7 +20,7 @@ public:
     static std::map<std::string, Mesh> meshes;
 
     // Loads a texture from file
-    static Texture loadTexture(IRenderer& renderer, const string& filename, const string& name);
+    static Texture loadTexture(IRenderer& renderer, const std::string& filename, const std::string& name);
 
     // Retrieves a stored texture
     static Texture& getTexture(const std::string& name);
@@ -35,7 +36,7 @@ public:
     static Shader& getShader(const std::string& name);
 
     // Loads a mesh from file
-    static Mesh loadMesh(const string& filename, const string& name);
+    static Mesh loadMesh(const std::string& filename, const std::string& name);
 
     // Retrieves a stored mesh
     static Mesh& getMesh(const std::string& name);
@@ -47,14 +48,14 @@ private:
     Assets() {}
 
     // Loads a single texture from file
-    static Texture loadTextureFromFile(IRenderer& renderer, const string& filename);
+    static Texture loadTextureFromFile(IRenderer& renderer, const std::string& filename);
 
     // Loads and generates a shader from file
     static Shader loadShaderFromFile(const std::string& vShaderFile, const std::string& fShaderFile,
                                      const std::string& tcShaderFile = "", const std::string& teShaderFile = "",
                                      const std::string& gShaderFile = "");
 
-    static Mesh loadMeshFromFile(const string& filename);
+    static Mesh loadMeshFromFile(const std::string& filename);
 
 };
 
