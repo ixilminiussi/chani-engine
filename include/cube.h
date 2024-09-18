@@ -3,10 +3,9 @@
 
 #include "actor.h"
 
-class Cube : public Actor
-{
-public:
-	Cube();
+class Cube : public Actor {
+  public:
+    Cube();
 };
 
 #endif

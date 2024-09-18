@@ -5,17 +5,16 @@
 
 enum class ButtonState;
 
-class KeyboardState
-{
-	friend class InputSystem;
+class KeyboardState {
+    friend class InputSystem;
 
-public:
-	bool getKeyValue(SDL_Scancode key) const;
-	ButtonState getKeyState(SDL_Scancode key) const;
+  public:
+    bool getKeyValue(SDL_Scancode key) const;
+    ButtonState getKeyState(SDL_Scancode key) const;
 
-private:
-	const bool* currentState;
-	bool previousState[SDL_SCANCODE_COUNT];
+  private:
+    const bool *currentState;
+    bool previousState[SDL_SCANCODE_COUNT];
 };
 
 #endif

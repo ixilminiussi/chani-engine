@@ -3,16 +3,15 @@
 
 #include "actor.h"
 
-class OrbitActor : public Actor
-{
-public:
-	OrbitActor();
-	void actorInput(const InputState& inputState) override;
-	void setVisible(bool visible);
+class OrbitActor : public Actor {
+  public:
+    OrbitActor();
+    void actorInput(const InputState &inputState) override;
+    void setVisible(bool visible);
 
-private:
-	class OrbitCameraComponent* cameraComponent;
-	class MeshComponent* meshComponent;
+  private:
+    class OrbitCameraComponent *cameraComponent;
+    class MeshComponent *meshComponent;
 };
 
 #endif

@@ -3,24 +3,22 @@
 
 #include "component.h"
 
-class MeshComponent : public Component
-{
-public:
-	MeshComponent(Actor* owner);
-	virtual ~MeshComponent();
+class MeshComponent : public Component {
+  public:
+    MeshComponent(Actor *owner);
+    virtual ~MeshComponent();
 
-	bool getVisible() const { return isVisible; }
-	void setVisible(bool isVisibleP);
+    bool getVisible() const { return isVisible; }
+    void setVisible(bool isVisibleP);
 
-	virtual void draw(class Shader& shader);
-	virtual void setMesh(class Mesh& meshP);
-	void setTextureIndex(size_t textureIndexP);
+    virtual void draw(class Shader &shader);
+    virtual void setMesh(class Mesh &meshP);
+    void setTextureIndex(size_t textureIndexP);
 
-
-protected:
-	Mesh* mesh;
-	size_t textureIndex;
-	bool isVisible;
+  protected:
+    Mesh *mesh;
+    size_t textureIndex;
+    bool isVisible;
 };
 
 #endif

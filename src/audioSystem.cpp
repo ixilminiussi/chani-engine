@@ -8,13 +8,13 @@
 
 #include "audioSystem.h"
 
-#include "game.h"
 #include "log.h"
 
-#include <sstream>
 #include <SDL_log.h>
 #include <fmod_errors.h>
 #include <fmod_studio.hpp>
+#include <sstream>
+#include <vector>
 
 unsigned int AudioSystem::nextID = 0;
 

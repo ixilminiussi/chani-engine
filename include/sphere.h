@@ -3,10 +3,9 @@
 
 #include "actor.h"
 
-class Sphere : public Actor
-{
-public:
-	Sphere();
+class Sphere : public Actor {
+  public:
+    Sphere();
 };
 
 #endif

@@ -5,24 +5,24 @@
 
 class Actor;
 
-class Component
-{
-public:
-	Component(Actor* ownerP, int updateOrderP = 100);
-	Component() = delete;
-	virtual ~Component();
-	Component(const Component&) = delete;
-	Component& operator=(const Component&) = delete;
+class Component {
+  public:
+    Component(Actor *ownerP, int updateOrderP = 100);
+    Component() = delete;
+    virtual ~Component();
+    Component(const Component &) = delete;
+    Component &operator=(const Component &) = delete;
 
-	int getUpdateOrder() const { return updateOrder; }
+    int getUpdateOrder() const { return updateOrder; }
 
-	virtual void processInput(const struct InputState& inputState);
-	virtual void update(float dt);
-	virtual void onUpdateWorldTransform() {}
+    virtual void processInput(const struct InputState &inputState);
+    virtual void update(float dt);
+    virtual void onUpdateWorldTransform() {}
 
-protected:
-	Actor& owner;
-	int updateOrder;		// Order of the component in the actor's updateComponent method
+  protected:
+    Actor &owner;
+    int updateOrder; // Order of the component in the actor's updateComponent
+                     // method
 };
 
 #endif

@@ -3,10 +3,9 @@
 
 #include "actor.h"
 
-class Plane : public Actor
-{
-public:
-	Plane();
+class Plane : public Actor {
+  public:
+    Plane();
 };
 
 #endif

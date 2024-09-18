@@ -3,7 +3,6 @@
 #include "log.h"
 
 #include <SDL_image.h>
-#include <sstream>
 
 Texture::Texture()
     : textureID(0), filename(""), width(0), height(0), SDLTexture(nullptr) {}

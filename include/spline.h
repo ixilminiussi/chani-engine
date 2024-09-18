@@ -5,12 +5,11 @@
 
 #include <vector>
 
-struct Spline
-{
+struct Spline {
     std::vector<Vector3> controlPoints;
 
-	size_t getNbPoints() const { return controlPoints.size(); }
-	Vector3 compute(size_t index, float t) const;
+    size_t getNbPoints() const { return controlPoints.size(); }
+    Vector3 compute(size_t index, float t) const;
 };
 
 #endif

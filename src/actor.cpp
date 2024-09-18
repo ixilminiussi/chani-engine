@@ -2,7 +2,6 @@
 
 #include "component.h"
 #include "game.h"
-#include "maths.h"
 
 #include <algorithm>
 

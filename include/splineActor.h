@@ -3,17 +3,15 @@
 
 #include "actor.h"
 
-class SplineActor : public Actor
-{
-public:
-	SplineActor();
+class SplineActor : public Actor {
+  public:
+    SplineActor();
 
-	void actorInput(const InputState& inputState) override;
-	void restartSpline();
+    void actorInput(const InputState &inputState) override;
+    void restartSpline();
 
-
-private:
-	class SplineCameraComponent* cameraComponent;
+  private:
+    class SplineCameraComponent *cameraComponent;
 };
 
 #endif

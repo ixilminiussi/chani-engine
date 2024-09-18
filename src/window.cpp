@@ -13,8 +13,7 @@ bool Window::initialize() {
         return false;
     }
 
-    SDLWindow =
-        SDL_CreateWindow("Cameras", width, height, SDL_WINDOW_OPENGL);
+    SDLWindow = SDL_CreateWindow("Cameras", width, height, SDL_WINDOW_OPENGL);
     if (!SDLWindow) {
         Log::error(LogCategory::System, "Failed to create window");
         return false;

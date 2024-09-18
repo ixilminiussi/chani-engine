@@ -3,28 +3,26 @@
 
 #include "cameraComponent.h"
 
-class OrbitCameraComponent : public CameraComponent
-{
-public:
-	OrbitCameraComponent(class Actor* owner);
+class OrbitCameraComponent : public CameraComponent {
+  public:
+    OrbitCameraComponent(class Actor *owner);
 
-	void update(float dt) override;
+    void update(float dt) override;
 
-	float getPitchSpeed() const { return pitchSpeed; }
-	float getYawSpeed() const { return yawSpeed; }
+    float getPitchSpeed() const { return pitchSpeed; }
+    float getYawSpeed() const { return yawSpeed; }
 
-	void setPitchSpeed(float pitchSpeedP);
-	void setYawSpeed(float yawSpeedP);
+    void setPitchSpeed(float pitchSpeedP);
+    void setYawSpeed(float yawSpeedP);
 
+  private:
+    // Offset from target
+    Vector3 offset;
+    // Up vector of camera
+    Vector3 up;
 
-private:
-	// Offset from target
-	Vector3 offset;
-	// Up vector of camera
-	Vector3 up;
-
-	float pitchSpeed;
-	float yawSpeed;
+    float pitchSpeed;
+    float yawSpeed;
 };
 
 #endif
