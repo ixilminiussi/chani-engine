@@ -15,8 +15,7 @@ find_path(FMOD_STUDIO_INCLUDE_DIR
     NAMES fmod_studio.hpp
     PATHS
         ${FMOD_HOME}/studio/inc
-        /usr/local/include/fmod/studio/inc
-    PATH_SUFFIXES x86_64
+        /usr/local/include/fmod/studio
 )
 
 # Find the FMOD Core headers
@@ -24,8 +23,7 @@ find_path(FMOD_CORE_INCLUDE_DIR
     NAMES fmod.h
     PATHS
         ${FMOD_HOME}/core/inc
-        /usr/local/include/fmod/core/inc
-    PATH_SUFFIXES x86_64
+        /usr/local/include/fmod/core
 )
 
 # Check if the include directories were found
@@ -43,7 +41,7 @@ find_library(FMOD_STUDIO_LIBRARY
     NAMES fmodstudio
     PATHS
         ${FMOD_HOME}/studio/lib
-        /usr/local/lib/fmod/studio/lib
+        /usr/local/lib/fmod/studio
     PATH_SUFFIXES x86_64
 )
 
@@ -52,7 +50,7 @@ find_library(FMOD_CORE_LIBRARY
     NAMES fmod
     PATHS
         ${FMOD_HOME}/core/lib
-        /usr/local/lib/fmod/core/lib
+        /usr/local/lib/fmod/core
     PATH_SUFFIXES x86_64
 )
 

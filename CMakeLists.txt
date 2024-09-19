@@ -23,7 +23,7 @@ set_target_properties(chani PROPERTIES
 configure_file(chani.pc.in chani.pc @ONLY)
 
 include_directories(PUBLIC include PRIVATE ${SDL3_INCLUDE_DIRS} ${FMOD_INCLUDE_DIRS} ${SDL3_IMAGE_INCLUDE_DIRS})
-target_link_libraries(chani FMOD::Core FMOD::Studio RapidJSON OpenGL::GL SDL3::SDL3 SDL3_image::SDL3_image GLEW::GLEW)
+target_link_libraries(chani FMOD::Core FMOD::Studio RapidJSON OpenGL::GL SDL3 SDL3_image GLEW::GLEW)
 
 install(TARGETS chani
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
