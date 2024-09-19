@@ -1,0 +1,7 @@
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/chani.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/edit_cache.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/rebuild_cache.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/list_install_components.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/install.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/install/local.dir
+/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles/install/strip.dir
