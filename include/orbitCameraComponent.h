@@ -18,6 +18,9 @@ class OrbitCameraComponent : public CameraComponent {
     void zoom(float factor);
     void unzoom(float factor);
 
+    void setDistance(float newDistance);
+    float getDistance();
+
   private:
     // Offset from target
     Vector3 offset;

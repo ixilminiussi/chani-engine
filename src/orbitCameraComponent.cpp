@@ -30,7 +30,20 @@ void OrbitCameraComponent::update(float dt) {
     setViewMatrix(view);
 }
 
+float OrbitCameraComponent::getDistance() {
+    return (offset - owner.getPosition()).length();
+}
+
+void OrbitCameraComponent::setDistance(float newDistance) {
+    float currentDistance = getDistance();
+    unzoom(newDistance - getDistance());
+}
+
 void OrbitCameraComponent::zoom(float factor) {
+    if (factor > getDistance()) {
+        setDistance(0.0f);
+        return;
+    }
     Vector3 forward = -1.0f * offset;
     forward.normalize();
     offset += forward * factor;
