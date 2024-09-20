@@ -1,7 +1,7 @@
 #include "actor.h"
 
 #include "component.h"
-#include "game.h"
+#include "chani.h"
 
 #include <algorithm>
 

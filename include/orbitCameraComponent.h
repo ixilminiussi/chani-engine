@@ -15,6 +15,9 @@ class OrbitCameraComponent : public CameraComponent {
     void setPitchSpeed(float pitchSpeedP);
     void setYawSpeed(float yawSpeedP);
 
+    void zoom(float factor);
+    void unzoom(float factor);
+
   private:
     // Offset from target
     Vector3 offset;

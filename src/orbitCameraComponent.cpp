@@ -30,6 +30,16 @@ void OrbitCameraComponent::update(float dt) {
     setViewMatrix(view);
 }
 
+void OrbitCameraComponent::zoom(float factor) {
+    Vector3 forward = -1.0f * offset;
+    forward.normalize();
+    offset += forward * factor;
+}
+
+void OrbitCameraComponent::unzoom(float factor) {
+    zoom(-factor);
+}
+
 void OrbitCameraComponent::setPitchSpeed(float pitchSpeedP) {
     pitchSpeed = pitchSpeedP;
 }

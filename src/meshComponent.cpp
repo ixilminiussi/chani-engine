@@ -1,7 +1,7 @@
 #include "meshComponent.h"
 
 #include "actor.h"
-#include "game.h"
+#include "chani.h"
 #include "mesh.h"
 
 MeshComponent::MeshComponent(Actor *owner)

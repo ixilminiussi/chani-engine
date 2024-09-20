@@ -2,7 +2,7 @@
 
 #include "actor.h"
 #include "audioSystem.h"
-#include "game.h"
+#include "chani.h"
 
 AudioComponent::AudioComponent(Actor *owner, int updateOrder)
     : Component(owner, updateOrder) {}

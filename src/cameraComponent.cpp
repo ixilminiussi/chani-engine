@@ -1,6 +1,6 @@
 #include "cameraComponent.h"
 
-#include "game.h"
+#include "chani.h"
 
 CameraComponent::CameraComponent(Actor *owner, int updateOrder)
     : Component(owner, updateOrder) {}

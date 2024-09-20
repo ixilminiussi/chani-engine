@@ -1,7 +1,7 @@
 #include "spriteComponent.h"
 
 #include "actor.h"
-#include "game.h"
+#include "chani.h"
 #include "rectangle.h"
 
 SpriteComponent::SpriteComponent(Actor *ownerP, Texture &textureP,
