@@ -1,7 +1,9 @@
 #include "assets.h"
 
 #include "log.h"
+#include "phongMaterial.h"
 #include "rendererOGL.h"
+#include "spriteMaterial.h"
 
 #include <fstream>
 #include <iostream>
@@ -11,6 +13,7 @@
 std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
 std::map<std::string, Mesh> Assets::meshes;
+std::map<std::string, Material> Assets::materials;
 
 Texture Assets::loadTexture(IRenderer &renderer, const std::string &filename,
                             const std::string &name) {
@@ -59,6 +62,21 @@ Mesh &Assets::getMesh(const std::string &name) {
         Log::error(LogCategory::Application, loadError.str());
     }
     return meshes[name];
+}
+
+Material Assets::loadPhongMaterial(const std::string &filename, const std::string &name) {
+    materials[name] = loadPhongMaterialFromFile(filename);
+    return materials[name];
+}
+
+Material Assets::loadSpriteMaterial(const std::string &filename, const std::string &name) {
+    materials[name] = loadSpriteMaterialFromFile(filename);
+    return materials[name];
+}
+
+Material Assets::loadCustomMaterial(const Material &material, const std::string &name) {
+    materials[name] = material;
+    return materials[name];
 }
 
 void Assets::clear() {
@@ -188,8 +206,6 @@ Mesh Assets::loadMeshFromFile(const std::string &filename) {
         Log::error(LogCategory::Application, s.str());
     }
 
-    mesh.setShaderName(doc["shader"].GetString());
-
     // Skip the vertex format/shader for now
     // (This is changed in a later chapter's code)
     size_t vertSize = 8;
@@ -202,8 +218,6 @@ Mesh Assets::loadMeshFromFile(const std::string &filename) {
           << " has no textures, there should be at least one";
         Log::error(LogCategory::Application, s.str());
     }
-
-    mesh.setSpecularPower(static_cast<float>(doc["specularPower"].GetDouble()));
 
     for (rapidjson::SizeType i = 0; i < textures.Size(); i++) {
         std::string texName = textures[i].GetString();
@@ -276,4 +290,59 @@ Mesh Assets::loadMeshFromFile(const std::string &filename) {
     Log::info("Loaded mesh " + filename);
 
     return mesh;
+}
+
+PhongMaterial Assets::loadPhongMaterialFromFile(const std::string &filename) {
+    PhongMaterial phongMaterial;
+
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        Log::error(LogCategory::Application,
+                   "File not found: Material " + filename);
+    }
+
+    std::stringstream fileStream;
+    fileStream << file.rdbuf();
+    std::string contents = fileStream.str();
+    rapidjson::StringStream jsonStr(contents.c_str());
+    rapidjson::Document doc;
+    doc.ParseStream(jsonStr);
+
+    if (!doc.IsObject()) {
+        std::ostringstream s;
+        s << "Material " << filename << " is not valid json";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    phongMaterial.setShaderName(doc["shader"].GetString());
+    phongMaterial.setSpecular(static_cast<float>(doc["specular"].GetDouble()));
+
+    return phongMaterial;
+}
+
+SpriteMaterial Assets::loadSpriteMaterialFromFile(const std::string &filename) {
+    SpriteMaterial spriteMaterial;
+
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        Log::error(LogCategory::Application,
+                   "File not found: Material " + filename);
+    }
+
+    std::stringstream fileStream;
+    fileStream << file.rdbuf();
+    std::string contents = fileStream.str();
+    rapidjson::StringStream jsonStr(contents.c_str());
+    rapidjson::Document doc;
+    doc.ParseStream(jsonStr);
+
+    if (!doc.IsObject()) {
+        std::ostringstream s;
+        s << "Material " << filename << " is not valid json";
+        Log::error(LogCategory::Application, s.str());
+    }
+
+    spriteMaterial.setShaderName(doc["shader"].GetString());
+
+    return spriteMaterial;
 }

@@ -14,15 +14,10 @@
 
 RendererOGL::RendererOGL()
     : window(nullptr), context(nullptr), spriteVertexArray(nullptr),
-      spriteViewProj(
-          Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)),
-      view(
-          Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-      projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f),
-                                               WINDOW_WIDTH, WINDOW_HEIGHT,
-                                               10.0f, 10000.0f)),
       ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
-      dirLight({Vector3::zero, Vector3::zero, Vector3::zero}) {}
+      dirLight({Vector3::zero, Vector3::zero, Vector3::zero}),
+      clearColor(0.0f, 0.0f, 0.0f),
+      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)) {}
 
 RendererOGL::~RendererOGL() {}
 
@@ -69,17 +64,22 @@ bool RendererOGL::initialize(Window &windowP) {
 }
 
 void RendererOGL::beginDraw() {
-    glClearColor(0.45f, 0.45f, 1.0f, 1.0f);
+    glClearColor(clearColor.x, clearColor.y, clearColor.z, 1.0f);
     // Clear the color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void RendererOGL::draw() {
+    for (auto &[shaderName, shader] : Assets::shaders) {
+        setLightUniforms(shader);
+    }
+
     drawMeshes();
     drawSprites();
 }
 
-void RendererOGL::endDraw() { SDL_GL_SwapWindow(window->getSDLWindow()); }
+void RendererOGL::endDraw() {
+    SDL_GL_SwapWindow(window->getSDLWindow()); }
 
 void RendererOGL::close() {
     delete spriteVertexArray;
@@ -87,19 +87,10 @@ void RendererOGL::close() {
 }
 
 void RendererOGL::drawMeshes() {
-    // Enable depth buffering/disable alpha blend
-    glEnable(GL_DEPTH_TEST);
-    glDisable(GL_BLEND);
-    Shader &shader = Assets::getShader("Phong");
-    shader.use();
-    // Update view-projection matrix
-    shader.setMatrix4("uViewProj", view * projection);
-    // Lights
-    setLightUniforms(shader);
     // Draw
     for (auto mc : meshes) {
         if (mc->getVisible()) {
-            mc->draw(Assets::getShader("Phong"));
+            mc->draw();
         }
     }
 }
@@ -121,22 +112,11 @@ void RendererOGL::removeSprite(SpriteComponent *sprite) {
 }
 
 void RendererOGL::drawSprites() {
-    glDisable(GL_DEPTH_TEST);
-    // Enable alpha blending on the color buffer
-    glEnable(GL_BLEND);
-    //	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-
-    // Active shader and vertex array
-    Shader &spriteShader = Assets::getShader("Sprite");
-    spriteShader.use();
-    spriteShader.setMatrix4("uViewProj", spriteViewProj);
     spriteVertexArray->setActive();
 
     for (auto sprite : sprites) {
         if (sprite->getVisible()) {
-            sprite->draw(*this);
+            sprite->draw();
         }
     }
 }
@@ -152,14 +132,20 @@ void RendererOGL::drawSprite(const Actor &actor, const Texture &tex,
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
-void RendererOGL::addMesh(MeshComponent *mesh) { meshes.emplace_back(mesh); }
+void RendererOGL::addMesh(MeshComponent *mesh) {
+    meshes.emplace_back(mesh); }
 
 void RendererOGL::removeMesh(MeshComponent *mesh) {
     auto iter = std::find(begin(meshes), end(meshes), mesh);
     meshes.erase(iter);
 }
 
-void RendererOGL::setViewMatrix(const Matrix4 &viewP) { view = viewP; }
+void RendererOGL::setViewMatrix(const Matrix4 &viewP) {
+    view = viewP;
+    for (auto &[materialName, material] : Assets::materials) {
+        material.setView(view);
+    }
+}
 
 void RendererOGL::setLightUniforms(Shader &shader) {
     // Camera position is from inverted view

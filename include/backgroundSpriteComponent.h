@@ -23,7 +23,7 @@ class BackgroundSpriteComponent : public SpriteComponent {
     void setScrollSpeed(float scrollSpeedP);
 
     void update(float dt) override;
-    void draw(IRenderer &renderer) override;
+    void draw() override;
 
   private:
     // Struct to encapsulate each bg image and its offset

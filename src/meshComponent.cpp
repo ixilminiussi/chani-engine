@@ -13,19 +13,20 @@ MeshComponent::~MeshComponent() {
     owner.getGame().getRenderer().removeMesh(this);
 }
 
-void MeshComponent::setVisible(bool isVisibleP) { isVisible = isVisibleP; }
-
-void MeshComponent::draw(Shader &shader) {
+void MeshComponent::draw() {
     if (mesh) {
         Matrix4 wt = owner.getWorldTransform();
-        shader.setMatrix4("uWorldTransform", wt);
-        shader.setFloat("uSpecPower", mesh->getSpecularPower());
+        material->getShader().setMatrix4("uWorldTransform", wt);
+        material->init();
+
         Texture *t = mesh->getTexture(textureIndex);
         if (t) {
             t->setActive();
         }
+
         VertexArray *va = mesh->getVertexArray();
         va->setActive();
+
         glDrawElements(GL_TRIANGLES, va->getNbIndices(), GL_UNSIGNED_INT,
                        nullptr);
     }

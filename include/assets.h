@@ -4,6 +4,9 @@
 #include "mesh.h"
 #include "shader.h"
 #include "texture.h"
+#include "material.h"
+#include "phongMaterial.h"
+#include "spriteMaterial.h"
 
 #include <map>
 #include <string>
@@ -17,6 +20,7 @@ class Assets {
     static std::map<std::string, Texture> textures;
     static std::map<std::string, Shader> shaders;
     static std::map<std::string, Mesh> meshes;
+    static std::map<std::string, Material> materials;
 
     // Loads a texture from file
     static Texture loadTexture(IRenderer &renderer, const std::string &filename,
@@ -43,6 +47,16 @@ class Assets {
     // Retrieves a stored mesh
     static Mesh &getMesh(const std::string &name);
 
+    // Loads a material from file
+    static Material loadPhongMaterial(const std::string &filename, const std::string &name);
+
+    static Material loadSpriteMaterial(const std::string &filename, const std::string &name);
+
+    static Material loadCustomMaterial(const Material &material, const std::string &name);
+
+    // Retrieves a stored material
+    static Material &getMaterial(const std::string &name);
+
     // Properly de-allocates all loaded resources
     static void clear();
 
@@ -61,6 +75,9 @@ class Assets {
                                      const std::string &gShaderFile = "");
 
     static Mesh loadMeshFromFile(const std::string &filename);
+
+    static PhongMaterial loadPhongMaterialFromFile(const std::string &filename);
+    static SpriteMaterial loadSpriteMaterialFromFile(const std::string &filename);
 };
 
 #endif

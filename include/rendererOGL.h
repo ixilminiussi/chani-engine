@@ -44,9 +44,9 @@ class RendererOGL : public IRenderer {
     Window *window;
     SDL_GLContext context;
     VertexArray *spriteVertexArray;
-    Matrix4 spriteViewProj;
+    Vector3 clearColor;
+
     Matrix4 view;
-    Matrix4 projection;
 
     std::vector<class MeshComponent *> meshes;
     std::vector<class SpriteComponent *> sprites;

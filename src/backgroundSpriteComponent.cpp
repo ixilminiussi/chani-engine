@@ -2,6 +2,7 @@
 
 #include "actor.h"
 #include "rectangle.h"
+#include "shader.h"
 
 BackgroundSpriteComponent::BackgroundSpriteComponent(
     Actor *ownerP, const std::vector<Texture *> &texturesP, int drawOrderP)
@@ -24,13 +25,15 @@ void BackgroundSpriteComponent::update(float dt) {
     }
 }
 
-void BackgroundSpriteComponent::draw(IRenderer &renderer) {
+void BackgroundSpriteComponent::draw() {
     // Draw each background texture
     for (auto &bg : textures) {
         owner.setPosition(Vector3(0.0f, bg.offset.x, bg.offset.y));
-        renderer.drawSprite(owner, bg.texture, Rectangle::nullRect,
-                            Vector2(-screenSize.x / 2, -screenSize.y / 2),
-                            IRenderer::Flip::None);
+        Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(), (float)texture.getHeight(), 1.0f);
+        Matrix4 world = scaleMat * owner.getWorldTransform();
+        material.getShader().setMatrix4("uWorldTransform", world);
+        texture.setActive();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 }
 

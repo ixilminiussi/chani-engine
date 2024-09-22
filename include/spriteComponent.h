@@ -3,6 +3,7 @@
 
 #include "component.h"
 #include "texture.h"
+#include "material.h"
 
 class SpriteComponent : public Component {
   public:
@@ -14,7 +15,8 @@ class SpriteComponent : public Component {
     SpriteComponent &operator=(const SpriteComponent &) = delete;
 
     virtual void setTexture(const Texture &textureP);
-    virtual void draw(IRenderer &renderer);
+    virtual void setMaterial(const Material &materialP) { material = materialP; }
+    virtual void draw();
 
     int getDrawOrder() const { return drawOrder; }
     int getTexWidth() const { return texWidth; }
@@ -25,6 +27,7 @@ class SpriteComponent : public Component {
 
   protected:
     Texture texture;
+    Material material;
     int drawOrder;
     int texWidth;
     int texHeight;
