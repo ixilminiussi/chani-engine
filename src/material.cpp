@@ -1,5 +1,6 @@
 #include "material.h"
 #include "assets.h"
+#include "log.h"
 
 Material::Material()
     : shaderName(""), view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX,
@@ -8,7 +9,13 @@ Material::Material()
                                                WINDOW_WIDTH, WINDOW_HEIGHT,
                                                10.0f, 10000.0f)),
       spriteViewProj(
-          Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)) {}
+          Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT)) {
+}
 
 Shader &Material::getShader() { return Assets::getShader(shaderName); }
 
+Material *Material::selected = nullptr;
+
+void Material::init() {};
+
+void Material::use() {};

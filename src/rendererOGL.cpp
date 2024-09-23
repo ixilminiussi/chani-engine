@@ -17,7 +17,8 @@ RendererOGL::RendererOGL()
       ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
       dirLight({Vector3::zero, Vector3::zero, Vector3::zero}),
       clearColor(0.0f, 0.0f, 0.0f),
-      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)) {}
+      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX,
+                                 Vector3::unitZ)) {}
 
 RendererOGL::~RendererOGL() {}
 
@@ -78,8 +79,7 @@ void RendererOGL::draw() {
     drawSprites();
 }
 
-void RendererOGL::endDraw() {
-    SDL_GL_SwapWindow(window->getSDLWindow()); }
+void RendererOGL::endDraw() { SDL_GL_SwapWindow(window->getSDLWindow()); }
 
 void RendererOGL::close() {
     delete spriteVertexArray;
@@ -121,19 +121,18 @@ void RendererOGL::drawSprites() {
     }
 }
 
-void RendererOGL::drawSprite(const Actor &actor, const Texture &tex,
-                             Rectangle srcRect, Vector2 origin,
-                             Flip flip) const {
-    Matrix4 scaleMat = Matrix4::createScale((float)tex.getWidth(),
-                                            (float)tex.getHeight(), 1.0f);
-    Matrix4 world = scaleMat * actor.getWorldTransform();
-    Assets::getShader("Sprite").setMatrix4("uWorldTransform", world);
-    tex.setActive();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-}
+// void RendererOGL::drawSprite(const Actor &actor, const Texture &tex,
+//                              Rectangle srcRect, Vector2 origin,
+//                              Flip flip) const {
+//     Matrix4 scaleMat = Matrix4::createScale((float)tex.getWidth(),
+//                                             (float)tex.getHeight(), 1.0f);
+//     Matrix4 world = scaleMat * actor.getWorldTransform();
+//     Assets::getShader("Sprite").setMatrix4("uWorldTransform", world);
+//     tex.setActive();
+//     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+// }
 
-void RendererOGL::addMesh(MeshComponent *mesh) {
-    meshes.emplace_back(mesh); }
+void RendererOGL::addMesh(MeshComponent *mesh) { meshes.emplace_back(mesh); }
 
 void RendererOGL::removeMesh(MeshComponent *mesh) {
     auto iter = std::find(begin(meshes), end(meshes), mesh);
@@ -143,7 +142,7 @@ void RendererOGL::removeMesh(MeshComponent *mesh) {
 void RendererOGL::setViewMatrix(const Matrix4 &viewP) {
     view = viewP;
     for (auto &[materialName, material] : Assets::materials) {
-        material.setView(view);
+        material->setView(view);
     }
 }
 

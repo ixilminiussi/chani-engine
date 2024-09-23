@@ -3,6 +3,7 @@
 
 #include "component.h"
 #include "material.h"
+#include "mesh.h"
 
 class MeshComponent : public Component {
   public:
@@ -13,10 +14,9 @@ class MeshComponent : public Component {
     void setVisible(bool isVisibleP) { isVisible = isVisibleP; }
 
     virtual void draw();
-    virtual void setMesh(class Mesh &meshP);
+    void setMesh(Mesh &meshP);
+    void setMaterial(Material *materialP);
     void setTextureIndex(size_t textureIndexP);
-
-    void setMaterial(Material &materialP) { material = &materialP; }
 
   protected:
     Material *material;

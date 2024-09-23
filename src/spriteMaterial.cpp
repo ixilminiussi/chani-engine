@@ -18,3 +18,6 @@ void SpriteMaterial::use() {
         shader.use();
     }
 }
+
+void SpriteMaterial::init() {
+}

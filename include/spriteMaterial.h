@@ -9,6 +9,7 @@ class SpriteMaterial : public Material {
     ~SpriteMaterial() = default;
 
     void use() override;
+    void init() override;
 };
 
 #endif

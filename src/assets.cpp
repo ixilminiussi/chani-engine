@@ -13,7 +13,7 @@
 std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
 std::map<std::string, Mesh> Assets::meshes;
-std::map<std::string, Material> Assets::materials;
+std::map<std::string, Material*> Assets::materials;
 
 Texture Assets::loadTexture(IRenderer &renderer, const std::string &filename,
                             const std::string &name) {
@@ -64,22 +64,35 @@ Mesh &Assets::getMesh(const std::string &name) {
     return meshes[name];
 }
 
-Material Assets::loadPhongMaterial(const std::string &filename, const std::string &name) {
+Material *Assets::loadPhongMaterial(const std::string &filename, const std::string &name) {
     materials[name] = loadPhongMaterialFromFile(filename);
     return materials[name];
 }
 
-Material Assets::loadSpriteMaterial(const std::string &filename, const std::string &name) {
+Material *Assets::loadSpriteMaterial(const std::string &filename, const std::string &name) {
     materials[name] = loadSpriteMaterialFromFile(filename);
     return materials[name];
 }
 
-Material Assets::loadCustomMaterial(const Material &material, const std::string &name) {
+Material *Assets::loadCustomMaterial(Material *material, const std::string &name) {
     materials[name] = material;
     return materials[name];
 }
 
+Material *Assets::getMaterial(const std::string &name) {
+    if (materials.find(name) == end(materials)) {
+        std::ostringstream loadError;
+        loadError << "Material" << name << " does not exist in assets manager.";
+        Log::error(LogCategory::Application, loadError.str());
+    }
+    return materials[name];
+}
+
 void Assets::clear() {
+    // (Properly) delete all materials
+    for (auto iter : materials)
+        iter.second->unload();
+    materials.clear();
     // (Properly) delete all textures
     for (auto iter : textures)
         iter.second.unload();
@@ -181,6 +194,7 @@ Shader Assets::loadShaderFromFile(const std::string &vShaderFile,
                    tcShaderFile != "" ? tcShaderCode : nullptr,
                    teShaderFile != "" ? teShaderCode : nullptr,
                    gShaderFile != "" ? gShaderCode : nullptr);
+
     return shader;
 }
 
@@ -292,8 +306,8 @@ Mesh Assets::loadMeshFromFile(const std::string &filename) {
     return mesh;
 }
 
-PhongMaterial Assets::loadPhongMaterialFromFile(const std::string &filename) {
-    PhongMaterial phongMaterial;
+Material *Assets::loadPhongMaterialFromFile(const std::string &filename) {
+    PhongMaterial *material = new PhongMaterial();
 
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -314,14 +328,16 @@ PhongMaterial Assets::loadPhongMaterialFromFile(const std::string &filename) {
         Log::error(LogCategory::Application, s.str());
     }
 
-    phongMaterial.setShaderName(doc["shader"].GetString());
-    phongMaterial.setSpecular(static_cast<float>(doc["specular"].GetDouble()));
+    material->setShaderName(doc["shader"].GetString());
+    material->setSpecular(static_cast<float>(doc["specular"].GetDouble()));
 
-    return phongMaterial;
+    Log::info("Loaded phong material " + filename + " with shader " + doc["shader"].GetString());
+
+    return material;
 }
 
-SpriteMaterial Assets::loadSpriteMaterialFromFile(const std::string &filename) {
-    SpriteMaterial spriteMaterial;
+Material *Assets::loadSpriteMaterialFromFile(const std::string &filename) {
+    SpriteMaterial *material = new SpriteMaterial();
 
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -342,7 +358,9 @@ SpriteMaterial Assets::loadSpriteMaterialFromFile(const std::string &filename) {
         Log::error(LogCategory::Application, s.str());
     }
 
-    spriteMaterial.setShaderName(doc["shader"].GetString());
+    material->setShaderName(doc["shader"].GetString());
 
-    return spriteMaterial;
+    Log::info("Loaded sprite material " + filename);
+
+    return material;
 }

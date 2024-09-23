@@ -15,7 +15,7 @@ class SpriteComponent : public Component {
     SpriteComponent &operator=(const SpriteComponent &) = delete;
 
     virtual void setTexture(const Texture &textureP);
-    virtual void setMaterial(const Material &materialP) { material = materialP; }
+    void setMaterial(Material *materialP) { material = materialP; }
     virtual void draw();
 
     int getDrawOrder() const { return drawOrder; }
@@ -27,7 +27,7 @@ class SpriteComponent : public Component {
 
   protected:
     Texture texture;
-    Material material;
+    Material *material;
     int drawOrder;
     int texWidth;
     int texHeight;

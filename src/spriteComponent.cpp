@@ -27,7 +27,7 @@ void SpriteComponent::draw() {
     Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(),
                                             (float)texture.getHeight(), 1.0f);
     Matrix4 world = scaleMat * owner.getWorldTransform();
-    material.getShader().setMatrix4("uWorldTransform", world);
+    material->getShader().setMatrix4("uWorldTransform", world);
     texture.setActive();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }

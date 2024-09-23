@@ -7,10 +7,12 @@
 class Material {
   public:
     Material();
-    ~Material() = default;
+    virtual ~Material() = default;
 
     virtual void use();
     virtual void init();
+
+    virtual void unload() {}
 
     void setView(const Matrix4 &viewP) { view = viewP; }
     void setShaderName(const std::string &shaderNameP) {

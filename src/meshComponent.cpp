@@ -14,7 +14,9 @@ MeshComponent::~MeshComponent() {
 }
 
 void MeshComponent::draw() {
-    if (mesh) {
+    if (mesh && material) {
+        material->use();
+
         Matrix4 wt = owner.getWorldTransform();
         material->getShader().setMatrix4("uWorldTransform", wt);
         material->init();
@@ -33,6 +35,8 @@ void MeshComponent::draw() {
 }
 
 void MeshComponent::setMesh(Mesh &meshP) { mesh = &meshP; }
+
+void MeshComponent::setMaterial(Material *materialP) { material = materialP; }
 
 void MeshComponent::setTextureIndex(size_t textureIndexP) {
     textureIndex = textureIndexP;

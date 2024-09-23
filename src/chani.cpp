@@ -1,7 +1,8 @@
 #include "chani.h"
 
-#include "timer.h"
 #include "assets.h"
+#include "log.h"
+#include "timer.h"
 
 #include <algorithm>
 
