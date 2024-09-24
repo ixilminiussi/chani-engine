@@ -1,7 +1,7 @@
 #if !defined(ORBIT_ACTOR_H)
 #define ORBIT_ACTOR_H
 
-#include "actor.h"
+#include <actor.h>
 
 class OrbitActor : public Actor {
   public:

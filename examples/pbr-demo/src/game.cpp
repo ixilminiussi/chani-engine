@@ -11,30 +11,33 @@ Sphere *spheres[3];
 void Game::load() {
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
-    Assets::loadShader("assets/shaders/Sprite.vert",
-                       "assets/shaders/Sprite.frag", "", "", "", "Sprite");
     Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag",
-                       "", "", "", "Phong");
-    Assets::loadShader("assets/shaders/BasicMesh.vert",
-                       "assets/shaders/BasicMesh.frag", "", "", "",
-                       "BasicMesh");
+                       "", "", "", "Shader_Phong");
 
-    Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Sphere");
+    Assets::loadTexture(renderer, "assets/textures/Sphere.png",
+                        "Texture_Sphere");
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
+
+    Assets::loadPhongMaterial("assets/materials/Phong10.mat", "Material_Phong_10");
+    Assets::loadPhongMaterial("assets/materials/Phong50.mat", "Material_Phong_50");
+    Assets::loadPhongMaterial("assets/materials/Phong90.mat", "Material_Phong_90");
 
     spheres[0] = new Sphere();
     spheres[1] = new Sphere();
     spheres[2] = new Sphere();
 
-    spheres[0]->setPosition(Vector3(-100.0f, 0.0f, 0.0f));
+    spheres[0]->setPosition(Vector3(-1000.0f, 0.0f, 0.0f));
     spheres[0]->setScale(10.0f);
+    spheres[0]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_10"));
 
-    spheres[1]->setPosition(Vector3(-100.0f, 0.0f, 0.0f));
+    spheres[1]->setPosition(Vector3(0.0f, 0.0f, 0.0f));
     spheres[1]->setScale(10.0f);
+    spheres[1]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_50"));
 
-    spheres[2]->setPosition(Vector3(-100.0f, 0.0f, 0.0f));
+    spheres[2]->setPosition(Vector3(1000.0f, 0.0f, 0.0f));
     spheres[2]->setScale(10.0f);
+    spheres[2]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_90"));
 
     orbit = new OrbitActor();
     orbit->snapToActor(spheres[0]);

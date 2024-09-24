@@ -11,11 +11,9 @@ void PhongMaterial::use() {
         glEnable(GL_DEPTH_TEST);
         glDisable(GL_BLEND);
         Shader &shader = getShader();
-        shader.setMatrix4("uViewProj", view * projection);
         shader.use();
-    }
-}
 
-void PhongMaterial::init() {
-    getShader().setFloat("uSpecPower", specular);
+        shader.setFloat("uSpecPower", specular);
+        shader.setMatrix4("uViewProj", view * projection);
+    }
 }

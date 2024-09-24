@@ -1,13 +1,13 @@
 #include "FPSActor.h"
 
-#include "moveComponent.h"
-#include "audioComponent.h"
-#include "chani.h"
-#include "FPSCameraComponent.h"
-#include "meshComponent.h"
-#include "assets.h"
-#include "FPSCameraComponent.h"
-#include "meshComponent.h"
+#include <moveComponent.h>
+#include <audioComponent.h>
+#include <chani.h>
+#include <FPSCameraComponent.h>
+#include <meshComponent.h>
+#include <assets.h>
+#include <FPSCameraComponent.h>
+#include <meshComponent.h>
 
 FPSActor::FPSActor() : 
 	Actor(), 

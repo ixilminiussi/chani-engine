@@ -1,9 +1,9 @@
 #if !defined(FPS_ACTOR_H)
 #define FPS_ACTOR_H
 
-#include "actor.h"
-#include "soundEvent.h"
-#include "vector3.h"
+#include <actor.h>
+#include <soundEvent.h>
+#include <vector3.h>
 
 class FPSActor : public Actor {
   public:

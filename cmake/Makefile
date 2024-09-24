@@ -175,30 +175,6 @@ chani/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/build
 .PHONY : chani/fast
 
-src/FPSActor.o: src/FPSActor.cpp.o
-.PHONY : src/FPSActor.o
-
-# target to build an object file
-src/FPSActor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/FPSActor.cpp.o
-.PHONY : src/FPSActor.cpp.o
-
-src/FPSActor.i: src/FPSActor.cpp.i
-.PHONY : src/FPSActor.i
-
-# target to preprocess a source file
-src/FPSActor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/FPSActor.cpp.i
-.PHONY : src/FPSActor.cpp.i
-
-src/FPSActor.s: src/FPSActor.cpp.s
-.PHONY : src/FPSActor.s
-
-# target to generate assembly for a file
-src/FPSActor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/FPSActor.cpp.s
-.PHONY : src/FPSActor.cpp.s
-
 src/FPSCameraComponent.o: src/FPSCameraComponent.cpp.o
 .PHONY : src/FPSCameraComponent.o
 
@@ -511,30 +487,6 @@ src/cube.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/cube.cpp.s
 .PHONY : src/cube.cpp.s
 
-src/followActor.o: src/followActor.cpp.o
-.PHONY : src/followActor.o
-
-# target to build an object file
-src/followActor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/followActor.cpp.o
-.PHONY : src/followActor.cpp.o
-
-src/followActor.i: src/followActor.cpp.i
-.PHONY : src/followActor.i
-
-# target to preprocess a source file
-src/followActor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/followActor.cpp.i
-.PHONY : src/followActor.cpp.i
-
-src/followActor.s: src/followActor.cpp.s
-.PHONY : src/followActor.s
-
-# target to generate assembly for a file
-src/followActor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/followActor.cpp.s
-.PHONY : src/followActor.cpp.s
-
 src/followCameraComponent.o: src/followCameraComponent.cpp.o
 .PHONY : src/followCameraComponent.o
 
@@ -654,6 +606,30 @@ src/log.s: src/log.cpp.s
 src/log.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/log.cpp.s
 .PHONY : src/log.cpp.s
+
+src/material.o: src/material.cpp.o
+.PHONY : src/material.o
+
+# target to build an object file
+src/material.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/material.cpp.o
+.PHONY : src/material.cpp.o
+
+src/material.i: src/material.cpp.i
+.PHONY : src/material.i
+
+# target to preprocess a source file
+src/material.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/material.cpp.i
+.PHONY : src/material.cpp.i
+
+src/material.s: src/material.cpp.s
+.PHONY : src/material.s
+
+# target to generate assembly for a file
+src/material.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/material.cpp.s
+.PHONY : src/material.cpp.s
 
 src/matrix4.o: src/matrix4.cpp.o
 .PHONY : src/matrix4.o
@@ -775,30 +751,6 @@ src/moveComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/moveComponent.cpp.s
 .PHONY : src/moveComponent.cpp.s
 
-src/orbitActor.o: src/orbitActor.cpp.o
-.PHONY : src/orbitActor.o
-
-# target to build an object file
-src/orbitActor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/orbitActor.cpp.o
-.PHONY : src/orbitActor.cpp.o
-
-src/orbitActor.i: src/orbitActor.cpp.i
-.PHONY : src/orbitActor.i
-
-# target to preprocess a source file
-src/orbitActor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/orbitActor.cpp.i
-.PHONY : src/orbitActor.cpp.i
-
-src/orbitActor.s: src/orbitActor.cpp.s
-.PHONY : src/orbitActor.s
-
-# target to generate assembly for a file
-src/orbitActor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/orbitActor.cpp.s
-.PHONY : src/orbitActor.cpp.s
-
 src/orbitCameraComponent.o: src/orbitCameraComponent.cpp.o
 .PHONY : src/orbitCameraComponent.o
 
@@ -822,6 +774,30 @@ src/orbitCameraComponent.s: src/orbitCameraComponent.cpp.s
 src/orbitCameraComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.s
 .PHONY : src/orbitCameraComponent.cpp.s
+
+src/phongMaterial.o: src/phongMaterial.cpp.o
+.PHONY : src/phongMaterial.o
+
+# target to build an object file
+src/phongMaterial.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/phongMaterial.cpp.o
+.PHONY : src/phongMaterial.cpp.o
+
+src/phongMaterial.i: src/phongMaterial.cpp.i
+.PHONY : src/phongMaterial.i
+
+# target to preprocess a source file
+src/phongMaterial.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/phongMaterial.cpp.i
+.PHONY : src/phongMaterial.cpp.i
+
+src/phongMaterial.s: src/phongMaterial.cpp.s
+.PHONY : src/phongMaterial.s
+
+# target to generate assembly for a file
+src/phongMaterial.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/phongMaterial.cpp.s
+.PHONY : src/phongMaterial.cpp.s
 
 src/plane.o: src/plane.cpp.o
 .PHONY : src/plane.o
@@ -1111,6 +1087,30 @@ src/spriteComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/spriteComponent.cpp.s
 .PHONY : src/spriteComponent.cpp.s
 
+src/spriteMaterial.o: src/spriteMaterial.cpp.o
+.PHONY : src/spriteMaterial.o
+
+# target to build an object file
+src/spriteMaterial.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/spriteMaterial.cpp.o
+.PHONY : src/spriteMaterial.cpp.o
+
+src/spriteMaterial.i: src/spriteMaterial.cpp.i
+.PHONY : src/spriteMaterial.i
+
+# target to preprocess a source file
+src/spriteMaterial.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/spriteMaterial.cpp.i
+.PHONY : src/spriteMaterial.cpp.i
+
+src/spriteMaterial.s: src/spriteMaterial.cpp.s
+.PHONY : src/spriteMaterial.s
+
+# target to generate assembly for a file
+src/spriteMaterial.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chani.dir/build.make CMakeFiles/chani.dir/src/spriteMaterial.cpp.s
+.PHONY : src/spriteMaterial.cpp.s
+
 src/texture.o: src/texture.cpp.o
 .PHONY : src/texture.o
 
@@ -1268,9 +1268,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... chani"
-	@echo "... src/FPSActor.o"
-	@echo "... src/FPSActor.i"
-	@echo "... src/FPSActor.s"
 	@echo "... src/FPSCameraComponent.o"
 	@echo "... src/FPSCameraComponent.i"
 	@echo "... src/FPSCameraComponent.s"
@@ -1310,9 +1307,6 @@ help:
 	@echo "... src/cube.o"
 	@echo "... src/cube.i"
 	@echo "... src/cube.s"
-	@echo "... src/followActor.o"
-	@echo "... src/followActor.i"
-	@echo "... src/followActor.s"
 	@echo "... src/followCameraComponent.o"
 	@echo "... src/followCameraComponent.i"
 	@echo "... src/followCameraComponent.s"
@@ -1328,6 +1322,9 @@ help:
 	@echo "... src/log.o"
 	@echo "... src/log.i"
 	@echo "... src/log.s"
+	@echo "... src/material.o"
+	@echo "... src/material.i"
+	@echo "... src/material.s"
 	@echo "... src/matrix4.o"
 	@echo "... src/matrix4.i"
 	@echo "... src/matrix4.s"
@@ -1343,12 +1340,12 @@ help:
 	@echo "... src/moveComponent.o"
 	@echo "... src/moveComponent.i"
 	@echo "... src/moveComponent.s"
-	@echo "... src/orbitActor.o"
-	@echo "... src/orbitActor.i"
-	@echo "... src/orbitActor.s"
 	@echo "... src/orbitCameraComponent.o"
 	@echo "... src/orbitCameraComponent.i"
 	@echo "... src/orbitCameraComponent.s"
+	@echo "... src/phongMaterial.o"
+	@echo "... src/phongMaterial.i"
+	@echo "... src/phongMaterial.s"
 	@echo "... src/plane.o"
 	@echo "... src/plane.i"
 	@echo "... src/plane.s"
@@ -1385,6 +1382,9 @@ help:
 	@echo "... src/spriteComponent.o"
 	@echo "... src/spriteComponent.i"
 	@echo "... src/spriteComponent.s"
+	@echo "... src/spriteMaterial.o"
+	@echo "... src/spriteMaterial.i"
+	@echo "... src/spriteMaterial.s"
 	@echo "... src/texture.o"
 	@echo "... src/texture.i"
 	@echo "... src/texture.s"

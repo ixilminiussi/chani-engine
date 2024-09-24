@@ -38,6 +38,6 @@ void OrbitActor::snapToActor(Actor *actor) { targetActor = actor; }
 
 void OrbitActor::updateActor(float dt) {
     if (targetActor != nullptr) {
-        setPosition(targetActor->getPosition());
+        setPosition(Vector3::lerp(getPosition(), targetActor->getPosition(), 0.2f));
     }
 }

@@ -16,7 +16,7 @@ class MeshComponent : public Component {
     virtual void draw();
     void setMesh(Mesh &meshP);
     void setMaterial(Material *materialP);
-    void setTextureIndex(size_t textureIndexP);
+    void setTextureIndex(size_t textureIndexP); 
 
   protected:
     Material *material;

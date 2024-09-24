@@ -10,7 +10,6 @@ class Material {
     virtual ~Material() = default;
 
     virtual void use();
-    virtual void init();
 
     virtual void unload() {}
 
@@ -18,6 +17,7 @@ class Material {
     void setShaderName(const std::string &shaderNameP) {
         shaderName = shaderNameP;
     }
+    void setWorldTransform(const Matrix4 &wt);
     Shader &getShader();
 
   protected:

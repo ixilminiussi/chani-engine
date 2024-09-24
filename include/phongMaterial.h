@@ -9,11 +9,8 @@ class PhongMaterial : public Material {
     ~PhongMaterial() = default;
 
     void use() override;
-    void init() override;
 
-    void setSpecular(const float &specularP) {
-        specular = specularP;
-    }
+    void setSpecular(const float &specularP) { specular = specularP; }
 
   protected:
     float specular;

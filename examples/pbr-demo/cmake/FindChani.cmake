@@ -12,7 +12,7 @@ endif()
 
 # Find the Chani headers
 find_path(CHANI_INCLUDE_DIR
-  NAMES game.h
+  NAMES chani.h
   PATHS
     ${CHANI_HOME}/include
     /usr/local/include/chani

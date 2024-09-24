@@ -69,24 +69,10 @@ include CMakeFiles/chani.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/chani.dir/flags.make
 
-CMakeFiles/chani.dir/src/FPSActor.cpp.o: CMakeFiles/chani.dir/flags.make
-CMakeFiles/chani.dir/src/FPSActor.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSActor.cpp
-CMakeFiles/chani.dir/src/FPSActor.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/chani.dir/src/FPSActor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/FPSActor.cpp.o -MF CMakeFiles/chani.dir/src/FPSActor.cpp.o.d -o CMakeFiles/chani.dir/src/FPSActor.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSActor.cpp
-
-CMakeFiles/chani.dir/src/FPSActor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/FPSActor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSActor.cpp > CMakeFiles/chani.dir/src/FPSActor.cpp.i
-
-CMakeFiles/chani.dir/src/FPSActor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/FPSActor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSActor.cpp -o CMakeFiles/chani.dir/src/FPSActor.cpp.s
-
 CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSCameraComponent.cpp
 CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o -MF CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o.d -o CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/FPSCameraComponent.cpp
 
 CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.i: cmake_force
@@ -100,7 +86,7 @@ CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/actor.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/actor.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/actor.cpp
 CMakeFiles/chani.dir/src/actor.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/chani.dir/src/actor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/chani.dir/src/actor.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/actor.cpp.o -MF CMakeFiles/chani.dir/src/actor.cpp.o.d -o CMakeFiles/chani.dir/src/actor.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/actor.cpp
 
 CMakeFiles/chani.dir/src/actor.cpp.i: cmake_force
@@ -114,7 +100,7 @@ CMakeFiles/chani.dir/src/actor.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/animSpriteComponent.cpp
 CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o -MF CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o.d -o CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/animSpriteComponent.cpp
 
 CMakeFiles/chani.dir/src/animSpriteComponent.cpp.i: cmake_force
@@ -128,7 +114,7 @@ CMakeFiles/chani.dir/src/animSpriteComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/assets.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/assets.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/assets.cpp
 CMakeFiles/chani.dir/src/assets.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/chani.dir/src/assets.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/chani.dir/src/assets.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/assets.cpp.o -MF CMakeFiles/chani.dir/src/assets.cpp.o.d -o CMakeFiles/chani.dir/src/assets.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/assets.cpp
 
 CMakeFiles/chani.dir/src/assets.cpp.i: cmake_force
@@ -142,7 +128,7 @@ CMakeFiles/chani.dir/src/assets.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/audioComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/audioComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/audioComponent.cpp
 CMakeFiles/chani.dir/src/audioComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/chani.dir/src/audioComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/chani.dir/src/audioComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/audioComponent.cpp.o -MF CMakeFiles/chani.dir/src/audioComponent.cpp.o.d -o CMakeFiles/chani.dir/src/audioComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/audioComponent.cpp
 
 CMakeFiles/chani.dir/src/audioComponent.cpp.i: cmake_force
@@ -156,7 +142,7 @@ CMakeFiles/chani.dir/src/audioComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/audioSystem.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/audioSystem.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/audioSystem.cpp
 CMakeFiles/chani.dir/src/audioSystem.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/chani.dir/src/audioSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/chani.dir/src/audioSystem.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/audioSystem.cpp.o -MF CMakeFiles/chani.dir/src/audioSystem.cpp.o.d -o CMakeFiles/chani.dir/src/audioSystem.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/audioSystem.cpp
 
 CMakeFiles/chani.dir/src/audioSystem.cpp.i: cmake_force
@@ -170,7 +156,7 @@ CMakeFiles/chani.dir/src/audioSystem.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/backgroundSpriteComponent.cpp
 CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o -MF CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o.d -o CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/backgroundSpriteComponent.cpp
 
 CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.i: cmake_force
@@ -184,7 +170,7 @@ CMakeFiles/chani.dir/src/backgroundSpriteComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/cameraComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/cameraComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/cameraComponent.cpp
 CMakeFiles/chani.dir/src/cameraComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/chani.dir/src/cameraComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/chani.dir/src/cameraComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/cameraComponent.cpp.o -MF CMakeFiles/chani.dir/src/cameraComponent.cpp.o.d -o CMakeFiles/chani.dir/src/cameraComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/cameraComponent.cpp
 
 CMakeFiles/chani.dir/src/cameraComponent.cpp.i: cmake_force
@@ -198,7 +184,7 @@ CMakeFiles/chani.dir/src/cameraComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/chani.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/chani.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/chani.cpp
 CMakeFiles/chani.dir/src/chani.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/chani.dir/src/chani.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/chani.dir/src/chani.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/chani.cpp.o -MF CMakeFiles/chani.dir/src/chani.cpp.o.d -o CMakeFiles/chani.dir/src/chani.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/chani.cpp
 
 CMakeFiles/chani.dir/src/chani.cpp.i: cmake_force
@@ -212,7 +198,7 @@ CMakeFiles/chani.dir/src/chani.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/circleCollisionComponent.cpp
 CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o -MF CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o.d -o CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/circleCollisionComponent.cpp
 
 CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.i: cmake_force
@@ -226,7 +212,7 @@ CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/component.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/component.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/component.cpp
 CMakeFiles/chani.dir/src/component.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/chani.dir/src/component.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/chani.dir/src/component.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/component.cpp.o -MF CMakeFiles/chani.dir/src/component.cpp.o.d -o CMakeFiles/chani.dir/src/component.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/component.cpp
 
 CMakeFiles/chani.dir/src/component.cpp.i: cmake_force
@@ -240,7 +226,7 @@ CMakeFiles/chani.dir/src/component.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/controllerState.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/controllerState.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/controllerState.cpp
 CMakeFiles/chani.dir/src/controllerState.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/chani.dir/src/controllerState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/chani.dir/src/controllerState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/controllerState.cpp.o -MF CMakeFiles/chani.dir/src/controllerState.cpp.o.d -o CMakeFiles/chani.dir/src/controllerState.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/controllerState.cpp
 
 CMakeFiles/chani.dir/src/controllerState.cpp.i: cmake_force
@@ -254,7 +240,7 @@ CMakeFiles/chani.dir/src/controllerState.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/cube.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/cube.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/cube.cpp
 CMakeFiles/chani.dir/src/cube.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/chani.dir/src/cube.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/chani.dir/src/cube.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/cube.cpp.o -MF CMakeFiles/chani.dir/src/cube.cpp.o.d -o CMakeFiles/chani.dir/src/cube.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/cube.cpp
 
 CMakeFiles/chani.dir/src/cube.cpp.i: cmake_force
@@ -265,24 +251,10 @@ CMakeFiles/chani.dir/src/cube.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/cube.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/cube.cpp -o CMakeFiles/chani.dir/src/cube.cpp.s
 
-CMakeFiles/chani.dir/src/followActor.cpp.o: CMakeFiles/chani.dir/flags.make
-CMakeFiles/chani.dir/src/followActor.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followActor.cpp
-CMakeFiles/chani.dir/src/followActor.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/chani.dir/src/followActor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/followActor.cpp.o -MF CMakeFiles/chani.dir/src/followActor.cpp.o.d -o CMakeFiles/chani.dir/src/followActor.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followActor.cpp
-
-CMakeFiles/chani.dir/src/followActor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/followActor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followActor.cpp > CMakeFiles/chani.dir/src/followActor.cpp.i
-
-CMakeFiles/chani.dir/src/followActor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/followActor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followActor.cpp -o CMakeFiles/chani.dir/src/followActor.cpp.s
-
 CMakeFiles/chani.dir/src/followCameraComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/followCameraComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followCameraComponent.cpp
 CMakeFiles/chani.dir/src/followCameraComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/chani.dir/src/followCameraComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/chani.dir/src/followCameraComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/followCameraComponent.cpp.o -MF CMakeFiles/chani.dir/src/followCameraComponent.cpp.o.d -o CMakeFiles/chani.dir/src/followCameraComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/followCameraComponent.cpp
 
 CMakeFiles/chani.dir/src/followCameraComponent.cpp.i: cmake_force
@@ -296,7 +268,7 @@ CMakeFiles/chani.dir/src/followCameraComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/inputComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/inputComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/inputComponent.cpp
 CMakeFiles/chani.dir/src/inputComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/chani.dir/src/inputComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/chani.dir/src/inputComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/inputComponent.cpp.o -MF CMakeFiles/chani.dir/src/inputComponent.cpp.o.d -o CMakeFiles/chani.dir/src/inputComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/inputComponent.cpp
 
 CMakeFiles/chani.dir/src/inputComponent.cpp.i: cmake_force
@@ -310,7 +282,7 @@ CMakeFiles/chani.dir/src/inputComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/inputSystem.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/inputSystem.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/inputSystem.cpp
 CMakeFiles/chani.dir/src/inputSystem.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/chani.dir/src/inputSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/chani.dir/src/inputSystem.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/inputSystem.cpp.o -MF CMakeFiles/chani.dir/src/inputSystem.cpp.o.d -o CMakeFiles/chani.dir/src/inputSystem.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/inputSystem.cpp
 
 CMakeFiles/chani.dir/src/inputSystem.cpp.i: cmake_force
@@ -324,7 +296,7 @@ CMakeFiles/chani.dir/src/inputSystem.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/keyboardState.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/keyboardState.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/keyboardState.cpp
 CMakeFiles/chani.dir/src/keyboardState.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/chani.dir/src/keyboardState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/chani.dir/src/keyboardState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/keyboardState.cpp.o -MF CMakeFiles/chani.dir/src/keyboardState.cpp.o.d -o CMakeFiles/chani.dir/src/keyboardState.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/keyboardState.cpp
 
 CMakeFiles/chani.dir/src/keyboardState.cpp.i: cmake_force
@@ -338,7 +310,7 @@ CMakeFiles/chani.dir/src/keyboardState.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/log.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/log.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/log.cpp
 CMakeFiles/chani.dir/src/log.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/chani.dir/src/log.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/chani.dir/src/log.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/log.cpp.o -MF CMakeFiles/chani.dir/src/log.cpp.o.d -o CMakeFiles/chani.dir/src/log.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/log.cpp
 
 CMakeFiles/chani.dir/src/log.cpp.i: cmake_force
@@ -349,10 +321,24 @@ CMakeFiles/chani.dir/src/log.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/log.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/log.cpp -o CMakeFiles/chani.dir/src/log.cpp.s
 
+CMakeFiles/chani.dir/src/material.cpp.o: CMakeFiles/chani.dir/flags.make
+CMakeFiles/chani.dir/src/material.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/material.cpp
+CMakeFiles/chani.dir/src/material.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/chani.dir/src/material.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/material.cpp.o -MF CMakeFiles/chani.dir/src/material.cpp.o.d -o CMakeFiles/chani.dir/src/material.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/material.cpp
+
+CMakeFiles/chani.dir/src/material.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/material.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/material.cpp > CMakeFiles/chani.dir/src/material.cpp.i
+
+CMakeFiles/chani.dir/src/material.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/material.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/material.cpp -o CMakeFiles/chani.dir/src/material.cpp.s
+
 CMakeFiles/chani.dir/src/matrix4.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/matrix4.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/matrix4.cpp
 CMakeFiles/chani.dir/src/matrix4.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/chani.dir/src/matrix4.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/chani.dir/src/matrix4.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/matrix4.cpp.o -MF CMakeFiles/chani.dir/src/matrix4.cpp.o.d -o CMakeFiles/chani.dir/src/matrix4.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/matrix4.cpp
 
 CMakeFiles/chani.dir/src/matrix4.cpp.i: cmake_force
@@ -366,7 +352,7 @@ CMakeFiles/chani.dir/src/matrix4.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/mesh.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/mesh.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/mesh.cpp
 CMakeFiles/chani.dir/src/mesh.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/chani.dir/src/mesh.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/chani.dir/src/mesh.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/mesh.cpp.o -MF CMakeFiles/chani.dir/src/mesh.cpp.o.d -o CMakeFiles/chani.dir/src/mesh.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/mesh.cpp
 
 CMakeFiles/chani.dir/src/mesh.cpp.i: cmake_force
@@ -380,7 +366,7 @@ CMakeFiles/chani.dir/src/mesh.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/meshComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/meshComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/meshComponent.cpp
 CMakeFiles/chani.dir/src/meshComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/chani.dir/src/meshComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/chani.dir/src/meshComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/meshComponent.cpp.o -MF CMakeFiles/chani.dir/src/meshComponent.cpp.o.d -o CMakeFiles/chani.dir/src/meshComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/meshComponent.cpp
 
 CMakeFiles/chani.dir/src/meshComponent.cpp.i: cmake_force
@@ -394,7 +380,7 @@ CMakeFiles/chani.dir/src/meshComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/mouseState.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/mouseState.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/mouseState.cpp
 CMakeFiles/chani.dir/src/mouseState.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/chani.dir/src/mouseState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/chani.dir/src/mouseState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/mouseState.cpp.o -MF CMakeFiles/chani.dir/src/mouseState.cpp.o.d -o CMakeFiles/chani.dir/src/mouseState.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/mouseState.cpp
 
 CMakeFiles/chani.dir/src/mouseState.cpp.i: cmake_force
@@ -408,7 +394,7 @@ CMakeFiles/chani.dir/src/mouseState.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/moveComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/moveComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/moveComponent.cpp
 CMakeFiles/chani.dir/src/moveComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/chani.dir/src/moveComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/chani.dir/src/moveComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/moveComponent.cpp.o -MF CMakeFiles/chani.dir/src/moveComponent.cpp.o.d -o CMakeFiles/chani.dir/src/moveComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/moveComponent.cpp
 
 CMakeFiles/chani.dir/src/moveComponent.cpp.i: cmake_force
@@ -419,24 +405,10 @@ CMakeFiles/chani.dir/src/moveComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/moveComponent.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/moveComponent.cpp -o CMakeFiles/chani.dir/src/moveComponent.cpp.s
 
-CMakeFiles/chani.dir/src/orbitActor.cpp.o: CMakeFiles/chani.dir/flags.make
-CMakeFiles/chani.dir/src/orbitActor.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitActor.cpp
-CMakeFiles/chani.dir/src/orbitActor.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/chani.dir/src/orbitActor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/orbitActor.cpp.o -MF CMakeFiles/chani.dir/src/orbitActor.cpp.o.d -o CMakeFiles/chani.dir/src/orbitActor.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitActor.cpp
-
-CMakeFiles/chani.dir/src/orbitActor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/orbitActor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitActor.cpp > CMakeFiles/chani.dir/src/orbitActor.cpp.i
-
-CMakeFiles/chani.dir/src/orbitActor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/orbitActor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitActor.cpp -o CMakeFiles/chani.dir/src/orbitActor.cpp.s
-
 CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitCameraComponent.cpp
 CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o -MF CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o.d -o CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitCameraComponent.cpp
 
 CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.i: cmake_force
@@ -447,10 +419,24 @@ CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/orbitCameraComponent.cpp -o CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.s
 
+CMakeFiles/chani.dir/src/phongMaterial.cpp.o: CMakeFiles/chani.dir/flags.make
+CMakeFiles/chani.dir/src/phongMaterial.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/phongMaterial.cpp
+CMakeFiles/chani.dir/src/phongMaterial.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/chani.dir/src/phongMaterial.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/phongMaterial.cpp.o -MF CMakeFiles/chani.dir/src/phongMaterial.cpp.o.d -o CMakeFiles/chani.dir/src/phongMaterial.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/phongMaterial.cpp
+
+CMakeFiles/chani.dir/src/phongMaterial.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/phongMaterial.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/phongMaterial.cpp > CMakeFiles/chani.dir/src/phongMaterial.cpp.i
+
+CMakeFiles/chani.dir/src/phongMaterial.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/phongMaterial.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/phongMaterial.cpp -o CMakeFiles/chani.dir/src/phongMaterial.cpp.s
+
 CMakeFiles/chani.dir/src/plane.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/plane.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/plane.cpp
 CMakeFiles/chani.dir/src/plane.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/chani.dir/src/plane.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/chani.dir/src/plane.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/plane.cpp.o -MF CMakeFiles/chani.dir/src/plane.cpp.o.d -o CMakeFiles/chani.dir/src/plane.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/plane.cpp
 
 CMakeFiles/chani.dir/src/plane.cpp.i: cmake_force
@@ -464,7 +450,7 @@ CMakeFiles/chani.dir/src/plane.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/quaternion.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/quaternion.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/quaternion.cpp
 CMakeFiles/chani.dir/src/quaternion.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/chani.dir/src/quaternion.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/chani.dir/src/quaternion.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/quaternion.cpp.o -MF CMakeFiles/chani.dir/src/quaternion.cpp.o.d -o CMakeFiles/chani.dir/src/quaternion.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/quaternion.cpp
 
 CMakeFiles/chani.dir/src/quaternion.cpp.i: cmake_force
@@ -478,7 +464,7 @@ CMakeFiles/chani.dir/src/quaternion.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/random.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/random.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/random.cpp
 CMakeFiles/chani.dir/src/random.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/chani.dir/src/random.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/chani.dir/src/random.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/random.cpp.o -MF CMakeFiles/chani.dir/src/random.cpp.o.d -o CMakeFiles/chani.dir/src/random.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/random.cpp
 
 CMakeFiles/chani.dir/src/random.cpp.i: cmake_force
@@ -492,7 +478,7 @@ CMakeFiles/chani.dir/src/random.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/rectangle.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/rectangle.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/rectangle.cpp
 CMakeFiles/chani.dir/src/rectangle.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/chani.dir/src/rectangle.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/chani.dir/src/rectangle.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/rectangle.cpp.o -MF CMakeFiles/chani.dir/src/rectangle.cpp.o.d -o CMakeFiles/chani.dir/src/rectangle.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/rectangle.cpp
 
 CMakeFiles/chani.dir/src/rectangle.cpp.i: cmake_force
@@ -506,7 +492,7 @@ CMakeFiles/chani.dir/src/rectangle.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/rendererOGL.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/rendererOGL.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/rendererOGL.cpp
 CMakeFiles/chani.dir/src/rendererOGL.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/chani.dir/src/rendererOGL.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/chani.dir/src/rendererOGL.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/rendererOGL.cpp.o -MF CMakeFiles/chani.dir/src/rendererOGL.cpp.o.d -o CMakeFiles/chani.dir/src/rendererOGL.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/rendererOGL.cpp
 
 CMakeFiles/chani.dir/src/rendererOGL.cpp.i: cmake_force
@@ -520,7 +506,7 @@ CMakeFiles/chani.dir/src/rendererOGL.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/shader.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/shader.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/shader.cpp
 CMakeFiles/chani.dir/src/shader.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/chani.dir/src/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/chani.dir/src/shader.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/shader.cpp.o -MF CMakeFiles/chani.dir/src/shader.cpp.o.d -o CMakeFiles/chani.dir/src/shader.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/shader.cpp
 
 CMakeFiles/chani.dir/src/shader.cpp.i: cmake_force
@@ -534,7 +520,7 @@ CMakeFiles/chani.dir/src/shader.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/soundEvent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/soundEvent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/soundEvent.cpp
 CMakeFiles/chani.dir/src/soundEvent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/chani.dir/src/soundEvent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/chani.dir/src/soundEvent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/soundEvent.cpp.o -MF CMakeFiles/chani.dir/src/soundEvent.cpp.o.d -o CMakeFiles/chani.dir/src/soundEvent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/soundEvent.cpp
 
 CMakeFiles/chani.dir/src/soundEvent.cpp.i: cmake_force
@@ -548,7 +534,7 @@ CMakeFiles/chani.dir/src/soundEvent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/sphere.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/sphere.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/sphere.cpp
 CMakeFiles/chani.dir/src/sphere.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/chani.dir/src/sphere.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/chani.dir/src/sphere.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/sphere.cpp.o -MF CMakeFiles/chani.dir/src/sphere.cpp.o.d -o CMakeFiles/chani.dir/src/sphere.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/sphere.cpp
 
 CMakeFiles/chani.dir/src/sphere.cpp.i: cmake_force
@@ -562,7 +548,7 @@ CMakeFiles/chani.dir/src/sphere.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/spline.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/spline.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spline.cpp
 CMakeFiles/chani.dir/src/spline.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/chani.dir/src/spline.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/chani.dir/src/spline.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/spline.cpp.o -MF CMakeFiles/chani.dir/src/spline.cpp.o.d -o CMakeFiles/chani.dir/src/spline.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spline.cpp
 
 CMakeFiles/chani.dir/src/spline.cpp.i: cmake_force
@@ -576,7 +562,7 @@ CMakeFiles/chani.dir/src/spline.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/splineActor.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/splineActor.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/splineActor.cpp
 CMakeFiles/chani.dir/src/splineActor.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/chani.dir/src/splineActor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/chani.dir/src/splineActor.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/splineActor.cpp.o -MF CMakeFiles/chani.dir/src/splineActor.cpp.o.d -o CMakeFiles/chani.dir/src/splineActor.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/splineActor.cpp
 
 CMakeFiles/chani.dir/src/splineActor.cpp.i: cmake_force
@@ -590,7 +576,7 @@ CMakeFiles/chani.dir/src/splineActor.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/splineCameraComponent.cpp
 CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o -MF CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o.d -o CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/splineCameraComponent.cpp
 
 CMakeFiles/chani.dir/src/splineCameraComponent.cpp.i: cmake_force
@@ -604,7 +590,7 @@ CMakeFiles/chani.dir/src/splineCameraComponent.cpp.s: cmake_force
 CMakeFiles/chani.dir/src/spriteComponent.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/spriteComponent.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteComponent.cpp
 CMakeFiles/chani.dir/src/spriteComponent.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/chani.dir/src/spriteComponent.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/chani.dir/src/spriteComponent.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/spriteComponent.cpp.o -MF CMakeFiles/chani.dir/src/spriteComponent.cpp.o.d -o CMakeFiles/chani.dir/src/spriteComponent.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteComponent.cpp
 
 CMakeFiles/chani.dir/src/spriteComponent.cpp.i: cmake_force
@@ -614,6 +600,20 @@ CMakeFiles/chani.dir/src/spriteComponent.cpp.i: cmake_force
 CMakeFiles/chani.dir/src/spriteComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/spriteComponent.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteComponent.cpp -o CMakeFiles/chani.dir/src/spriteComponent.cpp.s
+
+CMakeFiles/chani.dir/src/spriteMaterial.cpp.o: CMakeFiles/chani.dir/flags.make
+CMakeFiles/chani.dir/src/spriteMaterial.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteMaterial.cpp
+CMakeFiles/chani.dir/src/spriteMaterial.cpp.o: CMakeFiles/chani.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/ixilminiussi/Desktop/gamedev/chani-engine/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/chani.dir/src/spriteMaterial.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/chani.dir/src/spriteMaterial.cpp.o -MF CMakeFiles/chani.dir/src/spriteMaterial.cpp.o.d -o CMakeFiles/chani.dir/src/spriteMaterial.cpp.o -c /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteMaterial.cpp
+
+CMakeFiles/chani.dir/src/spriteMaterial.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/chani.dir/src/spriteMaterial.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteMaterial.cpp > CMakeFiles/chani.dir/src/spriteMaterial.cpp.i
+
+CMakeFiles/chani.dir/src/spriteMaterial.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/chani.dir/src/spriteMaterial.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ixilminiussi/Desktop/gamedev/chani-engine/src/spriteMaterial.cpp -o CMakeFiles/chani.dir/src/spriteMaterial.cpp.s
 
 CMakeFiles/chani.dir/src/texture.cpp.o: CMakeFiles/chani.dir/flags.make
 CMakeFiles/chani.dir/src/texture.cpp.o: /home/ixilminiussi/Desktop/gamedev/chani-engine/src/texture.cpp
@@ -701,7 +701,6 @@ CMakeFiles/chani.dir/src/window.cpp.s: cmake_force
 
 # Object files for target chani
 chani_OBJECTS = \
-"CMakeFiles/chani.dir/src/FPSActor.cpp.o" \
 "CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o" \
 "CMakeFiles/chani.dir/src/actor.cpp.o" \
 "CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o" \
@@ -715,19 +714,19 @@ chani_OBJECTS = \
 "CMakeFiles/chani.dir/src/component.cpp.o" \
 "CMakeFiles/chani.dir/src/controllerState.cpp.o" \
 "CMakeFiles/chani.dir/src/cube.cpp.o" \
-"CMakeFiles/chani.dir/src/followActor.cpp.o" \
 "CMakeFiles/chani.dir/src/followCameraComponent.cpp.o" \
 "CMakeFiles/chani.dir/src/inputComponent.cpp.o" \
 "CMakeFiles/chani.dir/src/inputSystem.cpp.o" \
 "CMakeFiles/chani.dir/src/keyboardState.cpp.o" \
 "CMakeFiles/chani.dir/src/log.cpp.o" \
+"CMakeFiles/chani.dir/src/material.cpp.o" \
 "CMakeFiles/chani.dir/src/matrix4.cpp.o" \
 "CMakeFiles/chani.dir/src/mesh.cpp.o" \
 "CMakeFiles/chani.dir/src/meshComponent.cpp.o" \
 "CMakeFiles/chani.dir/src/mouseState.cpp.o" \
 "CMakeFiles/chani.dir/src/moveComponent.cpp.o" \
-"CMakeFiles/chani.dir/src/orbitActor.cpp.o" \
 "CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o" \
+"CMakeFiles/chani.dir/src/phongMaterial.cpp.o" \
 "CMakeFiles/chani.dir/src/plane.cpp.o" \
 "CMakeFiles/chani.dir/src/quaternion.cpp.o" \
 "CMakeFiles/chani.dir/src/random.cpp.o" \
@@ -740,6 +739,7 @@ chani_OBJECTS = \
 "CMakeFiles/chani.dir/src/splineActor.cpp.o" \
 "CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o" \
 "CMakeFiles/chani.dir/src/spriteComponent.cpp.o" \
+"CMakeFiles/chani.dir/src/spriteMaterial.cpp.o" \
 "CMakeFiles/chani.dir/src/texture.cpp.o" \
 "CMakeFiles/chani.dir/src/timer.cpp.o" \
 "CMakeFiles/chani.dir/src/vector2.cpp.o" \
@@ -750,7 +750,6 @@ chani_OBJECTS = \
 # External object files for target chani
 chani_EXTERNAL_OBJECTS =
 
-libchani.so.0.1.0: CMakeFiles/chani.dir/src/FPSActor.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/FPSCameraComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/actor.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/animSpriteComponent.cpp.o
@@ -764,19 +763,19 @@ libchani.so.0.1.0: CMakeFiles/chani.dir/src/circleCollisionComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/component.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/controllerState.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/cube.cpp.o
-libchani.so.0.1.0: CMakeFiles/chani.dir/src/followActor.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/followCameraComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/inputComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/inputSystem.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/keyboardState.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/log.cpp.o
+libchani.so.0.1.0: CMakeFiles/chani.dir/src/material.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/matrix4.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/mesh.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/meshComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/mouseState.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/moveComponent.cpp.o
-libchani.so.0.1.0: CMakeFiles/chani.dir/src/orbitActor.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/orbitCameraComponent.cpp.o
+libchani.so.0.1.0: CMakeFiles/chani.dir/src/phongMaterial.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/plane.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/quaternion.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/random.cpp.o
@@ -789,6 +788,7 @@ libchani.so.0.1.0: CMakeFiles/chani.dir/src/spline.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/splineActor.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/splineCameraComponent.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/spriteComponent.cpp.o
+libchani.so.0.1.0: CMakeFiles/chani.dir/src/spriteMaterial.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/texture.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/timer.cpp.o
 libchani.so.0.1.0: CMakeFiles/chani.dir/src/vector2.cpp.o

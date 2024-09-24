@@ -14,8 +14,10 @@ Material::Material()
 
 Shader &Material::getShader() { return Assets::getShader(shaderName); }
 
-Material *Material::selected = nullptr;
-
-void Material::init() {};
+void Material::setWorldTransform(const Matrix4 &wt) {
+    getShader().setMatrix4("uWorldTransform", wt);
+}
 
 void Material::use() {};
+
+Material *Material::selected = nullptr;

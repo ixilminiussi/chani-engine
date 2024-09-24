@@ -18,8 +18,7 @@ void MeshComponent::draw() {
         material->use();
 
         Matrix4 wt = owner.getWorldTransform();
-        material->getShader().setMatrix4("uWorldTransform", wt);
-        material->init();
+        material->setWorldTransform(wt);
 
         Texture *t = mesh->getTexture(textureIndex);
         if (t) {
