@@ -3,7 +3,8 @@
 
 #include "actor.h"
 
-class Cube : public Actor {
+class Cube : public Actor
+{
   public:
     Cube();
 };

@@ -4,17 +4,29 @@
 
 #include <SDL_image.h>
 
-Texture::Texture()
-    : textureID(0), filename(""), width(0), height(0), SDLTexture(nullptr) {}
+Texture::Texture() : textureID(0), filename(""), width(0), height(0), SDLTexture(nullptr)
+{
+}
 
-Texture::~Texture() {}
+Texture::~Texture()
+{
+}
 
-void Texture::unload() {
-    if (SDLTexture) {
+void Texture::unload()
+{
+    if (SDLTexture)
+    {
         SDL_DestroyTexture(SDLTexture);
-    } else {
+    }
+    else
+    {
         glDeleteTextures(1, &textureID);
     }
+}
+
+inline SDL_Texture *Texture::toSDLTexture() const
+{
+    return SDLTexture;
 }
 
 /*
@@ -43,27 +55,30 @@ texture for "+ filename); return false;
 }
 */
 
-bool Texture::loadOGL(RendererOGL &renderer, const std::string &filenameP) {
+bool Texture::loadOGL(RendererOGL &renderer, const std::string &filenameP)
+{
     filename = filenameP;
     // Load from file
     SDL_Surface *surf = IMG_Load(filename.c_str());
-    if (!surf) {
-        Log::error(LogCategory::Application,
-                   "Failed to load texture file " + filename);
+    if (!surf)
+    {
+        Log::error(LogCategory::Application, "Failed to load texture file " + filename);
         return false;
     }
     width = surf->w;
     height = surf->h;
     int format = 0;
-    if (surf->format == SDL_PIXELFORMAT_RGB24) {
+    if (surf->format == SDL_PIXELFORMAT_RGB24)
+    {
         format = GL_RGB;
-    } else if (surf->format == SDL_PIXELFORMAT_RGBA32) {
+    }
+    else if (surf->format == SDL_PIXELFORMAT_RGBA32)
+    {
         format = GL_RGBA;
     }
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format,
-                 GL_UNSIGNED_BYTE, surf->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, surf->pixels);
     SDL_DestroySurface(surf);
 
     Log::info("Loaded texture " + filename);
@@ -74,9 +89,23 @@ bool Texture::loadOGL(RendererOGL &renderer, const std::string &filenameP) {
     return true;
 }
 
-void Texture::updateInfo(int &widthOut, int &heightOut) {
+void Texture::updateInfo(int &widthOut, int &heightOut)
+{
     widthOut = width;
     heightOut = height;
 }
 
-void Texture::setActive() const { glBindTexture(GL_TEXTURE_2D, textureID); }
+void Texture::setActive() const
+{
+    glBindTexture(GL_TEXTURE_2D, textureID);
+}
+
+int Texture::getWidth() const
+{
+    return width;
+}
+
+int Texture::getHeight() const
+{
+    return height;
+}

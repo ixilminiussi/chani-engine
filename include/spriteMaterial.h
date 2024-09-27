@@ -3,7 +3,8 @@
 
 #include "material.h"
 
-class SpriteMaterial : public Material {
+class SpriteMaterial : public Material
+{
   public:
     SpriteMaterial();
     ~SpriteMaterial() = default;

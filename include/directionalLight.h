@@ -3,7 +3,8 @@
 
 #include "vector3.h"
 
-struct DirectionalLight {
+struct DirectionalLight
+{
     Vector3 direction;
     Vector3 diffuseColor;
     Vector3 specColor;

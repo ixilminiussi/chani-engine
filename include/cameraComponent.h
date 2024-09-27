@@ -4,7 +4,8 @@
 #include "component.h"
 #include "matrix4.h"
 
-class CameraComponent : public Component {
+class CameraComponent : public Component
+{
   public:
     CameraComponent(class Actor *owner, int updateOrder = 200);
 

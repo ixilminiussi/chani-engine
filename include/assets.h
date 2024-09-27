@@ -1,12 +1,10 @@
 #if !defined(ASSETS_H)
 #define ASSETS_H
 
+#include "material.h"
 #include "mesh.h"
 #include "shader.h"
 #include "texture.h"
-#include "material.h"
-#include "phongMaterial.h"
-#include "spriteMaterial.h"
 
 #include <map>
 #include <string>
@@ -15,16 +13,16 @@
 // functions to load resources. Each loaded resource is also
 // stored for future reference by string handles. All functions
 // and resources are static and no public constructor is defined.
-class Assets {
+class Assets
+{
   public:
     static std::map<std::string, Texture> textures;
     static std::map<std::string, Shader> shaders;
     static std::map<std::string, Mesh> meshes;
-    static std::map<std::string, Material*> materials;
+    static std::map<std::string, Material *> materials;
 
     // Loads a texture from file
-    static Texture loadTexture(IRenderer &renderer, const std::string &filename,
-                               const std::string &name);
+    static Texture loadTexture(IRenderer &renderer, const std::string &filename, const std::string &name);
 
     // Retrieves a stored texture
     static Texture &getTexture(const std::string &name);
@@ -33,10 +31,9 @@ class Assets {
     // (and tessellation control, evaluation, geometry) shader's source code. If
     // tcShaderFile, teShaderFile, gShaderFile are not nullptr, it also loads
     // tessellation and geometry shaders
-    static Shader
-    loadShader(const std::string &vShaderFile, const std::string &fShaderFile,
-               const std::string &tcShaderFile, const std::string &teShaderFile,
-               const std::string &gShaderFile, const std::string &name);
+    static Shader loadShader(const std::string &vShaderFile, const std::string &fShaderFile,
+                             const std::string &tcShaderFile, const std::string &teShaderFile,
+                             const std::string &gShaderFile, const std::string &name);
 
     // Retrieves a stored shader
     static Shader &getShader(const std::string &name);
@@ -61,17 +58,16 @@ class Assets {
     static void clear();
 
   private:
-    Assets() {}
+    Assets()
+    {
+    }
 
     // Loads a single texture from file
-    static Texture loadTextureFromFile(IRenderer &renderer,
-                                       const std::string &filename);
+    static Texture loadTextureFromFile(IRenderer &renderer, const std::string &filename);
 
     // Loads and generates a shader from file
-    static Shader loadShaderFromFile(const std::string &vShaderFile,
-                                     const std::string &fShaderFile,
-                                     const std::string &tcShaderFile = "",
-                                     const std::string &teShaderFile = "",
+    static Shader loadShaderFromFile(const std::string &vShaderFile, const std::string &fShaderFile,
+                                     const std::string &tcShaderFile = "", const std::string &teShaderFile = "",
                                      const std::string &gShaderFile = "");
 
     static Mesh loadMeshFromFile(const std::string &filename);

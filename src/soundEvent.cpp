@@ -12,112 +12,139 @@
 
 #include <fmod_studio.hpp>
 
-SoundEvent::SoundEvent(class AudioSystem *systemP, unsigned int id)
-    : system(systemP), id(id) {}
+SoundEvent::SoundEvent(class AudioSystem *systemP, unsigned int id) : system(systemP), id(id)
+{
+}
 
-SoundEvent::SoundEvent() : system(nullptr), id(0) {}
+SoundEvent::SoundEvent() : system(nullptr), id(0)
+{
+}
 
-bool SoundEvent::isValid() {
+bool SoundEvent::isValid()
+{
     return (system && system->getEventInstance(id) != nullptr);
 }
 
-void SoundEvent::restart() {
+void SoundEvent::restart()
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->start();
     }
 }
 
-void SoundEvent::stop(bool allowFadeOut /* true */) {
+void SoundEvent::stop(bool allowFadeOut /* true */)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
-        FMOD_STUDIO_STOP_MODE mode = allowFadeOut
-                                         ? FMOD_STUDIO_STOP_ALLOWFADEOUT
-                                         : FMOD_STUDIO_STOP_IMMEDIATE;
+    if (event)
+    {
+        FMOD_STUDIO_STOP_MODE mode = allowFadeOut ? FMOD_STUDIO_STOP_ALLOWFADEOUT : FMOD_STUDIO_STOP_IMMEDIATE;
         event->stop(mode);
     }
 }
 
-void SoundEvent::setPaused(bool pause) {
+void SoundEvent::setPaused(bool pause)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->setPaused(pause);
     }
 }
 
-void SoundEvent::setVolume(float value) {
+void SoundEvent::setVolume(float value)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->setVolume(value);
     }
 }
 
-void SoundEvent::setPitch(float value) {
+void SoundEvent::setPitch(float value)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->setPitch(value);
     }
 }
 
-void SoundEvent::setParameter(const std::string &name, float value) {
+void SoundEvent::setParameter(const std::string &name, float value)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->setParameterByName(name.c_str(), value);
     }
 }
 
-bool SoundEvent::getPaused() const {
+bool SoundEvent::getPaused() const
+{
     bool retVal = false;
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->getPaused(&retVal);
     }
     return retVal;
 }
 
-float SoundEvent::getVolume() const {
+float SoundEvent::getVolume() const
+{
     float retVal = 0.0f;
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->getVolume(&retVal);
     }
     return retVal;
 }
 
-float SoundEvent::getPitch() const {
+float SoundEvent::getPitch() const
+{
     float retVal = 0.0f;
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->getPitch(&retVal);
     }
     return retVal;
 }
 
-float SoundEvent::getParameter(const std::string &name) {
+float SoundEvent::getParameter(const std::string &name)
+{
     float retVal = 0.0f;
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         event->getParameterByName(name.c_str(), &retVal);
     }
     return retVal;
 }
 
-bool SoundEvent::is3D() const {
+bool SoundEvent::is3D() const
+{
     bool retVal = false;
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         // Get the event description
         FMOD::Studio::EventDescription *ed = nullptr;
         event->getDescription(&ed);
-        if (ed) {
+        if (ed)
+        {
             ed->is3D(&retVal);
         }
     }
     return retVal;
 }
 
-namespace {
-FMOD_VECTOR VecToFMOD(const Vector3 &in) {
+namespace
+{
+FMOD_VECTOR VecToFMOD(const Vector3 &in)
+{
     // Convert from our coordinates (+x forward, +y right, +z up)
     // to FMOD (+z forward, +x right, +y up)
     FMOD_VECTOR v;
@@ -128,9 +155,11 @@ FMOD_VECTOR VecToFMOD(const Vector3 &in) {
 }
 } // namespace
 
-void SoundEvent::set3DAttributes(const Matrix4 &worldTrans) {
+void SoundEvent::set3DAttributes(const Matrix4 &worldTrans)
+{
     auto event = system ? system->getEventInstance(id) : nullptr;
-    if (event) {
+    if (event)
+    {
         FMOD_3D_ATTRIBUTES attr;
         // Set position, forward, up
         attr.position = VecToFMOD(worldTrans.getTranslation());

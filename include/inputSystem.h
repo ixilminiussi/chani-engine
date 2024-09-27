@@ -7,28 +7,36 @@
 
 #include <SDL_events.h>
 
-enum class ButtonState { None, Pressed, Released, Held };
+enum class ButtonState
+{
+    None,
+    Pressed,
+    Released,
+    Held
+};
 
-struct InputState {
+struct InputState
+{
     KeyboardState keyboard;
     MouseState mouse;
     GamepadState gamepad;
 };
 
-class InputSystem {
+class InputSystem
+{
   public:
     InputSystem();
 
     bool initialize();
     void close();
 
-    const InputState getInputState() const { return inputState; }
+    const InputState getInputState() const;
 
     bool processEvent(SDL_Event &event); // Returns isRunning status
     void preUpdate();
     void update();
 
-    bool getIsCursorDisplayed() const { return isCursorDisplayed; }
+    bool getIsCursorDisplayed() const;
     void setMouseCursor(bool isCursorDisplayedP);
     void setMouseRelativeMode(SDL_Window *window, bool isMouseRelativeOnP);
 

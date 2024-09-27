@@ -5,18 +5,19 @@
 #include "material.h"
 #include "mesh.h"
 
-class MeshComponent : public Component {
+class MeshComponent : public Component
+{
   public:
     MeshComponent(Actor *owner);
     virtual ~MeshComponent();
 
-    bool getVisible() const { return isVisible; }
-    void setVisible(bool isVisibleP) { isVisible = isVisibleP; }
+    bool getVisible() const;
+    void setVisible(bool isVisibleP);
 
     virtual void draw();
     void setMesh(Mesh &meshP);
     void setMaterial(Material *materialP);
-    void setTextureIndex(size_t textureIndexP); 
+    void setTextureIndex(size_t textureIndexP);
 
   protected:
     Material *material;

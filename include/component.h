@@ -5,7 +5,8 @@
 
 class Actor;
 
-class Component {
+class Component
+{
   public:
     Component(Actor *ownerP, int updateOrderP = 100);
     Component() = delete;
@@ -13,11 +14,13 @@ class Component {
     Component(const Component &) = delete;
     Component &operator=(const Component &) = delete;
 
-    int getUpdateOrder() const { return updateOrder; }
+    int getUpdateOrder() const;
 
     virtual void processInput(const struct InputState &inputState);
     virtual void update(float dt);
-    virtual void onUpdateWorldTransform() {}
+    virtual void onUpdateWorldTransform()
+    {
+    }
 
   protected:
     Actor &owner;

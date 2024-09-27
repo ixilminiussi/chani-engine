@@ -1,12 +1,12 @@
-#include "phongMaterial.h"
+#include "pbrMaterial.h"
 #include "shader.h"
 
-PhongMaterial::PhongMaterial() : Material()
+PBRMaterial::PBRMaterial() : Material()
 {
-    shaderName = "Phong";
+    shaderName = "PBR";
 }
 
-void PhongMaterial::use()
+void PBRMaterial::use()
 {
     if (selected != this)
     {
@@ -18,12 +18,12 @@ void PhongMaterial::use()
         Shader &shader = getShader();
         shader.use();
 
-        shader.setFloat("uSpecPower", specular);
+        shader.setFloat("uRoughness", roughness);
         shader.setMatrix4("uViewProj", view * projection);
     }
 }
 
-void PhongMaterial::setSpecular(const float &specularP)
+void PBRMaterial::setRoughness(const float &roughnessP)
 {
-    specular = specularP;
+    roughness = roughnessP;
 }

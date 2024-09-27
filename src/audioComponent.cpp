@@ -4,64 +4,87 @@
 #include "audioSystem.h"
 #include "chani.h"
 
-AudioComponent::AudioComponent(Actor *owner, int updateOrder)
-    : Component(owner, updateOrder) {}
+AudioComponent::AudioComponent(Actor *owner, int updateOrder) : Component(owner, updateOrder)
+{
+}
 
-AudioComponent::~AudioComponent() { stopAllEvents(); }
+AudioComponent::~AudioComponent()
+{
+    stopAllEvents();
+}
 
-void AudioComponent::update(float dt) {
+void AudioComponent::update(float dt)
+{
     Component::update(dt);
 
     // Remove invalid 2D events
     auto iter = events2D.begin();
-    while (iter != events2D.end()) {
-        if (!iter->isValid()) {
+    while (iter != events2D.end())
+    {
+        if (!iter->isValid())
+        {
             iter = events2D.erase(iter);
-        } else {
+        }
+        else
+        {
             ++iter;
         }
     }
 
     // Remove invalid 3D events
     iter = events3D.begin();
-    while (iter != events3D.end()) {
-        if (!iter->isValid()) {
+    while (iter != events3D.end())
+    {
+        if (!iter->isValid())
+        {
             iter = events3D.erase(iter);
-        } else {
+        }
+        else
+        {
             ++iter;
         }
     }
 }
 
-void AudioComponent::onUpdateWorldTransform() {
+void AudioComponent::onUpdateWorldTransform()
+{
     // Update 3D events' world transforms
     Matrix4 world = owner.getWorldTransform();
-    for (auto &event : events3D) {
-        if (event.isValid()) {
+    for (auto &event : events3D)
+    {
+        if (event.isValid())
+        {
             event.set3DAttributes(world);
         }
     }
 }
 
-SoundEvent AudioComponent::playEvent(const std::string &name) {
+SoundEvent AudioComponent::playEvent(const std::string &name)
+{
     SoundEvent e = owner.getGame().getAudioSystem().playEvent(name);
     // Is this 2D or 3D?
-    if (e.is3D()) {
+    if (e.is3D())
+    {
         events3D.emplace_back(e);
         // Set initial 3D attributes
         e.set3DAttributes(owner.getWorldTransform());
-    } else {
+    }
+    else
+    {
         events2D.emplace_back(e);
     }
     return e;
 }
 
-void AudioComponent::stopAllEvents() {
+void AudioComponent::stopAllEvents()
+{
     // Stop all sounds
-    for (auto &e : events2D) {
+    for (auto &e : events2D)
+    {
         e.stop();
     }
-    for (auto &e : events3D) {
+    for (auto &e : events3D)
+    {
         e.stop();
     }
     // Clear events

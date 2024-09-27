@@ -8,7 +8,8 @@
 
 enum class ButtonState;
 
-class GamepadState {
+class GamepadState
+{
   public:
     friend class InputSystem;
 
@@ -17,11 +18,11 @@ class GamepadState {
     bool getButtonValue(SDL_GamepadButton button) const;
     ButtonState getButtonState(SDL_GamepadButton button) const;
 
-    const Vector2 &getLeftStick() const { return leftStick; }
-    const Vector2 &getRightStick() const { return rightStick; }
-    float getLeftTrigger() const { return leftTrigger; }
-    float getRightTrigger() const { return rightTrigger; }
-    bool getIsConnected() const { return isConnected; }
+    const Vector2 &getLeftStick() const;
+    const Vector2 &getRightStick() const;
+    float getLeftTrigger() const;
+    float getRightTrigger() const;
+    bool getIsConnected() const;
 
   private:
     Uint8 currentButtons[SDL_GAMEPAD_BUTTON_COUNT];

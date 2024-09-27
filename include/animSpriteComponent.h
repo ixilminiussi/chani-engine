@@ -5,16 +5,16 @@
 
 #include <vector>
 
-class AnimSpriteComponent : public SpriteComponent {
+class AnimSpriteComponent : public SpriteComponent
+{
   public:
-    AnimSpriteComponent(Actor *ownerP, const std::vector<Texture *> &textureP,
-                        int drawOrderP = 100);
+    AnimSpriteComponent(Actor *ownerP, const std::vector<Texture *> &textureP, int drawOrderP = 100);
     virtual ~AnimSpriteComponent();
     AnimSpriteComponent() = delete;
     AnimSpriteComponent(const AnimSpriteComponent &) = delete;
     AnimSpriteComponent &operator=(const AnimSpriteComponent &) = delete;
 
-    float getAnimFPS() const { return animFPS; }
+    float getAnimFPS() const;
     void setAnimTextures(const std::vector<Texture *> &textures);
     void setAnimFPS(float animFPSP);
 

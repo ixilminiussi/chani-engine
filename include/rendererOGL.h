@@ -4,12 +4,12 @@
 #include "directionalLight.h"
 #include "iRenderer.h"
 #include "shader.h"
-#include "vector2.h"
 #include "vertexArray.h"
 
 #include <vector>
 
-class RendererOGL : public IRenderer {
+class RendererOGL : public IRenderer
+{
   public:
     RendererOGL();
     virtual ~RendererOGL();
@@ -21,7 +21,7 @@ class RendererOGL : public IRenderer {
     void draw();
     void endDraw();
     void close();
-    IRenderer::Type type() { return Type::OGL; }
+    IRenderer::Type type();
 
     void addSprite(class SpriteComponent *sprite);
     void removeSprite(class SpriteComponent *sprite);
@@ -32,7 +32,7 @@ class RendererOGL : public IRenderer {
     void addMesh(class MeshComponent *mesh);
     void removeMesh(class MeshComponent *mesh);
 
-    DirectionalLight &getDirectionalLight() { return dirLight; }
+    DirectionalLight &getDirectionalLight();
 
     void setViewMatrix(const Matrix4 &viewP);
     void setLightUniforms(Shader &shader);

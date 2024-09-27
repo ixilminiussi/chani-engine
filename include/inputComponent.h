@@ -6,7 +6,8 @@
 #include <SDL_scancode.h>
 #include <SDL_stdinc.h>
 
-class InputComponent : public MoveComponent {
+class InputComponent : public MoveComponent
+{
   public:
     InputComponent(Actor *ownerP);
     InputComponent() = delete;

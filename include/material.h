@@ -4,21 +4,22 @@
 #include "shader.h"
 #include <string>
 
-class Material {
+class Material
+{
   public:
     Material();
     virtual ~Material() = default;
 
     virtual void use();
 
-    virtual void unload() {}
-
-    void setView(const Matrix4 &viewP) { view = viewP; }
-    void setShaderName(const std::string &shaderNameP) {
-        shaderName = shaderNameP;
+    virtual void unload()
+    {
     }
-    void setWorldTransform(const Matrix4 &wt);
+
+    void setView(const Matrix4 &viewP);
+    void setShaderName(const std::string &shaderNameP);
     Shader &getShader();
+    void setWorldTransform(const Matrix4 &wt);
 
   protected:
     std::string shaderName;

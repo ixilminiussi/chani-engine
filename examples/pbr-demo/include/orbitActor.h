@@ -5,7 +5,8 @@
 #include <inputSystem.h>
 #include <orbitCameraComponent.h>
 
-class OrbitActor : public Actor {
+class OrbitActor : public Actor
+{
   public:
     OrbitActor();
     void actorInput(const InputState &inputState) override;

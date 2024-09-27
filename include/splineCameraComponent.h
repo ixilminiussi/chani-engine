@@ -4,7 +4,8 @@
 #include "cameraComponent.h"
 #include "spline.h"
 
-class SplineCameraComponent : public CameraComponent {
+class SplineCameraComponent : public CameraComponent
+{
   public:
     SplineCameraComponent(class Actor *ownerP);
 

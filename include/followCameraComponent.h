@@ -3,7 +3,8 @@
 
 #include "cameraComponent.h"
 
-class FollowCameraComponent : public CameraComponent {
+class FollowCameraComponent : public CameraComponent
+{
   public:
     FollowCameraComponent(class Actor *ownerP);
 

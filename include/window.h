@@ -6,7 +6,8 @@
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
-class Window {
+class Window
+{
   public:
     Window();
     Window(const Window &) = delete;
@@ -15,9 +16,9 @@ class Window {
     bool initialize();
     void close();
 
-    SDL_Window *getSDLWindow() const { return SDLWindow; }
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
+    SDL_Window *getSDLWindow() const;
+    int getWidth() const;
+    int getHeight() const;
 
   private:
     SDL_Window *SDLWindow;

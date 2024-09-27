@@ -7,15 +7,16 @@
 
 enum class ButtonState;
 
-class MouseState {
+class MouseState
+{
     friend class InputSystem;
 
   public:
-    const Vector2 &getPosition() const { return position; }
+    const Vector2 &getPosition() const;
     bool getButtonValue(int button) const;
     ButtonState getButtonState(int button) const;
-    const Vector2 &getScrollWheel() const { return scrollWheel; }
-    bool isRelativeModeOn() const { return isRelativeMode; }
+    const Vector2 &getScrollWheel() const;
+    bool isRelativeModeOn() const;
 
   private:
     Vector2 position;

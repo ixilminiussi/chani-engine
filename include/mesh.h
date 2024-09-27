@@ -2,16 +2,18 @@
 #define MESH_H
 
 #include "texture.h"
+#include "vertexArray.h"
 
-class Mesh {
+class Mesh
+{
   public:
     Mesh();
     ~Mesh();
 
     void unload();
 
-    class VertexArray *getVertexArray() { return vertexArray; }
-    float getRadius() const { return radius; }
+    VertexArray *getVertexArray();
+    float getRadius() const;
 
     void setVertexArray(VertexArray *vertexArrayP);
     void setRadius(const float &radiusP);

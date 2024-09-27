@@ -5,7 +5,8 @@
 
 #include <random>
 
-class Random {
+class Random
+{
   public:
     static void init();
 

@@ -1,7 +1,8 @@
 #if !defined(TIMER_H)
 #define TIMER_H
 
-class Timer {
+class Timer
+{
   public:
     Timer();
     Timer(const Timer &) = delete;

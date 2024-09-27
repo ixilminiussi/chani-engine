@@ -5,7 +5,8 @@
 
 enum class ButtonState;
 
-class KeyboardState {
+class KeyboardState
+{
     friend class InputSystem;
 
   public:

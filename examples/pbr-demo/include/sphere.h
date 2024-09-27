@@ -4,11 +4,12 @@
 #include <actor.h>
 #include <meshComponent.h>
 
-class Sphere : public Actor {
+class Sphere : public Actor
+{
   public:
     Sphere();
 
-    MeshComponent *getMeshComponent() { return mc; }
+    MeshComponent *getMeshComponent() const;
 
   private:
     MeshComponent *mc;

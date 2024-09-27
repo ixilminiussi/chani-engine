@@ -4,22 +4,27 @@
 #include "matrix4.h"
 #include "vector2.h"
 
+// clang-format off
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+// clang-format on
 
 #include <string>
 
 // General purpose shader object. Compiles from file, generates
 // compile/link-time error messages and hosts several utility
 // functions for easy management.
-class Shader {
+class Shader
+{
   public:
     // State
     GLuint id;
 
     // Constructor
-    Shader() : id(0), vs(0), fs(0), gs(0), tcs(0), tes(0) {}
+    Shader() : id(0), vs(0), fs(0), gs(0), tcs(0), tes(0)
+    {
+    }
 
     // Unload the shader
     void unload();
@@ -28,10 +33,8 @@ class Shader {
     Shader &use();
 
     // Compiles the shader from given source code
-    void compile(const GLchar *vertexSource, const GLchar *fragmentSource,
-                 const GLchar *tessControlSource = nullptr,
-                 const GLchar *tessEvalSource = nullptr,
-                 const GLchar *geometrySource = nullptr);
+    void compile(const GLchar *vertexSource, const GLchar *fragmentSource, const GLchar *tessControlSource = nullptr,
+                 const GLchar *tessEvalSource = nullptr, const GLchar *geometrySource = nullptr);
 
     // Utility functions
     void setFloat(const GLchar *name, GLfloat value);

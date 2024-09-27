@@ -4,15 +4,16 @@
 #include "actor.h"
 #include "cameraComponent.h"
 
-class FPSCameraComponent : public CameraComponent {
+class FPSCameraComponent : public CameraComponent
+{
   public:
     FPSCameraComponent(class Actor *ownerP);
 
     void update(float dt) override;
 
-    float getPitch() const { return pitch; }
-    float getPitchSpeed() const { return pitchSpeed; }
-    float getMaxPitch() const { return maxPitch; }
+    float getPitch() const;
+    float getPitchSpeed() const;
+    float getMaxPitch() const;
 
     void setPitchSpeed(float speed);
     void setMaxPitch(float pitch);

@@ -1,13 +1,12 @@
 #include "matrix4.h"
 
-static float m4Ident[4][4] = {{1.0f, 0.0f, 0.0f, 0.0f},
-                              {0.0f, 1.0f, 0.0f, 0.0f},
-                              {0.0f, 0.0f, 1.0f, 0.0f},
-                              {0.0f, 0.0f, 0.0f, 1.0f}};
+static float m4Ident[4][4] = {
+    {1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 1.0f}};
 
 const Matrix4 Matrix4::identity(m4Ident);
 
-void Matrix4::invert() {
+void Matrix4::invert()
+{
     float tmp[12];
     float src[16];
     float dst[16];
@@ -104,13 +103,16 @@ void Matrix4::invert() {
 
     // Inverse of matrix is divided by determinant
     det = 1 / det;
-    for (int j = 0; j < 16; j++) {
+    for (int j = 0; j < 16; j++)
+    {
         dst[j] *= det;
     }
 
     // Set it back
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
             mat[i][j] = dst[i * 4 + j];
         }
     }

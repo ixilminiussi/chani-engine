@@ -5,15 +5,15 @@
 #include "audioSystem.h"
 #include "inputSystem.h"
 #include "rendererOGL.h"
-#include "spriteComponent.h"
-#include "vector2.h"
 #include "window.h"
 
 #include <vector>
 
-class Game {
+class Game
+{
   public:
-    static Game &instance() {
+    static Game &instance()
+    {
         static Game inst;
         return inst;
     }
@@ -24,7 +24,9 @@ class Game {
     Game &operator=(Game &&) = delete;
 
   private:
-    Game() : isRunning(true), isUpdatingActors(false) {}
+    Game() : isRunning(true), isUpdatingActors(false)
+    {
+    }
 
   public:
     bool initialize();
@@ -35,8 +37,8 @@ class Game {
 
     void addActor(Actor *actor);
     void removeActor(Actor *actor);
-    RendererOGL &getRenderer() { return renderer; }
-    AudioSystem &getAudioSystem() { return audioSystem; }
+    RendererOGL &getRenderer();
+    AudioSystem &getAudioSystem();
 
   private:
     void processInput();

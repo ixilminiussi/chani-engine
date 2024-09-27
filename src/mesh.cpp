@@ -4,34 +4,57 @@
 #include "vertexArray.h"
 #include <stdexcept>
 
-Mesh::Mesh() : vertexArray(nullptr), radius(0.0f) {}
+Mesh::Mesh() : vertexArray(nullptr), radius(0.0f)
+{
+}
 
-Mesh::~Mesh() {}
+Mesh::~Mesh()
+{
+}
 
-void Mesh::unload() {
+void Mesh::unload()
+{
     delete vertexArray;
     vertexArray = nullptr;
 }
 
-void Mesh::setVertexArray(VertexArray *vertexArrayP) {
+VertexArray *Mesh::getVertexArray()
+{
+    return vertexArray;
+}
+
+void Mesh::setVertexArray(VertexArray *vertexArrayP)
+{
     vertexArray = vertexArrayP;
 }
 
-Texture *Mesh::getTexture(int index) {
+float Mesh::getRadius() const
+{
+    return radius;
+}
+
+void Mesh::setRadius(const float &radiusP)
+{
+    radius = radiusP;
+}
+
+Texture *Mesh::getTexture(int index)
+{
     Texture *texture;
-    try {
+    try
+    {
         texture = textures.at(index);
         return texture;
     }
-    catch (const std::out_of_range& e) {
+    catch (const std::out_of_range &e)
+    {
         Log::error(LogCategory::Application, e.what());
     }
 
     return nullptr;
 }
 
-void Mesh::addTexture(Texture *texture) {
+void Mesh::addTexture(Texture *texture)
+{
     textures.push_back(texture);
 }
-
-void Mesh::setRadius(const float &radiusP) { radius = radiusP; }

@@ -4,7 +4,8 @@
 #include <SDL_log.h>
 #include <string>
 
-enum class LogCategory {
+enum class LogCategory
+{
     Application = SDL_LOG_CATEGORY_APPLICATION,
     Assert = SDL_LOG_CATEGORY_ASSERT,
     Audio = SDL_LOG_CATEGORY_AUDIO,
@@ -16,7 +17,8 @@ enum class LogCategory {
     Video = SDL_LOG_CATEGORY_VIDEO
 };
 
-class Log {
+class Log
+{
   public:
     Log() = delete;
     Log(const Log &) = delete;

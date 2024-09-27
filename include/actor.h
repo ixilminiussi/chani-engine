@@ -2,7 +2,6 @@
 #define ACTOR_H
 
 #include "matrix4.h"
-#include "vector2.h"
 
 #include <SDL_stdinc.h>
 #include <vector>
@@ -10,21 +9,27 @@
 class Game;
 class Component;
 
-class Actor {
+class Actor
+{
   public:
-    enum class ActorState { Active, Paused, Dead };
+    enum class ActorState
+    {
+        Active,
+        Paused,
+        Dead
+    };
 
     Actor();
     virtual ~Actor();
     Actor(const Actor &) = delete;
     Actor &operator=(const Actor &) = delete;
 
-    Game &getGame() const { return game; }
-    const ActorState getState() const { return state; }
-    const Vector3 getPosition() const { return position; }
-    const float getScale() const { return scale; }
-    const Quaternion getRotation() const { return rotation; }
-    const Matrix4 &getWorldTransform() const { return worldTransform; }
+    Game &getGame() const;
+    const ActorState getState() const;
+    const Vector3 getPosition() const;
+    const float getScale() const;
+    const Quaternion getRotation() const;
+    const Matrix4 &getWorldTransform() const;
 
     void setPosition(Vector3 positionP);
     void setScale(float scaleP);

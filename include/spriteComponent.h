@@ -2,10 +2,11 @@
 #define SPRITE_COMPONENT_H
 
 #include "component.h"
-#include "texture.h"
 #include "material.h"
+#include "texture.h"
 
-class SpriteComponent : public Component {
+class SpriteComponent : public Component
+{
   public:
     SpriteComponent(Actor *ownerP, Texture &textureP,
                     int drawOrderP = 100); // Lower draw order: further back
@@ -15,13 +16,14 @@ class SpriteComponent : public Component {
     SpriteComponent &operator=(const SpriteComponent &) = delete;
 
     virtual void setTexture(const Texture &textureP);
-    void setMaterial(Material *materialP) { material = materialP; }
+    void setMaterial(Material *materialP);
+
     virtual void draw();
 
-    int getDrawOrder() const { return drawOrder; }
-    int getTexWidth() const { return texWidth; }
-    int getTexHeight() const { return texHeight; }
-    int getVisible() const { return isVisible; }
+    int getDrawOrder() const;
+    int getTexWidth() const;
+    int getTexHeight() const;
+    bool getVisible() const;
 
     void setVisible(bool isVisibleP);
 

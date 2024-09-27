@@ -13,7 +13,8 @@
 
 #include <string>
 
-class SoundEvent {
+class SoundEvent
+{
   public:
     SoundEvent();
     // Returns true if associated FMOD event still exists

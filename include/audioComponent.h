@@ -7,7 +7,8 @@
 #include <string>
 #include <vector>
 
-class AudioComponent : public Component {
+class AudioComponent : public Component
+{
   public:
     AudioComponent(class Actor *owner, int updateOrder = 200);
     ~AudioComponent();

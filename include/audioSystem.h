@@ -16,9 +16,11 @@
 #include <unordered_map>
 
 // Forward declarations to avoid including FMOD header
-namespace FMOD {
+namespace FMOD
+{
 class System;
-namespace Studio {
+namespace Studio
+{
 class Bank;
 class EventDescription;
 class EventInstance;
@@ -27,7 +29,8 @@ class Bus;
 }; // namespace Studio
 }; // namespace FMOD
 
-class AudioSystem {
+class AudioSystem
+{
   public:
     AudioSystem();
     ~AudioSystem();
@@ -65,8 +68,7 @@ class AudioSystem {
     // Map of event name to EventDescription
     std::unordered_map<std::string, FMOD::Studio::EventDescription *> events;
     // Map of event id to EventInstance
-    std::unordered_map<unsigned int, FMOD::Studio::EventInstance *>
-        eventInstances;
+    std::unordered_map<unsigned int, FMOD::Studio::EventInstance *> eventInstances;
     // Map of buses
     std::unordered_map<std::string, FMOD::Studio::Bus *> buses;
     // FMOD studio system

@@ -10,16 +10,17 @@ constexpr float spriteVertices[] = {
 
 constexpr unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
-class VertexArray {
+class VertexArray
+{
   public:
-    VertexArray(const float *verticesP, unsigned int nbVerticesP,
-                const unsigned int *indicesP, unsigned int nbIndicesP);
+    VertexArray(const float *verticesP, unsigned int nbVerticesP, const unsigned int *indicesP,
+                unsigned int nbIndicesP);
     ~VertexArray();
 
     void setActive();
 
-    unsigned int getNbVertices() const { return nbVertices; }
-    unsigned int getNbIndices() const { return nbIndices; }
+    unsigned int getNbVertices() const;
+    unsigned int getNbIndices() const;
 
   private:
     unsigned int nbVertices;

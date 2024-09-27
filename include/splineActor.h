@@ -3,7 +3,8 @@
 
 #include "actor.h"
 
-class SplineActor : public Actor {
+class SplineActor : public Actor
+{
   public:
     SplineActor();
 

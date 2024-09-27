@@ -1,16 +1,21 @@
 #if !defined(QUATERNION_H)
 #define QUATERNION_H
 
+#include "maths.h"
 #include "vector3.h"
 
-class Quaternion {
+class Quaternion
+{
   public:
     float x;
     float y;
     float z;
     float w;
 
-    Quaternion() { *this = Quaternion::identity; }
+    Quaternion()
+    {
+        *this = Quaternion::identity;
+    }
 
     // This directly sets the quaternion components --
     // don't use for axis/angle
@@ -25,19 +30,27 @@ class Quaternion {
     void conjugate();
     void normalize();
 
-    float lengthSq() const { return (x * x + y * y + z * z + w * w); }
+    float lengthSq() const
+    {
+        return (x * x + y * y + z * z + w * w);
+    }
 
-    float length() const { return Maths::sqrt(lengthSq()); }
+    float length() const
+    {
+        return Maths::sqrt(lengthSq());
+    }
 
     // Normalize the provided quaternion
-    static Quaternion normalize(const Quaternion &q) {
+    static Quaternion normalize(const Quaternion &q)
+    {
         Quaternion retVal = q;
         retVal.normalize();
         return retVal;
     }
 
     // Linear interpolation
-    static Quaternion lerp(const Quaternion &a, const Quaternion &b, float f) {
+    static Quaternion lerp(const Quaternion &a, const Quaternion &b, float f)
+    {
         Quaternion retVal;
         retVal.x = Maths::lerp(a.x, b.x, f);
         retVal.y = Maths::lerp(a.y, b.y, f);
@@ -47,34 +60,41 @@ class Quaternion {
         return retVal;
     }
 
-    static float dot(const Quaternion &a, const Quaternion &b) {
+    static float dot(const Quaternion &a, const Quaternion &b)
+    {
         return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
     }
 
     // Spherical Linear Interpolation
-    static Quaternion slerp(const Quaternion &a, const Quaternion &b, float f) {
+    static Quaternion slerp(const Quaternion &a, const Quaternion &b, float f)
+    {
         float rawCosm = Quaternion::dot(a, b);
 
         float cosom = -rawCosm;
-        if (rawCosm >= 0.0f) {
+        if (rawCosm >= 0.0f)
+        {
             cosom = rawCosm;
         }
 
         float scale0, scale1;
 
-        if (cosom < 0.9999f) {
+        if (cosom < 0.9999f)
+        {
             const float omega = Maths::acos(cosom);
             const float invSin = 1.f / Maths::sin(omega);
             scale0 = Maths::sin((1.f - f) * omega) * invSin;
             scale1 = Maths::sin(f * omega) * invSin;
-        } else {
+        }
+        else
+        {
             // Use linear interpolation if the quaternions
             // are collinear
             scale0 = 1.0f - f;
             scale1 = f;
         }
 
-        if (rawCosm < 0.0f) {
+        if (rawCosm < 0.0f)
+        {
             scale1 = -scale1;
         }
 
@@ -89,7 +109,8 @@ class Quaternion {
 
     // Concatenate
     // Rotate by q FOLLOWED BY p
-    static Quaternion concatenate(const Quaternion &q, const Quaternion &p) {
+    static Quaternion concatenate(const Quaternion &q, const Quaternion &p)
+    {
         Quaternion retVal;
 
         // Vector component is:

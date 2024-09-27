@@ -18,11 +18,16 @@
 
 unsigned int AudioSystem::nextID = 0;
 
-AudioSystem::AudioSystem() : system(nullptr), coreSystem(nullptr) {}
+AudioSystem::AudioSystem() : system(nullptr), coreSystem(nullptr)
+{
+}
 
-AudioSystem::~AudioSystem() {}
+AudioSystem::~AudioSystem()
+{
+}
 
-bool AudioSystem::initialize() {
+bool AudioSystem::initialize()
+{
     // Initialize debug logging
     FMOD::Debug_Initialize(FMOD_DEBUG_LEVEL_ERROR, // Log only errors
                            FMOD_DEBUG_MODE_TTY     // Output to stdout
@@ -31,7 +36,8 @@ bool AudioSystem::initialize() {
     // Create FMOD studio system object
     FMOD_RESULT result;
     result = FMOD::Studio::System::create(&system);
-    if (result != FMOD_OK) {
+    if (result != FMOD_OK)
+    {
         std::ostringstream error;
         error << "Failed to create FMOD system: " << FMOD_ErrorString(result);
         Log::error(LogCategory::Audio, error.str());
@@ -39,15 +45,15 @@ bool AudioSystem::initialize() {
     }
 
     // Initialize FMOD studio system
-    result = system->initialize(512, // Max number of concurrent sounds
+    result = system->initialize(512,                     // Max number of concurrent sounds
                                 FMOD_STUDIO_INIT_NORMAL, // Use default settings
                                 FMOD_INIT_NORMAL,        // Use default settings
                                 nullptr                  // Usually null
     );
-    if (result != FMOD_OK) {
+    if (result != FMOD_OK)
+    {
         std::ostringstream error;
-        error << "Failed to initialize FMOD system: "
-              << FMOD_ErrorString(result);
+        error << "Failed to initialize FMOD system: " << FMOD_ErrorString(result);
         Log::error(LogCategory::Audio, error.str());
         return false;
     }
@@ -62,31 +68,35 @@ bool AudioSystem::initialize() {
     return true;
 }
 
-void AudioSystem::close() {
+void AudioSystem::close()
+{
     // Unload all banks
     unloadAllBanks();
     // Shutdown FMOD system
-    if (system) {
+    if (system)
+    {
         system->release();
     }
 }
 
-void AudioSystem::loadBank(const std::string &name) {
+void AudioSystem::loadBank(const std::string &name)
+{
     // Prevent double-loading
-    if (banks.find(name) != banks.end()) {
+    if (banks.find(name) != banks.end())
+    {
         return;
     }
 
     // Try to load bank
     FMOD::Studio::Bank *bank = nullptr;
-    FMOD_RESULT result =
-        system->loadBankFile(name.c_str(),                 // File name of bank
-                             FMOD_STUDIO_LOAD_BANK_NORMAL, // Normal loading
-                             &bank // Save pointer to bank
-        );
+    FMOD_RESULT result = system->loadBankFile(name.c_str(),                 // File name of bank
+                                              FMOD_STUDIO_LOAD_BANK_NORMAL, // Normal loading
+                                              &bank                         // Save pointer to bank
+    );
 
     const int maxPathLength = 512;
-    if (result == FMOD_OK) {
+    if (result == FMOD_OK)
+    {
         // Add bank to map
         banks.emplace(name, bank);
         // Load all non-streaming sample data
@@ -94,13 +104,14 @@ void AudioSystem::loadBank(const std::string &name) {
         // Get the number of events in this bank
         int numEvents = 0;
         bank->getEventCount(&numEvents);
-        if (numEvents > 0) {
+        if (numEvents > 0)
+        {
             // Get list of event descriptions in this bank
-            std::vector<FMOD::Studio::EventDescription *> eventDescriptions(
-                numEvents);
+            std::vector<FMOD::Studio::EventDescription *> eventDescriptions(numEvents);
             bank->getEventList(eventDescriptions.data(), numEvents, &numEvents);
             char eventName[maxPathLength];
-            for (int i = 0; i < numEvents; i++) {
+            for (int i = 0; i < numEvents; i++)
+            {
                 FMOD::Studio::EventDescription *e = eventDescriptions[i];
                 // Get the path of this event (like event:/Explosion2D)
                 e->getPath(eventName, maxPathLength, nullptr);
@@ -111,12 +122,14 @@ void AudioSystem::loadBank(const std::string &name) {
         // Get the number of buses in this bank
         int numBuses = 0;
         bank->getBusCount(&numBuses);
-        if (numBuses > 0) {
+        if (numBuses > 0)
+        {
             // Get list of buses in this bank
             std::vector<FMOD::Studio::Bus *> bankBuses(numBuses);
             bank->getBusList(bankBuses.data(), numBuses, &numBuses);
             char busName[512];
-            for (int i = 0; i < numBuses; i++) {
+            for (int i = 0; i < numBuses; i++)
+            {
                 FMOD::Studio::Bus *bus = bankBuses[i];
                 // Get the path of this bus (like bus:/SFX)
                 bus->getPath(busName, 512, nullptr);
@@ -127,10 +140,12 @@ void AudioSystem::loadBank(const std::string &name) {
     }
 }
 
-void AudioSystem::unloadBank(const std::string &name) {
+void AudioSystem::unloadBank(const std::string &name)
+{
     // Ignore if not loaded
     auto iter = banks.find(name);
-    if (iter == banks.end()) {
+    if (iter == banks.end())
+    {
         return;
     }
 
@@ -138,20 +153,22 @@ void AudioSystem::unloadBank(const std::string &name) {
     FMOD::Studio::Bank *bank = iter->second;
     int numEvents = 0;
     bank->getEventCount(&numEvents);
-    if (numEvents > 0) {
+    if (numEvents > 0)
+    {
         // Get event descriptions for this bank
-        std::vector<FMOD::Studio::EventDescription *> eventDescriptions(
-            numEvents);
+        std::vector<FMOD::Studio::EventDescription *> eventDescriptions(numEvents);
         // Get list of events
         bank->getEventList(eventDescriptions.data(), numEvents, &numEvents);
         char eventName[512];
-        for (int i = 0; i < numEvents; i++) {
+        for (int i = 0; i < numEvents; i++)
+        {
             FMOD::Studio::EventDescription *e = eventDescriptions[i];
             // Get the path of this event
             e->getPath(eventName, 512, nullptr);
             // Remove this event
             auto eventi = events.find(eventName);
-            if (eventi != events.end()) {
+            if (eventi != events.end())
+            {
                 events.erase(eventi);
             }
         }
@@ -159,18 +176,21 @@ void AudioSystem::unloadBank(const std::string &name) {
     // Get the number of buses in this bank
     int numBuses = 0;
     bank->getBusCount(&numBuses);
-    if (numBuses > 0) {
+    if (numBuses > 0)
+    {
         // Get list of buses in this bank
         std::vector<FMOD::Studio::Bus *> bankBuses(numBuses);
         bank->getBusList(bankBuses.data(), numBuses, &numBuses);
         char busName[512];
-        for (int i = 0; i < numBuses; i++) {
+        for (int i = 0; i < numBuses; i++)
+        {
             FMOD::Studio::Bus *bus = bankBuses[i];
             // Get the path of this bus (like bus:/SFX)
             bus->getPath(busName, 512, nullptr);
             // Remove this bus
             auto busi = buses.find(busName);
-            if (busi != buses.end()) {
+            if (busi != buses.end())
+            {
                 buses.erase(busi);
             }
         }
@@ -183,8 +203,10 @@ void AudioSystem::unloadBank(const std::string &name) {
     banks.erase(iter);
 }
 
-void AudioSystem::unloadAllBanks() {
-    for (auto &iter : banks) {
+void AudioSystem::unloadAllBanks()
+{
+    for (auto &iter : banks)
+    {
         // Unload the sample data, then the bank itself
         iter.second->unloadSampleData();
         iter.second->unload();
@@ -194,14 +216,17 @@ void AudioSystem::unloadAllBanks() {
     events.clear();
 }
 
-SoundEvent AudioSystem::playEvent(const std::string &name) {
+SoundEvent AudioSystem::playEvent(const std::string &name)
+{
     unsigned int retID = 0;
     auto iter = events.find(name);
-    if (iter != events.end()) {
+    if (iter != events.end())
+    {
         // Create instance of event
         FMOD::Studio::EventInstance *event = nullptr;
         iter->second->createInstance(&event);
-        if (event) {
+        if (event)
+        {
             // Start the event instance
             event->start();
             // Get the next id, and add to map
@@ -213,15 +238,18 @@ SoundEvent AudioSystem::playEvent(const std::string &name) {
     return SoundEvent(this, retID);
 }
 
-void AudioSystem::update(float dt) {
+void AudioSystem::update(float dt)
+{
     // Find any stopped event instances
     std::vector<unsigned int> done;
-    for (auto &iter : eventInstances) {
+    for (auto &iter : eventInstances)
+    {
         FMOD::Studio::EventInstance *e = iter.second;
         // Get the state of this event
         FMOD_STUDIO_PLAYBACK_STATE state;
         e->getPlaybackState(&state);
-        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED)
+        {
             // Release the event and add id to done
             e->release();
             done.emplace_back(iter.first);
@@ -229,7 +257,8 @@ void AudioSystem::update(float dt) {
     }
 
     // Remove done event instances from map
-    for (auto id : done) {
+    for (auto id : done)
+    {
         eventInstances.erase(id);
     }
 
@@ -237,8 +266,10 @@ void AudioSystem::update(float dt) {
     system->update();
 }
 
-namespace {
-FMOD_VECTOR VecToFMOD(const Vector3 &in) {
+namespace
+{
+FMOD_VECTOR VecToFMOD(const Vector3 &in)
+{
     // Convert from our coordinates (+x forward, +y right, +z up)
     // to FMOD (+z forward, +x right, +y up)
     FMOD_VECTOR v;
@@ -249,7 +280,8 @@ FMOD_VECTOR VecToFMOD(const Vector3 &in) {
 }
 } // namespace
 
-void AudioSystem::setListener(const Matrix4 &viewMatrix) {
+void AudioSystem::setListener(const Matrix4 &viewMatrix)
+{
     // Invert the view matrix to get the correct vectors
     Matrix4 invView = viewMatrix;
     invView.invert();
@@ -266,42 +298,52 @@ void AudioSystem::setListener(const Matrix4 &viewMatrix) {
     system->setListenerAttributes(0, &listener);
 }
 
-float AudioSystem::getBusVolume(const std::string &name) const {
+float AudioSystem::getBusVolume(const std::string &name) const
+{
     float retVal = 0.0f;
     const auto iter = buses.find(name);
-    if (iter != buses.end()) {
+    if (iter != buses.end())
+    {
         iter->second->getVolume(&retVal);
     }
     return retVal;
 }
 
-bool AudioSystem::getBusPaused(const std::string &name) const {
+bool AudioSystem::getBusPaused(const std::string &name) const
+{
     bool retVal = false;
     const auto iter = buses.find(name);
-    if (iter != buses.end()) {
+    if (iter != buses.end())
+    {
         iter->second->getPaused(&retVal);
     }
     return retVal;
 }
 
-void AudioSystem::setBusVolume(const std::string &name, float volume) {
+void AudioSystem::setBusVolume(const std::string &name, float volume)
+{
     auto iter = buses.find(name);
-    if (iter != buses.end()) {
+    if (iter != buses.end())
+    {
         iter->second->setVolume(volume);
     }
 }
 
-void AudioSystem::setBusPaused(const std::string &name, bool pause) {
+void AudioSystem::setBusPaused(const std::string &name, bool pause)
+{
     auto iter = buses.find(name);
-    if (iter != buses.end()) {
+    if (iter != buses.end())
+    {
         iter->second->setPaused(pause);
     }
 }
 
-FMOD::Studio::EventInstance *AudioSystem::getEventInstance(unsigned int id) {
+FMOD::Studio::EventInstance *AudioSystem::getEventInstance(unsigned int id)
+{
     FMOD::Studio::EventInstance *event = nullptr;
     auto iter = eventInstances.find(id);
-    if (iter != eventInstances.end()) {
+    if (iter != eventInstances.end())
+    {
         event = iter->second;
     }
     return event;

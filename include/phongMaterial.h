@@ -3,14 +3,15 @@
 
 #include "material.h"
 
-class PhongMaterial : public Material {
+class PhongMaterial : public Material
+{
   public:
     PhongMaterial();
     ~PhongMaterial() = default;
 
     void use() override;
 
-    void setSpecular(const float &specularP) { specular = specularP; }
+    void setSpecular(const float &specularP);
 
   protected:
     float specular;

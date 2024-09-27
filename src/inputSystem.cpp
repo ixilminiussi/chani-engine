@@ -6,10 +6,12 @@
 #include <SDL_mouse.h>
 #include <cstring>
 
-InputSystem::InputSystem()
-    : inputState(), isCursorDisplayed(false), gamepad(nullptr) {}
+InputSystem::InputSystem() : inputState(), isCursorDisplayed(false), gamepad(nullptr)
+{
+}
 
-bool InputSystem::initialize() {
+bool InputSystem::initialize()
+{
     // Keyboard
     // Assign current state pointer
     inputState.keyboard.currentState = SDL_GetKeyboardState(nullptr);
@@ -30,22 +32,29 @@ bool InputSystem::initialize() {
     return true;
 }
 
-void InputSystem::close() {
-    if (gamepad != nullptr) {
+void InputSystem::close()
+{
+    if (gamepad != nullptr)
+    {
         SDL_CloseGamepad(gamepad);
     }
 }
 
-bool InputSystem::processEvent(SDL_Event &event) {
+const InputState InputSystem::getInputState() const
+{
+    return inputState;
+}
+
+bool InputSystem::processEvent(SDL_Event &event)
+{
     bool isRunning = true;
-    switch (event.type) {
+    switch (event.type)
+    {
     case SDL_EVENT_QUIT:
         isRunning = false;
         break;
     case SDL_EVENT_MOUSE_WHEEL:
-        inputState.mouse.scrollWheel =
-            Vector2(static_cast<float>(event.wheel.x),
-                    static_cast<float>(event.wheel.y));
+        inputState.mouse.scrollWheel = Vector2(static_cast<float>(event.wheel.x), static_cast<float>(event.wheel.y));
         break;
     default:
         break;
@@ -53,25 +62,28 @@ bool InputSystem::processEvent(SDL_Event &event) {
     return isRunning;
 }
 
-void InputSystem::preUpdate() {
+void InputSystem::preUpdate()
+{
     // Copy current state to previous
     // Keyboard
-    memcpy(inputState.keyboard.previousState, inputState.keyboard.currentState,
-           SDL_SCANCODE_COUNT);
+    memcpy(inputState.keyboard.previousState, inputState.keyboard.currentState, SDL_SCANCODE_COUNT);
     // Mouse
     inputState.mouse.previousButtons = inputState.mouse.currentButtons;
     inputState.mouse.scrollWheel = Vector2::zero;
     // gamepad
-    memcpy(inputState.gamepad.previousButtons,
-           inputState.gamepad.currentButtons, SDL_GAMEPAD_BUTTON_COUNT);
+    memcpy(inputState.gamepad.previousButtons, inputState.gamepad.currentButtons, SDL_GAMEPAD_BUTTON_COUNT);
 }
 
-void InputSystem::update() {
+void InputSystem::update()
+{
     // Mouse
     float x = 0, y = 0;
-    if (inputState.mouse.isRelativeMode) {
+    if (inputState.mouse.isRelativeMode)
+    {
         inputState.mouse.currentButtons = SDL_GetRelativeMouseState(&x, &y);
-    } else {
+    }
+    else
+    {
         inputState.mouse.currentButtons = SDL_GetMouseState(&x, &y);
     }
 
@@ -80,16 +92,14 @@ void InputSystem::update() {
 
     // gamepad
     // Buttons
-    for (int i = 0; i < SDL_GAMEPAD_BUTTON_COUNT; i++) {
-        inputState.gamepad.currentButtons[i] =
-            SDL_GetGamepadButton(gamepad, SDL_GamepadButton(i));
+    for (int i = 0; i < SDL_GAMEPAD_BUTTON_COUNT; i++)
+    {
+        inputState.gamepad.currentButtons[i] = SDL_GetGamepadButton(gamepad, SDL_GamepadButton(i));
     }
 
     // Triggers
-    inputState.gamepad.leftTrigger =
-        filter1D(SDL_GetGamepadAxis(gamepad, SDL_GAMEPAD_AXIS_LEFT_TRIGGER));
-    inputState.gamepad.rightTrigger =
-        filter1D(SDL_GetGamepadAxis(gamepad, SDL_GAMEPAD_AXIS_RIGHT_TRIGGER));
+    inputState.gamepad.leftTrigger = filter1D(SDL_GetGamepadAxis(gamepad, SDL_GAMEPAD_AXIS_LEFT_TRIGGER));
+    inputState.gamepad.rightTrigger = filter1D(SDL_GetGamepadAxis(gamepad, SDL_GAMEPAD_AXIS_RIGHT_TRIGGER));
 
     // Sticks
     x = SDL_GetGamepadAxis(gamepad, SDL_GAMEPAD_AXIS_LEFTX);
@@ -101,33 +111,43 @@ void InputSystem::update() {
     inputState.gamepad.rightStick = filter2D(x, y);
 }
 
-void InputSystem::setMouseCursor(bool isCursorDisplayedP) {
+bool InputSystem::getIsCursorDisplayed() const
+{
+    return isCursorDisplayed;
+}
+
+void InputSystem::setMouseCursor(bool isCursorDisplayedP)
+{
     isCursorDisplayed = isCursorDisplayedP;
-    if (isCursorDisplayedP) {
+    if (isCursorDisplayedP)
+    {
         SDL_ShowCursor();
-    } else {
+    }
+    else
+    {
         SDL_HideCursor();
     }
 }
 
-void InputSystem::setMouseRelativeMode(SDL_Window *window,
-                                       bool isMouseRelativeOnP) {
+void InputSystem::setMouseRelativeMode(SDL_Window *window, bool isMouseRelativeOnP)
+{
     SDL_bool set = isMouseRelativeOnP ? SDL_TRUE : SDL_FALSE;
     SDL_SetWindowRelativeMouseMode(window, set);
 
     inputState.mouse.isRelativeMode = isMouseRelativeOnP;
 }
 
-float InputSystem::filter1D(int input) {
+float InputSystem::filter1D(int input)
+{
     const int deadZone = GAMEPAD_DEAD_ZONE_1D;
     const int maxValue = GAMEPAD_MAX_VALUE;
     float retVal = 0.0f;
 
     int absValue = input > 0 ? input : -input;
-    if (absValue > deadZone) {
+    if (absValue > deadZone)
+    {
         // Compute fractional value between dead zone and max value
-        retVal =
-            static_cast<float>(absValue - deadZone) / (maxValue - deadZone);
+        retVal = static_cast<float>(absValue - deadZone) / (maxValue - deadZone);
         // Make sure sign matches original value
         retVal = input > 0 ? retVal : -1.0f * retVal;
         // Clamp between -1.0f and 1.0f
@@ -137,7 +157,8 @@ float InputSystem::filter1D(int input) {
     return retVal;
 }
 
-Vector2 InputSystem::filter2D(int inputX, int inputY) {
+Vector2 InputSystem::filter2D(int inputX, int inputY)
+{
     const float deadZone = GAMEPAD_DEAD_ZONE_2D;
     const float maxValue = GAMEPAD_MAX_VALUE;
 
@@ -147,9 +168,12 @@ Vector2 InputSystem::filter2D(int inputX, int inputY) {
     float length = dir.length();
 
     // If length < deadZone, should be no input
-    if (length < deadZone) {
+    if (length < deadZone)
+    {
         dir = Vector2::zero;
-    } else {
+    }
+    else
+    {
         // Calculate fractional value between dead zone and max value circles
         float f = (length - deadZone) / (maxValue - deadZone);
         // Clamp f between 0.0f and 1.0f
