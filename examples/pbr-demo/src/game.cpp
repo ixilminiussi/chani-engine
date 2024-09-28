@@ -1,45 +1,68 @@
 #include <chani.h>
 
+#include "pbrMaterial.h"
 #include <actor.h>
 #include <assets.h>
+#include <maths.h>
 #include <orbitActor.h>
+#include <phongMaterial.h>
 #include <sphere.h>
 
+#define ROWS 2
+#define COLUMNS 5
+#define SPACING 1000
+
 OrbitActor *orbit;
-Sphere *spheres[3];
+Sphere *spheres[ROWS][COLUMNS];
+
+int x, y = 0;
 
 void Game::load()
 {
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
     Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
+    Assets::loadShader("assets/shaders/PBR.vert", "assets/shaders/PBR.frag", "", "", "", "Shader_PBR");
 
     Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Texture_Sphere");
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    Assets::loadPhongMaterial("assets/materials/Phong10.mat", "Material_Phong_10");
-    Assets::loadPhongMaterial("assets/materials/Phong50.mat", "Material_Phong_50");
-    Assets::loadPhongMaterial("assets/materials/Phong90.mat", "Material_Phong_90");
+    char *buffer = new char[1000];
 
-    spheres[0] = new Sphere();
-    spheres[1] = new Sphere();
-    spheres[2] = new Sphere();
+    int step = 100 / COLUMNS;
 
-    spheres[0]->setPosition(Vector3(-1000.0f, 0.0f, 0.0f));
-    spheres[0]->setScale(10.0f);
-    spheres[0]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_10"));
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
+            spheres[i][j] = new Sphere();
+            spheres[i][j]->setPosition(Vector3(0.0f, (float)(j * SPACING), -(float)(i * SPACING)));
+            spheres[i][j]->setScale(10.0f);
 
-    spheres[1]->setPosition(Vector3(0.0f, 0.0f, 0.0f));
-    spheres[1]->setScale(10.0f);
-    spheres[1]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_50"));
+            if (i == 0)
+            {
+                std::snprintf(buffer, 1000, "Material_Phong_%d", j);
+                Assets::loadPhongMaterial("assets/materials/Phong.mat", buffer);
 
-    spheres[2]->setPosition(Vector3(1000.0f, 0.0f, 0.0f));
-    spheres[2]->setScale(10.0f);
-    spheres[2]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong_90"));
+                dynamic_cast<PhongMaterial *>(Assets::getMaterial(buffer))->setSpecular((float)(j * step));
+                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial(buffer));
+            }
+            if (i == 1)
+            {
+                std::snprintf(buffer, 1000, "Material_PBR_%d", j);
+                Assets::loadCustomMaterial(PBRMaterial::loadFromFile("assets/materials/PBR.mat"), buffer);
+
+                dynamic_cast<PBRMaterial *>(Assets::getMaterial(buffer))->setRoughness((float)(j * step));
+                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial(buffer));
+            }
+        }
+    }
+
+    delete[] buffer;
 
     orbit = new OrbitActor();
-    orbit->snapToActor(spheres[0]);
+    orbit->snapToActor(spheres[y][x]);
 
     // Setup lights
     renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -69,18 +92,27 @@ void Game::processInput()
         isRunning = false;
     }
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_1) == ButtonState::Pressed)
+    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed)
     {
-        orbit->snapToActor(spheres[0]);
+        y++;
     }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_2) == ButtonState::Pressed)
+    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Pressed)
     {
-        orbit->snapToActor(spheres[1]);
+        y--;
     }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_3) == ButtonState::Pressed)
+    if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed)
     {
-        orbit->snapToActor(spheres[2]);
+        x++;
     }
+    if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed)
+    {
+        x--;
+    }
+
+    y = Maths::wrap(y, 0, ROWS);
+    x = Maths::wrap(x, 0, COLUMNS);
+
+    orbit->snapToActor(spheres[y][x]);
 
     // Actor input
     isUpdatingActors = true;

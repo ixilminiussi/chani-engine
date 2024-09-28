@@ -8,18 +8,19 @@ PhongMaterial::PhongMaterial() : Material()
 
 void PhongMaterial::use()
 {
-    if (selected != this)
+    if (true)
     {
         selected = this;
 
         // Enable depth buffering/disable alpha blend
         glEnable(GL_DEPTH_TEST);
         glDisable(GL_BLEND);
-        Shader &shader = getShader();
-        shader.use();
 
-        shader.setFloat("uSpecPower", specular);
+        Shader &shader = getShader();
+        shader.setFloat("uSpecular", specular);
         shader.setMatrix4("uViewProj", view * projection);
+
+        shader.use();
     }
 }
 

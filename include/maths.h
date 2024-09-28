@@ -44,6 +44,11 @@ template <typename T> T min(const T &a, const T &b)
     return (a < b ? a : b);
 }
 
+template <typename T> T wrap(const T &value, const T &lower, const T &upper)
+{
+    return ((value % (upper - lower)) + (upper - lower)) % (upper - lower) + lower;
+}
+
 template <typename T> T clamp(const T &value, const T &lower, const T &upper)
 {
     return min(upper, max(lower, value));

@@ -1,5 +1,5 @@
 {
     "version": 1,
     "shader": "Shader_Phong",
-    "specular": 10.0
+    "specular": 0.0
 }

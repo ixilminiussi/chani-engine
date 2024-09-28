@@ -26,13 +26,8 @@ void MeshComponent::setVisible(bool isVisibleP)
 
 void MeshComponent::draw()
 {
-    if (mesh && material)
+    if (material)
     {
-        material->use();
-
-        Matrix4 wt = owner.getWorldTransform();
-        material->setWorldTransform(wt);
-
         Texture *t = mesh->getTexture(textureIndex);
         if (t)
         {
@@ -42,7 +37,15 @@ void MeshComponent::draw()
         VertexArray *va = mesh->getVertexArray();
         va->setActive();
 
+        Matrix4 wt = owner.getWorldTransform();
+        material->setWorldTransform(wt);
+        material->use();
+
         glDrawElements(GL_TRIANGLES, va->getNbIndices(), GL_UNSIGNED_INT, nullptr);
+    }
+    else
+    {
+        // TODO: Throw error
     }
 }
 
@@ -60,3 +63,5 @@ void MeshComponent::setTextureIndex(size_t textureIndexP)
 {
     textureIndex = textureIndexP;
 }
+
+// TODO: ADD DEBUGGING FUNCTIONS / VARIABLE TO DEBUG SPECIFIC ACTOR

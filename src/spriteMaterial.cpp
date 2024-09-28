@@ -7,7 +7,7 @@ SpriteMaterial::SpriteMaterial() : Material()
 
 void SpriteMaterial::use()
 {
-    if (selected != this)
+    if (true)
     {
         selected = this;
 

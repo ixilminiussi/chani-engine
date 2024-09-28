@@ -33,14 +33,25 @@ void BackgroundSpriteComponent::update(float dt)
 void BackgroundSpriteComponent::draw()
 {
     // Draw each background texture
-    for (auto &bg : textures)
+    if (material)
     {
-        owner.setPosition(Vector3(0.0f, bg.offset.x, bg.offset.y));
-        Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(), (float)texture.getHeight(), 1.0f);
-        Matrix4 world = scaleMat * owner.getWorldTransform();
-        material->getShader().setMatrix4("uWorldTransform", world);
-        texture.setActive();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        for (auto &bg : textures)
+        {
+            owner.setPosition(Vector3(0.0f, bg.offset.x, bg.offset.y));
+            Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(), (float)texture.getHeight(), 1.0f);
+
+            Matrix4 world = scaleMat * owner.getWorldTransform();
+            material->setWorldTransform(world);
+            material->use();
+
+            texture.setActive();
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        }
+    }
+    else
+    {
+        // TODO: Throw error
     }
 }
 

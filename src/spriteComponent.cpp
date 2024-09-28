@@ -29,12 +29,23 @@ void SpriteComponent::setMaterial(Material *materialP)
 
 void SpriteComponent::draw()
 {
-    Vector2 origin{texWidth / 2.f, texHeight / 2.f};
-    Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(), (float)texture.getHeight(), 1.0f);
-    Matrix4 world = scaleMat * owner.getWorldTransform();
-    material->getShader().setMatrix4("uWorldTransform", world);
-    texture.setActive();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    if (material)
+    {
+        Vector2 origin{texWidth / 2.f, texHeight / 2.f};
+
+        Matrix4 scaleMat = Matrix4::createScale((float)texture.getWidth(), (float)texture.getHeight(), 1.0f);
+        Matrix4 world = scaleMat * owner.getWorldTransform();
+        material->setWorldTransform(world);
+        material->use();
+
+        texture.setActive();
+
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    }
+    else
+    {
+        // TODO: Throw error if missing material
+    }
 }
 
 int SpriteComponent::getDrawOrder() const

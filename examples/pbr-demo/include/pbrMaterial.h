@@ -3,22 +3,23 @@
 
 #include "material.h"
 
-class PBRMaterial : public Material
-{
-  public:
-    PBRMaterial();
-    ~PBRMaterial() = default;
+class PBRMaterial : public Material {
+public:
+  PBRMaterial();
+  ~PBRMaterial() = default;
 
-    void use() override;
+  void use() override;
 
-    void setRoughness(const float &roughnessP);
+  void setRoughness(const float &roughnessP);
 
-  protected:
-    float roughness;
+  static Material *loadFromFile(const std::string &filename);
 
-    // TODO: let users decide between a value and a texture. In the case of a
-    // texture, roughness/albedo etc will be determined according to that texture,
-    // otherwise it will be the value.
+protected:
+  float roughness;
+
+  // TODO: let users decide between a value and a texture. In the case of a
+  // texture, roughness/albedo etc will be determined according to that texture,
+  // otherwise it will be the value.
 };
 
 #endif

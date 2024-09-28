@@ -1,5 +1,5 @@
 {
     "version": 1,
     "shader": "Shader_Phong",
-    "specular": 50.0
+    "roughness": 0.0
 }
