@@ -9,9 +9,8 @@
 #include <moveComponent.h>
 
 FPSActor::FPSActor()
-    : Actor(), moveComponent(nullptr), audioComponent(nullptr), meshComponent(nullptr), cameraComponent(nullptr),
-      lastFootstep(0.0f)
-{
+    : Actor(), moveComponent(nullptr), audioComponent(nullptr),
+      meshComponent(nullptr), cameraComponent(nullptr), lastFootstep(0.0f) {
     moveComponent = new MoveComponent(this);
     audioComponent = new AudioComponent(this);
     cameraComponent = new FPSCameraComponent(this);
@@ -26,14 +25,13 @@ FPSActor::FPSActor()
     meshComponent->setMaterial(Assets::getMaterial("Mat_Rifle"));
 }
 
-void FPSActor::updateActor(float dt)
-{
+void FPSActor::updateActor(float dt) {
     Actor::updateActor(dt);
 
     // Play the footstep if we're moving and haven't recently
     lastFootstep -= dt;
-    if (!Maths::nearZero(moveComponent->getForwardSpeed()) && lastFootstep <= 0.0f)
-    {
+    if (!Maths::nearZero(moveComponent->getForwardSpeed()) &&
+        lastFootstep <= 0.0f) {
         footstep.setPaused(false);
         footstep.restart();
         lastFootstep = 0.5f;
@@ -46,29 +44,25 @@ void FPSActor::updateActor(float dt)
     modelPosition.z += MODEL_OFFSET.z;
     FPSModel->setPosition(modelPosition);
     Quaternion q = getRotation();
-    q = Quaternion::concatenate(q, Quaternion(getRight(), cameraComponent->getPitch()));
+    q = Quaternion::concatenate(
+        q, Quaternion(getRight(), cameraComponent->getPitch()));
     FPSModel->setRotation(q);
 }
 
-void FPSActor::actorInput(const InputState &inputState)
-{
+void FPSActor::actorInput(const InputState &inputState) {
     float forwardSpeed = 0.0f;
     float strafeSpeed = 0.0f;
     // wasd movement
-    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W))
-    {
+    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_W)) {
         forwardSpeed += 400.0f;
     }
-    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S))
-    {
+    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_S)) {
         forwardSpeed -= 400.0f;
     }
-    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A))
-    {
+    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_A)) {
         strafeSpeed -= 400.0f;
     }
-    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_D))
-    {
+    if (inputState.keyboard.getKeyValue(SDL_SCANCODE_D)) {
         strafeSpeed += 400.0f;
     }
     moveComponent->setForwardSpeed(forwardSpeed);
@@ -80,31 +74,27 @@ void FPSActor::actorInput(const InputState &inputState)
     const int maxMouseSpeed = 500;
     const float maxAngularSpeed = Maths::pi * 8;
     float angularSpeed = 0.0f;
-    if (x != 0)
-    {
+    if (x != 0) {
         angularSpeed = x / maxMouseSpeed;
         angularSpeed *= maxAngularSpeed;
     }
     moveComponent->setAngularSpeed(angularSpeed);
     const float maxPitchSpeed = Maths::pi * 8;
     float pitchSpeed = 0.0f;
-    if (y != 0)
-    {
+    if (y != 0) {
         pitchSpeed = y / maxMouseSpeed;
         pitchSpeed *= maxPitchSpeed;
     }
     cameraComponent->setPitchSpeed(pitchSpeed);
 }
 
-void FPSActor::setFootstepSurface(float value)
-{
+void FPSActor::setFootstepSurface(float value) {
     // Pause here because the way I setup the parameter in FMOD
     // changing it will play a footstep
     footstep.setPaused(true);
     footstep.setParameter("Surface", value);
 }
 
-void FPSActor::setVisible(bool isVisible)
-{
+void FPSActor::setVisible(bool isVisible) {
     meshComponent->setVisible(isVisible);
 }
