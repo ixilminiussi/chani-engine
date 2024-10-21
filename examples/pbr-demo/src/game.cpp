@@ -43,17 +43,15 @@ void Game::load()
 
             if (i == 0)
             {
-                /*PhongMaterial *mat = dynamic_cast<PhongMaterial
-                 * *>(Assets::getMaterial("Material_Phong")->makeUnique());*/
-                /*mat->setSpecular((float)j * step);*/
-                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong"));
+                PhongMaterial *mat = dynamic_cast<PhongMaterial *>(Assets::getMaterial("Material_Phong")->makeUnique());
+                mat->setSpecular((float)j * step);
+                spheres[i][j]->getMeshComponent()->setMaterial(mat);
             }
             if (i == 1)
             {
-                /*PBRMaterial *mat = dynamic_cast<PBRMaterial
-                 * *>(Assets::getMaterial("Material_PBR")->makeUnique());*/
-                /*mat->setRoughness((float)j * step);*/
-                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_PBR"));
+                PBRMaterial *mat = dynamic_cast<PBRMaterial *>(Assets::getMaterial("Material_PBR")->makeUnique());
+                mat->setRoughness((float)j * step);
+                spheres[i][j]->getMeshComponent()->setMaterial(mat);
             }
         }
     }

@@ -1,8 +1,10 @@
 #include "pbrMaterial.h"
 
+#include <assets.h>
 #include <fstream>
 #include <iostream>
 #include <log.h>
+#include <random.h>
 #include <rapidjson/document.h>
 #include <shader.h>
 #include <sstream>
@@ -16,11 +18,10 @@ void PBRMaterial::use()
     if (selected != this)
     {
         selected = this;
-        Shader &shader = getShader();
-        shader.use();
+        getShader().use();
 
-        shader.setFloat("uRoughness", roughness);
-        shader.setMatrix4("uViewProj", view * projection);
+        getShader().setFloat("uRoughness", roughness);
+        getShader().setMatrix4("uViewProj", view * projection);
 
         // Enable depth buffering/disable alpha blend
         glEnable(GL_DEPTH_TEST);
@@ -40,8 +41,10 @@ Material *PBRMaterial::makeUnique()
     newMat->view = view;
     newMat->projection = projection;
     newMat->spriteViewProj = spriteViewProj;
-    newMat->shaderName = shaderName;
     newMat->roughness = roughness;
+    newMat->shaderName = shaderName;
+
+    Assets::loadCustomMaterial(newMat, Random::getUUID().c_str());
 
     return newMat;
 }
