@@ -13,24 +13,37 @@ PBRMaterial::PBRMaterial() : Material()
 
 void PBRMaterial::use()
 {
-    if (true)
+    if (selected != this)
     {
         selected = this;
-
-        // Enable depth buffering/disable alpha blend
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
         Shader &shader = getShader();
         shader.use();
 
         shader.setFloat("uRoughness", roughness);
         shader.setMatrix4("uViewProj", view * projection);
+
+        // Enable depth buffering/disable alpha blend
+        glEnable(GL_DEPTH_TEST);
+        glDisable(GL_BLEND);
     }
 }
 
 void PBRMaterial::setRoughness(const float &roughnessP)
 {
     roughness = roughnessP;
+}
+
+Material *PBRMaterial::makeUnique()
+{
+    PBRMaterial *newMat = new PBRMaterial();
+
+    newMat->view = view;
+    newMat->projection = projection;
+    newMat->spriteViewProj = spriteViewProj;
+    newMat->shaderName = shaderName;
+    newMat->roughness = roughness;
+
+    return newMat;
 }
 
 Material *PBRMaterial::loadFromFile(const std::string &filename)

@@ -10,6 +10,7 @@ class Mesh
     Mesh();
     ~Mesh();
 
+    Mesh *makeUnique();
     void unload();
 
     VertexArray *getVertexArray();

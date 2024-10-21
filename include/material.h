@@ -4,17 +4,16 @@
 #include "shader.h"
 #include <string>
 
-class Material
-{
+class Material {
   public:
     Material();
     virtual ~Material() = default;
 
-    virtual void use();
+    virtual void use() = 0;
 
-    virtual void unload()
-    {
-    }
+    virtual void unload() {}
+
+    virtual Material *makeUnique() = 0;
 
     void setView(const Matrix4 &viewP);
     void setShaderName(const std::string &shaderNameP);

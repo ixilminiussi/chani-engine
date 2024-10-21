@@ -1,5 +1,5 @@
 {
     "version": 1,
-    "shader": "Shader_Phong",
+    "shader": "Shader_PBR",
     "roughness": 0.0
 }

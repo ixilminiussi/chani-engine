@@ -8,20 +8,27 @@ PhongMaterial::PhongMaterial() : Material()
 
 void PhongMaterial::use()
 {
-    if (true)
-    {
-        selected = this;
+    getShader().use();
 
-        // Enable depth buffering/disable alpha blend
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
+    getShader().setFloat("uSpecular", specular);
+    getShader().setMatrix4("uViewProj", view * projection);
 
-        Shader &shader = getShader();
-        shader.setFloat("uSpecular", specular);
-        shader.setMatrix4("uViewProj", view * projection);
+    // Enable depth buffering/disable alpha blend
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
+}
 
-        shader.use();
-    }
+Material *PhongMaterial::makeUnique()
+{
+    PhongMaterial *newMat = new PhongMaterial();
+
+    newMat->view = view;
+    newMat->projection = projection;
+    newMat->spriteViewProj = spriteViewProj;
+    newMat->shaderName = shaderName;
+    newMat->specular = specular;
+
+    return newMat;
 }
 
 void PhongMaterial::setSpecular(const float &specularP)

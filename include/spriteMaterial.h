@@ -10,6 +10,8 @@ class SpriteMaterial : public Material
     ~SpriteMaterial() = default;
 
     void use() override;
+
+    Material *makeUnique() override;
 };
 
 #endif

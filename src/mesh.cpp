@@ -12,6 +12,20 @@ Mesh::~Mesh()
 {
 }
 
+Mesh *Mesh::makeUnique()
+{
+    Mesh *newMesh = new Mesh();
+
+    for (Texture *t : textures)
+    {
+        newMesh->addTexture(t);
+    }
+
+    newMesh->setVertexArray(vertexArray);
+    newMesh->setRadius(radius);
+    return newMesh;
+}
+
 void Mesh::unload()
 {
     delete vertexArray;

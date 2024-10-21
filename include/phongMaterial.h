@@ -11,6 +11,8 @@ class PhongMaterial : public Material
 
     void use() override;
 
+    Material *makeUnique() override;
+
     void setSpecular(const float &specularP);
 
   protected:

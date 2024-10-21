@@ -28,6 +28,9 @@ void MeshComponent::draw()
 {
     if (material)
     {
+        material->use();
+        material->setWorldTransform(owner.getWorldTransform());
+
         Texture *t = mesh->getTexture(textureIndex);
         if (t)
         {
@@ -36,10 +39,6 @@ void MeshComponent::draw()
 
         VertexArray *va = mesh->getVertexArray();
         va->setActive();
-
-        Matrix4 wt = owner.getWorldTransform();
-        material->setWorldTransform(wt);
-        material->use();
 
         glDrawElements(GL_TRIANGLES, va->getNbIndices(), GL_UNSIGNED_INT, nullptr);
     }

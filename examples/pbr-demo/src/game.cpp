@@ -9,7 +9,7 @@
 #include <sphere.h>
 
 #define ROWS 2
-#define COLUMNS 5
+#define COLUMNS 10
 #define SPACING 1000
 
 OrbitActor *orbit;
@@ -28,9 +28,10 @@ void Game::load()
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    char *buffer = new char[1000];
+    Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
+    Assets::loadCustomMaterial(PBRMaterial::loadFromFile("assets/materials/PBR.mat"), "Material_PBR");
 
-    int step = 100 / COLUMNS;
+    float step = 100.0f / COLUMNS;
 
     for (int i = 0; i < ROWS; i++)
     {
@@ -42,24 +43,20 @@ void Game::load()
 
             if (i == 0)
             {
-                std::snprintf(buffer, 1000, "Material_Phong_%d", j);
-                Assets::loadPhongMaterial("assets/materials/Phong.mat", buffer);
-
-                dynamic_cast<PhongMaterial *>(Assets::getMaterial(buffer))->setSpecular((float)(j * step));
-                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial(buffer));
+                /*PhongMaterial *mat = dynamic_cast<PhongMaterial
+                 * *>(Assets::getMaterial("Material_Phong")->makeUnique());*/
+                /*mat->setSpecular((float)j * step);*/
+                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_Phong"));
             }
             if (i == 1)
             {
-                std::snprintf(buffer, 1000, "Material_PBR_%d", j);
-                Assets::loadCustomMaterial(PBRMaterial::loadFromFile("assets/materials/PBR.mat"), buffer);
-
-                dynamic_cast<PBRMaterial *>(Assets::getMaterial(buffer))->setRoughness((float)(j * step));
-                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial(buffer));
+                /*PBRMaterial *mat = dynamic_cast<PBRMaterial
+                 * *>(Assets::getMaterial("Material_PBR")->makeUnique());*/
+                /*mat->setRoughness((float)j * step);*/
+                spheres[i][j]->getMeshComponent()->setMaterial(Assets::getMaterial("Material_PBR"));
             }
         }
     }
-
-    delete[] buffer;
 
     orbit = new OrbitActor();
     orbit->snapToActor(spheres[y][x]);
