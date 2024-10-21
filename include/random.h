@@ -5,8 +5,7 @@
 
 #include <random>
 
-class Random
-{
+class Random {
   public:
     static void init();
 
@@ -25,6 +24,9 @@ class Random
 
     // Get a random vector given the min/max bounds
     static Vector2 getVector(const Vector2 &min, const Vector2 &max);
+
+    // Generate a uuid-like number for the sake of it
+    static std::string getUUID();
 
   private:
     static std::mt19937 sGenerator;
