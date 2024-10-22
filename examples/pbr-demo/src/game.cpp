@@ -17,39 +17,41 @@ Sphere *spheres[ROWS][COLUMNS];
 
 int x, y = 0;
 
-void Game::load()
-{
+void Game::load() {
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
-    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
-    Assets::loadShader("assets/shaders/PBR.vert", "assets/shaders/PBR.frag", "", "", "", "Shader_PBR");
+    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag",
+                       "", "", "", "Shader_Phong");
+    Assets::loadShader("assets/shaders/PBR.vert", "assets/shaders/PBR.frag", "",
+                       "", "", "Shader_PBR");
 
-    Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Texture_Sphere");
+    Assets::loadTexture(renderer, "assets/textures/Sphere.png",
+                        "Texture_Sphere");
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
-    Assets::loadCustomMaterial(PBRMaterial::loadFromFile("assets/materials/PBR.mat"), "Material_PBR");
+    Assets::loadCustomMaterial(
+        PBRMaterial::loadFromFile("assets/materials/PBR.mat"), "Material_PBR");
 
     float step = 100.0f / COLUMNS;
 
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLUMNS; j++)
-        {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
             spheres[i][j] = new Sphere();
-            spheres[i][j]->setPosition(Vector3(0.0f, (float)(j * SPACING), -(float)(i * SPACING)));
+            spheres[i][j]->setPosition(
+                Vector3(0.0f, (float)(j * SPACING), -(float)(i * SPACING)));
             spheres[i][j]->setScale(10.0f);
 
-            if (i == 0)
-            {
-                PhongMaterial *mat = dynamic_cast<PhongMaterial *>(Assets::getMaterial("Material_Phong")->makeUnique());
+            if (i == 0) {
+                PhongMaterial *mat = dynamic_cast<PhongMaterial *>(
+                    Assets::getMaterial("Material_Phong")->makeUnique());
                 mat->setSpecular((float)j * step);
                 spheres[i][j]->getMeshComponent()->setMaterial(mat);
             }
-            if (i == 1)
-            {
-                PBRMaterial *mat = dynamic_cast<PBRMaterial *>(Assets::getMaterial("Material_PBR")->makeUnique());
+            if (i == 1) {
+                PBRMaterial *mat = dynamic_cast<PBRMaterial *>(
+                    Assets::getMaterial("Material_PBR")->makeUnique());
                 mat->setRoughness((float)j * step);
                 spheres[i][j]->getMeshComponent()->setMaterial(mat);
             }
@@ -67,14 +69,12 @@ void Game::load()
     dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 }
 
-void Game::processInput()
-{
+void Game::processInput() {
     inputSystem.preUpdate();
 
     // SDL Event
     SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
+    while (SDL_PollEvent(&event)) {
         isRunning = inputSystem.processEvent(event);
     }
 
@@ -82,25 +82,22 @@ void Game::processInput()
     const InputState &input = inputSystem.getInputState();
 
     // Escape: quit game
-    if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) ==
+        ButtonState::Released) {
         isRunning = false;
     }
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
         y++;
     }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Pressed)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Pressed) {
         y--;
     }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) ==
+        ButtonState::Pressed) {
         x++;
     }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed) {
         x--;
     }
 
@@ -111,26 +108,22 @@ void Game::processInput()
 
     // Actor input
     isUpdatingActors = true;
-    for (auto actor : actors)
-    {
+    for (auto actor : actors) {
         actor->processInput(input);
     }
     isUpdatingActors = false;
 }
 
-void Game::update(float dt)
-{
+void Game::update(float dt) {
     // Update actors
     isUpdatingActors = true;
-    for (auto actor : actors)
-    {
+    for (auto actor : actors) {
         actor->update(dt);
     }
     isUpdatingActors = false;
 
     // Move pending actors to actors
-    for (auto pendingActor : pendingActors)
-    {
+    for (auto pendingActor : pendingActors) {
         pendingActor->computeWorldTransform();
         actors.emplace_back(pendingActor);
     }
@@ -138,16 +131,13 @@ void Game::update(float dt)
 
     // Delete dead actors
     std::vector<Actor *> deadActors;
-    for (auto actor : actors)
-    {
-        if (actor->getState() == Actor::ActorState::Dead)
-        {
+    for (auto actor : actors) {
+        if (actor->getState() == Actor::ActorState::Dead) {
             deadActors.emplace_back(actor);
         }
     }
 
-    for (auto deadActor : deadActors)
-    {
+    for (auto deadActor : deadActors) {
         delete deadActor;
     }
 }

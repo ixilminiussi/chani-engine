@@ -246,7 +246,7 @@ Mesh Assets::loadMeshFromFile(const std::string &filename)
     if (!textures.IsArray() || textures.Size() < 1)
     {
         std::ostringstream s;
-        s << "Mesh " << filename << " has no textures, there should be at least one";
+        s << "Mesh " << filename << " has no textures, there should be at least one ";
         Log::error(LogCategory::Application, s.str());
     }
 

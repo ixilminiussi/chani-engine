@@ -1,3 +1,4 @@
+#include <chani/shader.h>
 #if !defined(RENDERER_OGL_H)
 #define RENDERER_OGL_H
 
@@ -32,18 +33,29 @@ class RendererOGL : public IRenderer
     void addMesh(class MeshComponent *mesh);
     void removeMesh(class MeshComponent *mesh);
 
+    void addPostProcess(class PostProcessComponent *postProcess);
+    void removePostProcess(class PostProcessComponent *postProcess);
+
     DirectionalLight &getDirectionalLight();
 
     void setViewMatrix(const Matrix4 &viewP);
     void setLightUniforms(Shader &shader);
     void setAmbientLight(const Vector3 &ambientP);
+    void setClearColor(const Vector3 &colorP);
+
+    GLuint getColorTexture() const;
+    GLuint getDepthTexture() const;
 
   private:
     void drawMeshes();
     void drawSprites();
 
+    bool initializeFrameBuffer();
+    void drawPostProcesses();
+
     Window *window;
     SDL_GLContext context;
+    GLuint framebuffer, colorTextureBuffer, depthTextureBuffer;
     VertexArray *spriteVertexArray;
     Vector3 clearColor;
 
@@ -51,6 +63,7 @@ class RendererOGL : public IRenderer
 
     std::vector<class MeshComponent *> meshes;
     std::vector<class SpriteComponent *> sprites;
+    std::vector<class PostProcessComponent *> postProcesses;
 
     Vector3 ambientLight;
     DirectionalLight dirLight;

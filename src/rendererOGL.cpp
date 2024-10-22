@@ -5,7 +5,9 @@
 #include "iRenderer.h"
 #include "log.h"
 #include "meshComponent.h"
+#include "postProcessComponent.h"
 #include "spriteComponent.h"
+#include "window.h"
 
 #include <algorithm>
 
@@ -21,6 +23,43 @@ RendererOGL::RendererOGL()
 
 RendererOGL::~RendererOGL()
 {
+}
+
+bool RendererOGL::initializeFrameBuffer()
+{
+    // generating and binding buffer
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    // creating color texture to bind to
+    glGenTextures(1, &colorTextureBuffer);
+    glBindTexture(GL_TEXTURE_2D, colorTextureBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    // setting texture scale settings
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // attaching texture to buffer
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTextureBuffer, 0);
+
+    // creating depth texture to bind to
+    glGenTextures(1, &depthTextureBuffer);
+    glBindTexture(GL_TEXTURE_2D, depthTextureBuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+                 NULL);
+    // setting texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    // attaching texture to frame buffer
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureBuffer, 0);
+
+    // Check if the framebuffer is complete
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        return false;
+    }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0); // Unbind framebuffer
+    return true;
 }
 
 bool RendererOGL::initialize(Window &windowP)
@@ -57,6 +96,13 @@ bool RendererOGL::initialize(Window &windowP)
     // On some platforms, GLEW will emit a benign error code, so clear it
     glGetError();
 
+    // Initialize Frame Buffer to render into, to allow for post processing
+    if (!initializeFrameBuffer())
+    {
+        Log::error(LogCategory::Render, "Unable to initialize frame buffer");
+        return false;
+    }
+
     if (IMG_Init(IMG_INIT_PNG) == 0)
     {
         Log::error(LogCategory::Video, "Unable to initialize SDL_image");
@@ -69,8 +115,19 @@ bool RendererOGL::initialize(Window &windowP)
 
 void RendererOGL::beginDraw()
 {
+
     glClearColor(clearColor.x, clearColor.y, clearColor.z, 1.0f);
-    // Clear the color and depth buffer
+
+    // to not force the need for a pass through shader, if there are no post
+    // processes, simply render directly to the default buffer
+    if (postProcesses.size() == 0)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    else
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -83,6 +140,11 @@ void RendererOGL::draw()
 
     drawMeshes();
     drawSprites();
+
+    if (postProcesses.size() > 0)
+    {
+        drawPostProcesses();
+    }
 }
 
 void RendererOGL::endDraw()
@@ -167,9 +229,44 @@ void RendererOGL::removeMesh(MeshComponent *mesh)
     meshes.erase(iter);
 }
 
+void RendererOGL::drawPostProcesses()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0); // Switch back to default framebuffer
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    for (auto postProcess : postProcesses)
+    {
+        if (postProcess->getVisible())
+        {
+            postProcess->draw();
+        }
+    }
+}
+
+void RendererOGL::addPostProcess(PostProcessComponent *postProcess)
+{
+    postProcesses.emplace_back(postProcess);
+}
+
+void RendererOGL::removePostProcess(PostProcessComponent *postProcess)
+{
+    auto iter = std::find(begin(postProcesses), end(postProcesses), postProcess);
+    postProcesses.erase(iter);
+}
+
 DirectionalLight &RendererOGL::getDirectionalLight()
 {
     return dirLight;
+}
+
+GLuint RendererOGL::getColorTexture() const
+{
+    return colorTextureBuffer;
+}
+
+GLuint RendererOGL::getDepthTexture() const
+{
+    return depthTextureBuffer;
 }
 
 void RendererOGL::setViewMatrix(const Matrix4 &viewP)
@@ -198,4 +295,9 @@ void RendererOGL::setLightUniforms(Shader &shader)
 void RendererOGL::setAmbientLight(const Vector3 &ambientP)
 {
     ambientLight = ambientP;
+}
+
+void RendererOGL::setClearColor(const Vector3 &color)
+{
+    clearColor = color;
 }
