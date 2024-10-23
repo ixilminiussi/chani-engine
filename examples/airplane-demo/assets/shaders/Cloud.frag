@@ -6,12 +6,16 @@
 in vec3 fragNormal;
 // Position (in world space)
 in vec3 fragWorldPos;
+// Position (in screen space)
+in vec2 texCoords;
 
 // This corresponds to the output color to the color buffer
-out vec4 outColor;
+out vec3 outColor;
 
 // This is used for the texture sampling
 uniform sampler2D uTexture;
+uniform sampler2D uScreenTexture;
+uniform sampler2D uDepthTexture;
 
 // Create a struct for directional light
 struct DirectionalLight
@@ -29,11 +33,10 @@ struct DirectionalLight
 uniform vec3 uCameraPos;
 // Ambient light level
 uniform vec3 uAmbientLight;
-
 // Directional Light
 uniform DirectionalLight uDirLight;
 
 void main()
 {
-    outColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    outColor = texture(uDepthTexture, texCoords).rgb;
 }

@@ -31,34 +31,40 @@ bool RendererOGL::initializeFrameBuffer()
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     // creating color texture to bind to
-    glGenTextures(1, &colorTextureBuffer);
-    glBindTexture(GL_TEXTURE_2D, colorTextureBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glGenTextures(1, &colorTexture);
+    glBindTexture(GL_TEXTURE_2D, colorTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
     // setting texture scale settings
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // attaching texture to buffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTextureBuffer, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, colorTexture, 0);
 
     // creating depth texture to bind to
-    glGenTextures(1, &depthTextureBuffer);
-    glBindTexture(GL_TEXTURE_2D, depthTextureBuffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
-                 NULL);
+    glGenTextures(1, &depthTexture);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+                 0);
     // setting texture parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     // attaching texture to frame buffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureBuffer, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+
+    glDepthMask(GL_TRUE);
+    glClearDepth(1.0f);
+    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, DrawBuffers);
 
     // Check if the framebuffer is complete
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
+        Log::error(LogCategory::Render, "Framebuffer is not complete");
         return false;
     }
-    glBindFramebuffer(GL_FRAMEBUFFER, 0); // Unbind framebuffer
+
     return true;
 }
 
@@ -115,19 +121,21 @@ bool RendererOGL::initialize(Window &windowP)
 
 void RendererOGL::beginDraw()
 {
-
     glClearColor(clearColor.x, clearColor.y, clearColor.z, 1.0f);
 
     // to not force the need for a pass through shader, if there are no post
     // processes, simply render directly to the default buffer
-    if (postProcesses.size() == 0)
+    if (postProcesses.size() > 0)
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0);
     }
     else
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDrawBuffer(GL_BACK);
     }
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -232,7 +240,16 @@ void RendererOGL::removeMesh(MeshComponent *mesh)
 void RendererOGL::drawPostProcesses()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0); // Switch back to default framebuffer
-    glClear(GL_COLOR_BUFFER_BIT);
+    glDrawBuffer(GL_BACK);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, colorTexture);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for (auto postProcess : postProcesses)
     {
@@ -257,16 +274,6 @@ void RendererOGL::removePostProcess(PostProcessComponent *postProcess)
 DirectionalLight &RendererOGL::getDirectionalLight()
 {
     return dirLight;
-}
-
-GLuint RendererOGL::getColorTexture() const
-{
-    return colorTextureBuffer;
-}
-
-GLuint RendererOGL::getDepthTexture() const
-{
-    return depthTextureBuffer;
 }
 
 void RendererOGL::setViewMatrix(const Matrix4 &viewP)

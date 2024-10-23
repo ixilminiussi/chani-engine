@@ -9,6 +9,7 @@
 PostProcessComponent::PostProcessComponent(Actor *owner) : Component(owner), textureIndex(0), isVisible(true)
 {
     owner->getGame().getRenderer().addPostProcess(this);
+    initQuad();
 }
 
 PostProcessComponent::~PostProcessComponent()

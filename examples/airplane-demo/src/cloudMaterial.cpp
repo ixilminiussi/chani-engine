@@ -15,17 +15,13 @@ CloudMaterial::CloudMaterial() : Material()
 
 void CloudMaterial::use()
 {
-    if (selected != this)
-    {
-        selected = this;
-        getShader().use();
+    getShader().use();
 
-        getShader().setMatrix4("uViewProj", view * projection);
+    getShader().setMatrix4("uViewProj", view * projection);
+    getShader().setSampler2D("uScreenTexture", GL_TEXTURE0);
+    getShader().setSampler2D("uDepthTexture", GL_TEXTURE1);
 
-        // Enable depth buffering/disable alpha blend
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
-    }
+    glDisable(GL_DEPTH_TEST);
 }
 
 Material *CloudMaterial::makeUnique()
@@ -68,7 +64,7 @@ Material *CloudMaterial::loadFromFile(const std::string &filename)
 
     material->setShaderName(doc["shader"].GetString());
 
-    Log::info("Loaded phong material " + filename + " with shader " + doc["shader"].GetString());
+    Log::info("Loaded cloud material " + filename + " with shader " + doc["shader"].GetString());
 
     return material;
 }

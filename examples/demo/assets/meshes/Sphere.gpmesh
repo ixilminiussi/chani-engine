@@ -2,7 +2,7 @@
 	"version": 1,
 	"vertexformat": "PosNormTex",
 	"textures": [
-		"Sphere"
+		"Texture_Sphere"
 	],
 	"vertices": [
 		[ 0.000000, 0.000001, 12.500000, -0.003922, -0.003922, 0.992157, 0.968750, 0.000000 ],

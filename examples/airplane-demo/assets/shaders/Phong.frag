@@ -10,7 +10,7 @@ in vec3 fragNormal;
 in vec3 fragWorldPos;
 
 // This corresponds to the output color to the color buffer
-out vec4 outColor;
+layout(location = 0) out vec4 outColor;
 
 // This is used for the texture sampling
 uniform sampler2D uTexture;
@@ -60,4 +60,5 @@ void main()
 
     // Final color is texture color times phong light (alpha = 1)
     outColor = texture(uTexture, fragTexCoord) * vec4(Phong, 1.0f);
+    outColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

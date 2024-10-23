@@ -43,9 +43,6 @@ class RendererOGL : public IRenderer
     void setAmbientLight(const Vector3 &ambientP);
     void setClearColor(const Vector3 &colorP);
 
-    GLuint getColorTexture() const;
-    GLuint getDepthTexture() const;
-
   private:
     void drawMeshes();
     void drawSprites();
@@ -55,7 +52,7 @@ class RendererOGL : public IRenderer
 
     Window *window;
     SDL_GLContext context;
-    GLuint framebuffer, colorTextureBuffer, depthTextureBuffer;
+    GLuint framebuffer, colorTexture, depthTexture;
     VertexArray *spriteVertexArray;
     Vector3 clearColor;
 

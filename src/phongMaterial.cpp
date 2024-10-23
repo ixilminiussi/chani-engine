@@ -2,10 +2,15 @@
 #include "assets.h"
 #include "random.h"
 #include "shader.h"
+#include <chani/shader.h>
 
-PhongMaterial::PhongMaterial() : Material() { shaderName = "Phong"; }
+PhongMaterial::PhongMaterial() : Material()
+{
+    shaderName = "Phong";
+}
 
-void PhongMaterial::use() {
+void PhongMaterial::use()
+{
     getShader().use();
 
     getShader().setFloat("uSpecular", specular);
@@ -16,7 +21,8 @@ void PhongMaterial::use() {
     glDisable(GL_BLEND);
 }
 
-Material *PhongMaterial::makeUnique() {
+Material *PhongMaterial::makeUnique()
+{
     PhongMaterial *newMat = new PhongMaterial();
 
     newMat->view = view;
@@ -30,6 +36,7 @@ Material *PhongMaterial::makeUnique() {
     return newMat;
 }
 
-void PhongMaterial::setSpecular(const float &specularP) {
+void PhongMaterial::setSpecular(const float &specularP)
+{
     specular = specularP;
 }

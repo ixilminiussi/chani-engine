@@ -3,6 +3,7 @@
 #include "log.h"
 
 #include <SDL.h>
+#include <chani/shader.h>
 #include <sstream>
 #include <string>
 
@@ -144,6 +145,10 @@ void Shader::setInteger(const GLchar *name, GLint value)
 {
     glUniform1i(glGetUniformLocation(id, name), value);
 }
+void Shader::setSampler2D(const GLchar *name, GLint value)
+{
+    setInteger(name, value);
+}
 void Shader::setVector2f(const GLchar *name, GLfloat x, GLfloat y)
 {
     glUniform2f(glGetUniformLocation(id, name), x, y);
@@ -152,7 +157,6 @@ void Shader::setVector2f(const GLchar *name, const Vector2 &value)
 {
     glUniform2f(glGetUniformLocation(id, name), value.x, value.y);
 }
-
 void Shader::setVector3f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z)
 {
     glUniform3f(glGetUniformLocation(id, name), x, y, z);
