@@ -25,7 +25,6 @@ void PostProcessComponent::setVisible(bool isVisibleP) {
 void PostProcessComponent::draw() const {
     if (material) {
         material->use();
-        material->setWorldTransform(owner.getWorldTransform());
     }
 
     glBindVertexArray(quadVAO);

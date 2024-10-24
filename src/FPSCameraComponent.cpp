@@ -1,12 +1,10 @@
 #include "FPSCameraComponent.h"
 
 FPSCameraComponent::FPSCameraComponent(Actor *ownerP)
-    : CameraComponent(ownerP), pitchSpeed(0.0f), maxPitch(Maths::pi / 3.0f), pitch(0.0f)
-{
-}
+    : CameraComponent(ownerP), pitchSpeed(0.0f), maxPitch(Maths::pi / 3.0f),
+      pitch(0.0f) {}
 
-void FPSCameraComponent::update(float dt)
-{
+void FPSCameraComponent::update(float dt) {
     CameraComponent::update(dt);
 
     Vector3 cameraPosition = owner.getPosition();
@@ -21,27 +19,12 @@ void FPSCameraComponent::update(float dt)
     setViewMatrix(view);
 }
 
-float FPSCameraComponent::getPitch() const
-{
-    return pitch;
-}
+float FPSCameraComponent::getPitch() const { return pitch; }
 
-float FPSCameraComponent::getPitchSpeed() const
-{
-    return pitchSpeed;
-}
+float FPSCameraComponent::getPitchSpeed() const { return pitchSpeed; }
 
-void FPSCameraComponent::setPitchSpeed(float speed)
-{
-    pitchSpeed = speed;
-}
+void FPSCameraComponent::setPitchSpeed(float speed) { pitchSpeed = speed; }
 
-float FPSCameraComponent::getMaxPitch() const
-{
-    return maxPitch;
-}
+float FPSCameraComponent::getMaxPitch() const { return maxPitch; }
 
-void FPSCameraComponent::setMaxPitch(float pitch)
-{
-    maxPitch = pitch;
-}
+void FPSCameraComponent::setMaxPitch(float pitch) { maxPitch = pitch; }

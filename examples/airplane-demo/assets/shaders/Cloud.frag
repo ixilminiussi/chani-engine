@@ -2,10 +2,8 @@
 #version 330
 
 // Inputs from vertex shader
-// Normal (in world space)
-in vec3 fragNormal;
 // Position (in world space)
-in vec3 fragWorldPos;
+in vec3 rayDirection;
 // Position (in screen space)
 in vec2 texCoords;
 
@@ -13,9 +11,12 @@ in vec2 texCoords;
 out vec3 outColor;
 
 // This is used for the texture sampling
-uniform sampler2D uTexture;
 uniform sampler2D uScreenTexture;
 uniform sampler2D uDepthTexture;
+
+// bounds of cloud area
+uniform vec3 uAreaCorner;
+uniform vec3 uAreaSize;
 
 // Create a struct for directional light
 struct DirectionalLight
@@ -36,9 +37,27 @@ uniform vec3 uAmbientLight;
 // Directional Light
 uniform DirectionalLight uDirLight;
 
+vec2 rayBoxDst(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir)
+{
+    vec3 t0 = (boundsMin - rayOrigin) / rayDir;
+    vec3 t1 = (boundsMax - rayOrigin) / rayDir;
+    vec3 tmin = min(t0, t1);
+    vec3 tmax = max(t0, t1);
+
+    float dstA = max(max(tmin.x, tmin.y), tmin.z);
+    float dstB = min(tmax.x, min(tmax.y, tmax.z));
+
+    float dstToBox = max(0, dstA);
+    float dstInsideBox = max(0, dstB - dstToBox);
+
+    return vec2(dstToBox, dstInsideBox);
+}
+
 void main()
 {
+    vec2 rayBoxInfo = rayBoxDst(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, rayDirection);
+
     float depth = texture(uDepthTexture, texCoords).r;
-    outColor = vec3(depth);
-    // outColor = texture(uScreenTexture, texCoords).rgb;
+
+    outColor = texture(uScreenTexture, texCoords).rgb;
 }

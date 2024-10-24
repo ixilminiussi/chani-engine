@@ -9,8 +9,7 @@
 
 #include <vector>
 
-class RendererOGL : public IRenderer
-{
+class RendererOGL : public IRenderer {
   public:
     RendererOGL();
     virtual ~RendererOGL();

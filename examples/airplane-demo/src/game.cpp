@@ -3,31 +3,34 @@
 #include "cloudMaterial.h"
 #include <actor.h>
 #include <assets.h>
-#include <cloud.h>
+#include <cloudComponent.h>
 #include <maths.h>
 #include <orbitActor.h>
 #include <phongMaterial.h>
 #include <sphere.h>
 
-Cloud *cloud;
 Sphere *sphere, *sphere2;
 OrbitActor *orbit;
 
 int x, y = 0;
 
-void Game::load()
-{
+void Game::load() {
     renderer.setClearColor(Vector3(0.6f, 0.8f, 1.0f));
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
-    Assets::loadShader("assets/shaders/Cloud.vert", "assets/shaders/Cloud.frag", "", "", "", "Shader_Cloud");
-    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
+    Assets::loadShader("assets/shaders/Cloud.vert", "assets/shaders/Cloud.frag",
+                       "", "", "", "Shader_Cloud");
+    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag",
+                       "", "", "", "Shader_Phong");
 
-    Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Texture_Sphere");
+    Assets::loadTexture(renderer, "assets/textures/Sphere.png",
+                        "Texture_Sphere");
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
+    Assets::loadCustomMaterial(
+        CloudMaterial::loadFromFile("assets/materials/Cloud.mat"),
+        "Material_Cloud");
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
 
     sphere = new Sphere();
@@ -38,12 +41,13 @@ void Game::load()
     sphere2->setPosition(Vector3(200.0f, 200.0f, 0.0f));
     sphere2->setScale(10.0f);
 
-    cloud = new Cloud();
-    cloud->setPosition(Vector3(0.0f, 0.0f, 0.0f));
-    cloud->setScale(1.0f);
-
     orbit = new OrbitActor();
     orbit->snapToActor(sphere);
+
+    Cuboid area = {Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f)};
+    CloudComponent *cloudComponent = new CloudComponent(orbit, &area);
+
+    orbit->addComponent(cloudComponent);
 
     // Setup lights
     renderer.setAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
@@ -53,47 +57,41 @@ void Game::load()
     dir.specColor = Vector3(0.8f, 0.8f, 0.8f);
 }
 
-void Game::processInput()
-{
+void Game::processInput() {
     inputSystem.preUpdate();
 
     // SDL Event
     SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
+    while (SDL_PollEvent(&event)) {
         isRunning = inputSystem.processEvent(event);
     }
 
     inputSystem.update();
     const InputState &input = inputSystem.getInputState();
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
-    {
+    if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) ==
+        ButtonState::Released) {
         isRunning = false;
     }
 
     // Actor input
     isUpdatingActors = true;
-    for (auto actor : actors)
-    {
+    for (auto actor : actors) {
         actor->processInput(input);
     }
     isUpdatingActors = false;
 }
 
-void Game::update(float dt)
-{
+void Game::update(float dt) {
     // Update actors
     isUpdatingActors = true;
-    for (auto actor : actors)
-    {
+    for (auto actor : actors) {
         actor->update(dt);
     }
     isUpdatingActors = false;
 
     // Move pending actors to actors
-    for (auto pendingActor : pendingActors)
-    {
+    for (auto pendingActor : pendingActors) {
         pendingActor->computeWorldTransform();
         actors.emplace_back(pendingActor);
     }
@@ -101,16 +99,13 @@ void Game::update(float dt)
 
     // Delete dead actors
     std::vector<Actor *> deadActors;
-    for (auto actor : actors)
-    {
-        if (actor->getState() == Actor::ActorState::Dead)
-        {
+    for (auto actor : actors) {
+        if (actor->getState() == Actor::ActorState::Dead) {
             deadActors.emplace_back(actor);
         }
     }
 
-    for (auto deadActor : deadActors)
-    {
+    for (auto deadActor : deadActors) {
         delete deadActor;
     }
 }

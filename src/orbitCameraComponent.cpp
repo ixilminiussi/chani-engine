@@ -3,12 +3,10 @@
 #include "actor.h"
 
 OrbitCameraComponent::OrbitCameraComponent(Actor *ownerP)
-    : CameraComponent(ownerP), offset(-400.0f, 0.0f, 0.0f), up(Vector3::unitZ), pitchSpeed(0.0f), yawSpeed(0.0f)
-{
-}
+    : CameraComponent(ownerP), offset(-400.0f, 0.0f, 0.0f), up(Vector3::unitZ),
+      pitchSpeed(0.0f), yawSpeed(0.0f) {}
 
-void OrbitCameraComponent::update(float dt)
-{
+void OrbitCameraComponent::update(float dt) {
     CameraComponent::update(dt);
 
     Quaternion yaw{Vector3::unitZ, yawSpeed * dt};
@@ -32,21 +30,17 @@ void OrbitCameraComponent::update(float dt)
     setViewMatrix(view);
 }
 
-float OrbitCameraComponent::getDistance()
-{
+float OrbitCameraComponent::getDistance() {
     return (offset - owner.getPosition()).length();
 }
 
-void OrbitCameraComponent::setDistance(float newDistance)
-{
+void OrbitCameraComponent::setDistance(float newDistance) {
     float currentDistance = getDistance();
     unzoom(newDistance - getDistance());
 }
 
-void OrbitCameraComponent::zoom(float factor)
-{
-    if (factor > getDistance())
-    {
+void OrbitCameraComponent::zoom(float factor) {
+    if (factor > getDistance()) {
         setDistance(0.0f);
         return;
     }
@@ -55,27 +49,16 @@ void OrbitCameraComponent::zoom(float factor)
     offset += forward * factor;
 }
 
-void OrbitCameraComponent::unzoom(float factor)
-{
-    zoom(-factor);
-}
+void OrbitCameraComponent::unzoom(float factor) { zoom(-factor); }
 
-float OrbitCameraComponent::getPitchSpeed() const
-{
-    return pitchSpeed;
-}
+float OrbitCameraComponent::getPitchSpeed() const { return pitchSpeed; }
 
-void OrbitCameraComponent::setPitchSpeed(float pitchSpeedP)
-{
+void OrbitCameraComponent::setPitchSpeed(float pitchSpeedP) {
     pitchSpeed = pitchSpeedP;
 }
 
-float OrbitCameraComponent::getYawSpeed() const
-{
-    return yawSpeed;
-}
+float OrbitCameraComponent::getYawSpeed() const { return yawSpeed; }
 
-void OrbitCameraComponent::setYawSpeed(float yawSpeedP)
-{
+void OrbitCameraComponent::setYawSpeed(float yawSpeedP) {
     yawSpeed = yawSpeedP;
 }
