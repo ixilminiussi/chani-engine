@@ -11,14 +11,15 @@ PhongMaterial::PhongMaterial() : Material()
 
 void PhongMaterial::use()
 {
-    getShader().use();
-
-    getShader().setFloat("uSpecular", specular);
-    getShader().setMatrix4("uViewProj", view * projection);
-
     // Enable depth buffering/disable alpha blend
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
+
+    getShader().use();
+
+    getShader().setFloat("uSpecular", specular);
+    getShader().setSampler2D("uTexture", 0);
+    getShader().setMatrix4("uViewProj", view * projection);
 }
 
 Material *PhongMaterial::makeUnique()

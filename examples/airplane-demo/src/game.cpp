@@ -10,7 +10,7 @@
 #include <sphere.h>
 
 Cloud *cloud;
-Sphere *sphere;
+Sphere *sphere, *sphere2;
 OrbitActor *orbit;
 
 int x, y = 0;
@@ -33,6 +33,10 @@ void Game::load()
     sphere = new Sphere();
     sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
     sphere->setScale(10.0f);
+
+    sphere2 = new Sphere();
+    sphere2->setPosition(Vector3(200.0f, 200.0f, 0.0f));
+    sphere2->setScale(10.0f);
 
     cloud = new Cloud();
     cloud->setPosition(Vector3(0.0f, 0.0f, 0.0f));

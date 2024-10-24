@@ -147,7 +147,7 @@ void Shader::setInteger(const GLchar *name, GLint value)
 }
 void Shader::setSampler2D(const GLchar *name, GLint value)
 {
-    setInteger(name, value);
+    glUniform1i(glGetUniformLocation(id, name), value);
 }
 void Shader::setVector2f(const GLchar *name, GLfloat x, GLfloat y)
 {

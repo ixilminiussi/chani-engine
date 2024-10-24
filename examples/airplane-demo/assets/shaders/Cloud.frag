@@ -38,5 +38,7 @@ uniform DirectionalLight uDirLight;
 
 void main()
 {
-    outColor = texture(uDepthTexture, texCoords).rgb;
+    float depth = texture(uDepthTexture, texCoords).r;
+    outColor = vec3(depth);
+    // outColor = texture(uScreenTexture, texCoords).rgb;
 }

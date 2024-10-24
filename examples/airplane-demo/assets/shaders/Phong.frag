@@ -30,7 +30,7 @@ struct DirectionalLight
 // Camera position (in world space)
 uniform vec3 uCameraPos;
 // Specular power for this surface
-uniform float uRoughness;
+uniform float uSpecular;
 // Ambient light level
 uniform vec3 uAmbientLight;
 
@@ -54,11 +54,10 @@ void main()
     if (NdotL > 0)
     {
         vec3 Diffuse = uDirLight.diffuseColor * NdotL;
-        vec3 Specular = uDirLight.specColor * pow(max(0.0, dot(R, V)), max(uRoughness, 1));
+        vec3 Specular = uDirLight.specColor * pow(max(0.0, dot(R, V)), max(uSpecular, 1));
         Phong += Diffuse + Specular;
     }
 
     // Final color is texture color times phong light (alpha = 1)
     outColor = texture(uTexture, fragTexCoord) * vec4(Phong, 1.0f);
-    outColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

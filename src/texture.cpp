@@ -3,6 +3,7 @@
 #include "log.h"
 
 #include <SDL_image.h>
+#include <chani/shader.h>
 
 Texture::Texture() : textureID(0), filename(""), width(0), height(0), SDLTexture(nullptr)
 {
@@ -97,6 +98,7 @@ void Texture::updateInfo(int &widthOut, int &heightOut)
 
 void Texture::setActive() const
 {
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
 

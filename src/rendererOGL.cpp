@@ -17,7 +17,7 @@
 RendererOGL::RendererOGL()
     : window(nullptr), context(nullptr), spriteVertexArray(nullptr), ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
       dirLight({Vector3::zero, Vector3::zero, Vector3::zero}), clearColor(0.0f, 0.0f, 0.0f),
-      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ))
+      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)), framebuffer(0)
 {
 }
 
@@ -33,28 +33,25 @@ bool RendererOGL::initializeFrameBuffer()
     // creating color texture to bind to
     glGenTextures(1, &colorTexture);
     glBindTexture(GL_TEXTURE_2D, colorTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     // setting texture scale settings
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // attaching texture to buffer
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, colorTexture, 0);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0);
 
     // creating depth texture to bind to
     glGenTextures(1, &depthTexture);
     glBindTexture(GL_TEXTURE_2D, depthTexture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
-                 0);
-    // setting texture parameters
+                 nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    // attaching texture to frame buffer
+
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 
-    glDepthMask(GL_TRUE);
-    glClearDepth(1.0f);
     GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, DrawBuffers);
 
@@ -102,6 +99,8 @@ bool RendererOGL::initialize(Window &windowP)
     // On some platforms, GLEW will emit a benign error code, so clear it
     glGetError();
 
+    glDepthMask(GL_TRUE);
+
     // Initialize Frame Buffer to render into, to allow for post processing
     if (!initializeFrameBuffer())
     {
@@ -128,13 +127,12 @@ void RendererOGL::beginDraw()
     if (postProcesses.size() > 0)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        glDrawBuffer(GL_COLOR_ATTACHMENT0);
     }
     else
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glDrawBuffer(GL_BACK);
     }
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -240,16 +238,14 @@ void RendererOGL::removeMesh(MeshComponent *mesh)
 void RendererOGL::drawPostProcesses()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0); // Switch back to default framebuffer
-    glDrawBuffer(GL_BACK);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, colorTexture);
-
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, depthTexture);
-
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, colorTexture);
+
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
 
     for (auto postProcess : postProcesses)
     {
@@ -287,6 +283,7 @@ void RendererOGL::setViewMatrix(const Matrix4 &viewP)
 
 void RendererOGL::setLightUniforms(Shader &shader)
 {
+    shader.use();
     // Camera position is from inverted view
     Matrix4 invertedView = view;
     invertedView.invert();

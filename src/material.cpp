@@ -25,6 +25,7 @@ Shader &Material::getShader()
 
 void Material::setWorldTransform(const Matrix4 &wt)
 {
+    getShader().use();
     getShader().setMatrix4("uWorldTransform", wt);
 }
 

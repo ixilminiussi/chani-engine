@@ -15,13 +15,14 @@ CloudMaterial::CloudMaterial() : Material()
 
 void CloudMaterial::use()
 {
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
+
     getShader().use();
 
     getShader().setMatrix4("uViewProj", view * projection);
-    getShader().setSampler2D("uScreenTexture", GL_TEXTURE0);
-    getShader().setSampler2D("uDepthTexture", GL_TEXTURE1);
-
-    glDisable(GL_DEPTH_TEST);
+    getShader().setSampler2D("uScreenTexture", 1);
+    getShader().setSampler2D("uDepthTexture", 2);
 }
 
 Material *CloudMaterial::makeUnique()

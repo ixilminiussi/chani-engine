@@ -15,18 +15,14 @@ PBRMaterial::PBRMaterial() : Material()
 
 void PBRMaterial::use()
 {
-    if (selected != this)
-    {
-        selected = this;
-        getShader().use();
+    getShader().use();
 
-        getShader().setFloat("uRoughness", roughness);
-        getShader().setMatrix4("uViewProj", view * projection);
+    getShader().setFloat("uRoughness", roughness);
+    getShader().setMatrix4("uViewProj", view * projection);
 
-        // Enable depth buffering/disable alpha blend
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
-    }
+    // Enable depth buffering/disable alpha blend
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 }
 
 void PBRMaterial::setRoughness(const float &roughnessP)
