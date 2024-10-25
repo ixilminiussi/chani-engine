@@ -60,5 +60,11 @@ void main()
     float depth = texture(uDepthTexture, texCoords).r;
 
     outColor = texture(uScreenTexture, texCoords).rgb;
-    outColor = abs(rayDirection);
+    // outColor = vec3(1.0) - outColor;
+    vec3 offsetColor = texture(uScreenTexture, texCoords - vec2(0.001)).rgb;
+    if (length(outColor - offsetColor) > 0.05)
+    {
+        outColor = vec3(0.0);
+    }
+    // outColor = vec3(depth);
 }
