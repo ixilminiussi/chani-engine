@@ -21,7 +21,7 @@ void main()
     vec4 clipSpacePos = vec4(aPos, 0.0, 1.0); // In clip space
 
     // Unproject the clip space position to world space
-    vec4 worldPos = uViewProj * clipSpacePos;
+    vec4 worldPos = clipSpacePos * inverse(uViewProj);
 
     // Perspective divide (since we are unprojecting a position)
     worldPos /= worldPos.w;

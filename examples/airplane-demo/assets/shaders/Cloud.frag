@@ -60,4 +60,5 @@ void main()
     float depth = texture(uDepthTexture, texCoords).r;
 
     outColor = texture(uScreenTexture, texCoords).rgb;
+    outColor = abs(rayDirection);
 }
