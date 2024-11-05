@@ -10,9 +10,12 @@
 #include <sstream>
 #include <window.h>
 
-CloudMaterial::CloudMaterial() : Material() {}
+CloudMaterial::CloudMaterial() : Material()
+{
+}
 
-void CloudMaterial::use() {
+void CloudMaterial::use()
+{
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
 
@@ -25,9 +28,13 @@ void CloudMaterial::use() {
     getShader().setSampler2D("uDepthTexture", 2);
 }
 
-void CloudMaterial::setArea(Cuboid *cuboid) { area = cuboid; }
+void CloudMaterial::setArea(Cuboid *cuboid)
+{
+    area = cuboid;
+}
 
-Material *CloudMaterial::makeUnique() {
+Material *CloudMaterial::makeUnique()
+{
     CloudMaterial *newMat = new CloudMaterial();
 
     newMat->view = view;
@@ -41,13 +48,14 @@ Material *CloudMaterial::makeUnique() {
     return newMat;
 }
 
-Material *CloudMaterial::loadFromFile(const std::string &filename) {
+Material *CloudMaterial::loadFromFile(const std::string &filename)
+{
     CloudMaterial *material = new CloudMaterial();
 
     std::ifstream file(filename);
-    if (!file.is_open()) {
-        Log::error(LogCategory::Application,
-                   "File not found: Material " + filename);
+    if (!file.is_open())
+    {
+        Log::error(LogCategory::Application, "File not found: Material " + filename);
     }
 
     std::stringstream fileStream;
@@ -57,7 +65,8 @@ Material *CloudMaterial::loadFromFile(const std::string &filename) {
     rapidjson::Document doc;
     doc.ParseStream(jsonStr);
 
-    if (!doc.IsObject()) {
+    if (!doc.IsObject())
+    {
         std::ostringstream s;
         s << "Material " << filename << " is not valid json";
         Log::error(LogCategory::Application, s.str());
@@ -65,8 +74,7 @@ Material *CloudMaterial::loadFromFile(const std::string &filename) {
 
     material->setShaderName(doc["shader"].GetString());
 
-    Log::info("Loaded cloud material " + filename + " with shader " +
-              doc["shader"].GetString());
+    Log::info("Loaded cloud material " + filename + " with shader " + doc["shader"].GetString());
 
     return material;
 }

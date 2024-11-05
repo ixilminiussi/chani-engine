@@ -40,8 +40,8 @@ void Game::load()
     orbit = new OrbitActor();
     orbit->snapToActor(sphere);
 
-    Cuboid area = {Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f)};
-    CloudComponent *cloudComponent = new CloudComponent(orbit, &area);
+    Cuboid *area = new Cuboid({Vector3(-200.0f, -200.0f, -50.0f), Vector3(400.0f, 400.0f, 100.0f)});
+    CloudComponent *cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);
 

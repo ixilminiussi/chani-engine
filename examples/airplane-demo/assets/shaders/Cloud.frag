@@ -37,20 +37,20 @@ uniform vec3 uAmbientLight;
 // Directional Light
 uniform DirectionalLight uDirLight;
 
+float linearDepth(float depth, float near, float far)
+{
+    return (2.0 * near * far) / (far + near - (2.0 * depth - 1.0) * (far - near));
+}
+
 vec2 rayBoxDst(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir)
 {
-    vec3 t0 = (boundsMin - rayOrigin) / rayDir;
-    vec3 t1 = (boundsMax - rayOrigin) / rayDir;
-    vec3 tmin = min(t0, t1);
-    vec3 tmax = max(t0, t1);
-
-    float dstA = max(max(tmin.x, tmin.y), tmin.z);
-    float dstB = min(tmax.x, min(tmax.y, tmax.z));
-
-    float dstToBox = max(0, dstA);
-    float dstInsideBox = max(0, dstB - dstToBox);
-
-    return vec2(dstToBox, dstInsideBox);
+    vec3 tMin = (boundsMin - rayOrigin) / rayDir;
+    vec3 tMax = (boundsMax - rayOrigin) / rayDir;
+    vec3 t1 = min(tMin, tMax);
+    vec3 t2 = max(tMin, tMax);
+    float tNear = max(max(t1.x, t1.y), t1.z);
+    float tFar = min(min(t2.x, t2.y), t2.z);
+    return vec2(tNear, tFar);
 }
 
 void main()
@@ -59,13 +59,12 @@ void main()
 
     float depth = texture(uDepthTexture, texCoords).r;
 
-    outColor = texture(uScreenTexture, texCoords).rgb;
-    outColor = vec3(1.0) - outColor;
-    // vec3 offsetColor = texture(uScreenTexture, texCoords - vec2(0.001)).rgb;
-    // if (length(outColor - offsetColor) > 0.05)
-    // {
-    //     outColor = vec3(0.0);
-    // }
     outColor = vec3(depth);
-    outColor = abs(rayDirection);
+
+    depth = linearDepth(depth, 10.0, 10000.0);
+
+    if (rayBoxInfo.x < rayBoxInfo.y && rayBoxInfo.x < depth)
+    {
+        outColor = vec3(1.0 - depth);
+    }
 }
