@@ -3,6 +3,8 @@
 // Uniforms
 uniform mat4 uViewProj;  // View-projection matrix
 uniform vec3 uCameraPos; // Camera's world position
+uniform float uNearDepth;
+uniform float uFarDepth;
 
 // Input attributes from the vertex buffer
 layout(location = 0) in vec2 aPos;

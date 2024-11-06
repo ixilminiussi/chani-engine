@@ -8,6 +8,7 @@
 #include <rapidjson/document.h>
 #include <shader.h>
 #include <sstream>
+#include <texture.h>
 #include <window.h>
 
 CloudMaterial::CloudMaterial() : Material()
@@ -26,6 +27,8 @@ void CloudMaterial::use()
     getShader().setMatrix4("uViewProj", view * projection);
     getShader().setSampler2D("uScreenTexture", 1);
     getShader().setSampler2D("uDepthTexture", 2);
+    getShader().setFloat("uNearPlane", RendererOGL::nearPlane);
+    getShader().setFloat("uFarPlane", RendererOGL::farPlane);
 }
 
 void CloudMaterial::setArea(Cuboid *cuboid)

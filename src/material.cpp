@@ -1,9 +1,11 @@
 #include "material.h"
 #include "assets.h"
+#include "rendererOGL.h"
 
 Material::Material()
     : shaderName(""), view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-      projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT, 10.0f, 10000.0f)),
+      projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT,
+                                               RendererOGL::nearPlane, RendererOGL::farPlane)),
       spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT))
 {
 }

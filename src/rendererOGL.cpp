@@ -14,6 +14,9 @@
 #include <GL/glew.h>
 #include <SDL_image.h>
 
+float RendererOGL::nearPlane = 10.0f;
+float RendererOGL::farPlane = 1500.0f;
+
 RendererOGL::RendererOGL()
     : window(nullptr), context(nullptr), spriteVertexArray(nullptr), ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
       dirLight({Vector3::zero, Vector3::zero, Vector3::zero}), clearColor(0.0f, 0.0f, 0.0f),
@@ -43,7 +46,7 @@ bool RendererOGL::initializeFrameBuffer()
     // creating depth texture to bind to
     glGenTextures(1, &depthTexture);
     glBindTexture(GL_TEXTURE_2D, depthTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT,
                  nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

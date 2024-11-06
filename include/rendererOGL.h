@@ -1,4 +1,3 @@
-#include <chani/shader.h>
 #if !defined(RENDERER_OGL_H)
 #define RENDERER_OGL_H
 
@@ -6,10 +5,12 @@
 #include "iRenderer.h"
 #include "shader.h"
 #include "vertexArray.h"
+#include <chani/shader.h>
 
 #include <vector>
 
-class RendererOGL : public IRenderer {
+class RendererOGL : public IRenderer
+{
   public:
     RendererOGL();
     virtual ~RendererOGL();
@@ -41,6 +42,8 @@ class RendererOGL : public IRenderer {
     void setLightUniforms(Shader &shader);
     void setAmbientLight(const Vector3 &ambientP);
     void setClearColor(const Vector3 &colorP);
+
+    static float nearPlane, farPlane;
 
   private:
     void drawMeshes();

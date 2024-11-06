@@ -32,6 +32,9 @@ struct DirectionalLight
 // Uniforms for lighting
 // Camera position (in world space)
 uniform vec3 uCameraPos;
+// Near and Far planes (in world space)
+uniform float uNearPlane;
+uniform float uFarPlane;
 // Ambient light level
 uniform vec3 uAmbientLight;
 // Directional Light
@@ -39,13 +42,13 @@ uniform DirectionalLight uDirLight;
 
 float linearDepth(float depth, float near, float far)
 {
-    return (2.0 * near * far) / (far + near - (2.0 * depth - 1.0) * (far - near));
+    return (2.0f * near * far) / (far + near - (2.0f * depth - 1.0f) * (far - near));
 }
 
 vec2 rayBoxDst(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir)
 {
-    vec3 tMin = (boundsMin - rayOrigin) / rayDir;
-    vec3 tMax = (boundsMax - rayOrigin) / rayDir;
+    vec3 tMin = (boundsMin - rayOrigin) / (rayDir + vec3(1e-5));
+    vec3 tMax = (boundsMax - rayOrigin) / (rayDir + vec3(1e-5));
     vec3 t1 = min(tMin, tMax);
     vec3 t2 = max(tMin, tMax);
     float tNear = max(max(t1.x, t1.y), t1.z);
@@ -59,12 +62,12 @@ void main()
 
     float depth = texture(uDepthTexture, texCoords).r;
 
-    outColor = vec3(depth);
+    depth = linearDepth(depth, uNearPlane, uFarPlane);
 
-    depth = linearDepth(depth, 10.0, 10000.0);
+    outColor = texture(uScreenTexture, texCoords).rgb;
 
     if (rayBoxInfo.x < rayBoxInfo.y && rayBoxInfo.x < depth)
     {
-        outColor = vec3(1.0 - depth);
+        outColor = vec3(0.0);
     }
 }
