@@ -13,6 +13,10 @@ class Vector3
     {
     }
 
+    Vector3(float single) : x(single), y(single), z(single)
+    {
+    }
+
     explicit Vector3(float xP, float yP, float zP) : x(xP), y(yP), z(zP)
     {
     }
@@ -57,12 +61,39 @@ class Vector3
         return Vector3(vec.x * scalar, vec.y * scalar, vec.z * scalar);
     }
 
+    // Component-wise division
+    friend Vector3 operator/(const Vector3 &left, const Vector3 &right)
+    {
+        return Vector3(left.x / right.x, left.y / right.y, left.z / right.z);
+    }
+
+    // Scalar division
+    friend Vector3 operator/(const Vector3 &vec, float scalar)
+    {
+        return Vector3(vec.x / scalar, vec.y / scalar, vec.z / scalar);
+    }
+
+    // Scalar division
+    friend Vector3 operator/(float scalar, const Vector3 &vec)
+    {
+        return Vector3(vec.x / scalar, vec.y / scalar, vec.z / scalar);
+    }
+
     // Scalar *=
     Vector3 &operator*=(float scalar)
     {
         x *= scalar;
         y *= scalar;
         z *= scalar;
+        return *this;
+    }
+
+    // Scalar /=
+    Vector3 &operator/=(float scalar)
+    {
+        x /= scalar;
+        y /= scalar;
+        z /= scalar;
         return *this;
     }
 

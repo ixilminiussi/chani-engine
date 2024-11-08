@@ -44,6 +44,8 @@ class Shader
     void setVector3f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z);
     void setVector3f(const GLchar *name, const Vector3 &value);
     void setSampler2D(const GLchar *name, GLint value);
+    void setSampler3D(const GLchar *name, GLint value);
+    void setBufferObject(const GLchar *name, GLint value);
     /*
     void setVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z,
     GLfloat w); void setVector4f(const GLchar* name, const Vector4& value);

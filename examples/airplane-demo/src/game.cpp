@@ -4,13 +4,16 @@
 #include <actor.h>
 #include <assets.h>
 #include <cloudComponent.h>
+#include <inputSystem.h>
 #include <maths.h>
 #include <orbitActor.h>
 #include <phongMaterial.h>
 #include <sphere.h>
+#include <window.h>
 
 Sphere *sphere, *sphere2;
 OrbitActor *orbit;
+CloudComponent *cloudComponent;
 
 int x, y = 0;
 
@@ -26,7 +29,12 @@ void Game::load()
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
+    PerlinSettings perlinSettings = {Vector3(9, 9, 1), Vector3(WINDOW_WIDTH, WINDOW_HEIGHT, 1)};
+
+    Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
+
+    Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat", perlinSettings),
+                               "Material_Cloud");
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
 
     sphere = new Sphere();
@@ -41,7 +49,7 @@ void Game::load()
     orbit->snapToActor(sphere);
 
     Cuboid *area = new Cuboid({Vector3(-200.0f, -200.0f, -50.0f), Vector3(400.0f, 400.0f, 100.0f)});
-    CloudComponent *cloudComponent = new CloudComponent(orbit, area);
+    cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);
 
@@ -70,6 +78,11 @@ void Game::processInput()
     if (input.keyboard.getKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released)
     {
         isRunning = false;
+    }
+
+    if (input.keyboard.getKeyState(SDL_SCANCODE_R) == ButtonState::Released)
+    {
+        cloudComponent->reloadNoiseShader();
     }
 
     // Actor input

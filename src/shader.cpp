@@ -149,6 +149,14 @@ void Shader::setSampler2D(const GLchar *name, GLint value)
 {
     glUniform1i(glGetUniformLocation(id, name), value);
 }
+void Shader::setSampler3D(const GLchar *name, GLint value)
+{
+    glUniform1i(glGetUniformLocation(id, name), value);
+}
+void Shader::setBufferObject(const GLchar *name, GLint value)
+{
+    glUniformBlockBinding(id, glGetUniformBlockIndex(id, name), value);
+}
 void Shader::setVector2f(const GLchar *name, GLfloat x, GLfloat y)
 {
     glUniform2f(glGetUniformLocation(id, name), x, y);

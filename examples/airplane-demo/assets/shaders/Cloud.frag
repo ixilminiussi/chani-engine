@@ -13,6 +13,7 @@ out vec3 outColor;
 // This is used for the texture sampling
 uniform sampler2D uScreenTexture;
 uniform sampler2D uDepthTexture;
+uniform sampler3D uPerlinNoise;
 
 // bounds of cloud area
 uniform vec3 uAreaCorner;
@@ -70,4 +71,6 @@ void main()
     {
         outColor = vec3(0.0);
     }
+
+    outColor = vec3(texture(uPerlinNoise, vec3(texCoords.xy, 0.0)).r);
 }

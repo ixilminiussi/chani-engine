@@ -1,6 +1,7 @@
 #if !defined(ASSETS_H)
 #define ASSETS_H
 
+#include "computeShader.h"
 #include "material.h"
 #include "mesh.h"
 #include "shader.h"
@@ -13,16 +14,17 @@
 // functions to load resources. Each loaded resource is also
 // stored for future reference by string handles. All functions
 // and resources are static and no public constructor is defined.
-class Assets
-{
+class Assets {
   public:
     static std::map<std::string, Texture> textures;
     static std::map<std::string, Shader> shaders;
     static std::map<std::string, Mesh> meshes;
     static std::map<std::string, Material *> materials;
+    static std::map<std::string, ComputeShader> computeShaders;
 
     // Loads a texture from file
-    static Texture loadTexture(IRenderer &renderer, const std::string &filename, const std::string &name);
+    static Texture loadTexture(IRenderer &renderer, const std::string &filename,
+                               const std::string &name);
 
     // Retrieves a stored texture
     static Texture &getTexture(const std::string &name);
@@ -31,9 +33,10 @@ class Assets
     // (and tessellation control, evaluation, geometry) shader's source code. If
     // tcShaderFile, teShaderFile, gShaderFile are not nullptr, it also loads
     // tessellation and geometry shaders
-    static Shader loadShader(const std::string &vShaderFile, const std::string &fShaderFile,
-                             const std::string &tcShaderFile, const std::string &teShaderFile,
-                             const std::string &gShaderFile, const std::string &name);
+    static Shader
+    loadShader(const std::string &vShaderFile, const std::string &fShaderFile,
+               const std::string &tcShaderFile, const std::string &teShaderFile,
+               const std::string &gShaderFile, const std::string &name);
 
     // Retrieves a stored shader
     static Shader &getShader(const std::string &name);
@@ -45,30 +48,44 @@ class Assets
     static Mesh &getMesh(const std::string &name);
 
     // Loads a material from file
-    static Material *loadPhongMaterial(const std::string &filename, const std::string &name);
+    static Material *loadPhongMaterial(const std::string &filename,
+                                       const std::string &name);
 
-    static Material *loadSpriteMaterial(const std::string &filename, const std::string &name);
+    static Material *loadSpriteMaterial(const std::string &filename,
+                                        const std::string &name);
 
-    static Material *loadCustomMaterial(Material *material, const std::string &name);
+    static Material *loadCustomMaterial(Material *material,
+                                        const std::string &name);
 
     // Retrieves a stored material
     static Material *getMaterial(const std::string &name);
+
+    // Loads (and generates) a shader program from a compute shader source file
+    static ComputeShader loadComputeShader(const std::string &cShaderFile,
+                                           const std::string &name);
+
+    // Retrieves a stored shader
+    static ComputeShader &getComputeShader(const std::string &name);
 
     // Properly de-allocates all loaded resources
     static void clear();
 
   private:
-    Assets()
-    {
-    }
+    Assets() = default;
 
     // Loads a single texture from file
-    static Texture loadTextureFromFile(IRenderer &renderer, const std::string &filename);
+    static Texture loadTextureFromFile(IRenderer &renderer,
+                                       const std::string &filename);
 
     // Loads and generates a shader from file
-    static Shader loadShaderFromFile(const std::string &vShaderFile, const std::string &fShaderFile,
-                                     const std::string &tcShaderFile = "", const std::string &teShaderFile = "",
+    static Shader loadShaderFromFile(const std::string &vShaderFile,
+                                     const std::string &fShaderFile,
+                                     const std::string &tcShaderFile = "",
+                                     const std::string &teShaderFile = "",
                                      const std::string &gShaderFile = "");
+
+    static ComputeShader
+    loadComputeShaderFromFile(const std::string &cShaderFile);
 
     static Mesh loadMeshFromFile(const std::string &filename);
 

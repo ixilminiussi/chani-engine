@@ -1,5 +1,6 @@
 #include "cloudMaterial.h"
 
+#include "perlinNoise.h"
 #include <assets.h>
 #include <fstream>
 #include <iostream>
@@ -11,8 +12,10 @@
 #include <texture.h>
 #include <window.h>
 
-CloudMaterial::CloudMaterial() : Material()
+CloudMaterial::CloudMaterial(PerlinSettings perlinSettings) : Material()
 {
+    noise = PerlinNoise(perlinSettings);
+    noise.generate();
 }
 
 void CloudMaterial::use()
@@ -22,6 +25,11 @@ void CloudMaterial::use()
 
     getShader().use();
 
+    GLenum e = glGetError();
+
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_3D, noise.getNoiseTexture());
+    getShader().setSampler3D("uPerlinNoise", 4);
     getShader().setVector3f("uAreaCorner", area->corner);
     getShader().setVector3f("uAreaSize", area->size);
     getShader().setMatrix4("uViewProj", view * projection);
@@ -36,9 +44,15 @@ void CloudMaterial::setArea(Cuboid *cuboid)
     area = cuboid;
 }
 
+void CloudMaterial::reload()
+{
+    noise.reload();
+}
+
 Material *CloudMaterial::makeUnique()
 {
-    CloudMaterial *newMat = new CloudMaterial();
+    PerlinSettings settings = {noise.getSubDivisions(), noise.getDimensions()};
+    CloudMaterial *newMat = new CloudMaterial(settings);
 
     newMat->view = view;
     newMat->projection = projection;
@@ -51,9 +65,9 @@ Material *CloudMaterial::makeUnique()
     return newMat;
 }
 
-Material *CloudMaterial::loadFromFile(const std::string &filename)
+Material *CloudMaterial::loadFromFile(const std::string &filename, const PerlinSettings &perlinSettings)
 {
-    CloudMaterial *material = new CloudMaterial();
+    CloudMaterial *material = new CloudMaterial(perlinSettings);
 
     std::ifstream file(filename);
     if (!file.is_open())

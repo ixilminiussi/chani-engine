@@ -15,6 +15,7 @@ std::map<std::string, Texture> Assets::textures;
 std::map<std::string, Shader> Assets::shaders;
 std::map<std::string, Mesh> Assets::meshes;
 std::map<std::string, Material *> Assets::materials;
+std::map<std::string, ComputeShader> Assets::computeShaders;
 
 Texture Assets::loadTexture(IRenderer &renderer, const std::string &filename, const std::string &name)
 {
@@ -116,6 +117,10 @@ void Assets::clear()
     for (auto iter : meshes)
         iter.second.unload();
     meshes.clear();
+    // (Properly) delete all compute shaders
+    for (auto iter : computeShaders)
+        iter.second.unload();
+    computeShaders.clear();
 }
 
 Texture Assets::loadTextureFromFile(IRenderer &renderer, const std::string &filename)
@@ -211,6 +216,53 @@ Shader Assets::loadShaderFromFile(const std::string &vShaderFile, const std::str
                    teShaderFile != "" ? teShaderCode : nullptr, gShaderFile != "" ? gShaderCode : nullptr);
 
     return shader;
+}
+
+ComputeShader Assets::loadComputeShaderFromFile(const std::string &cShaderFile)
+{
+    FILE *fp;
+    size_t filesize;
+    char *source;
+    try
+    {
+        fp = fopen(cShaderFile.c_str(), "rb");
+
+        fseek(fp, 0, SEEK_END);
+        filesize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        source = new char[filesize + 1];
+
+        fread(source, 1, filesize, fp);
+        source[filesize] = 0;
+        fclose(fp);
+    }
+    catch (std::exception e)
+    {
+        std::ostringstream loadError;
+
+        loadError << "ERROR::SHADER: Failed to read compute shader files " << cShaderFile << "\n"
+                  << "\n -- --------------------------------------------------- -- " << std::endl;
+        Log::error(LogCategory::Application, loadError.str());
+    }
+
+    ComputeShader shader;
+    shader.compile(source);
+    delete[] source;
+    return shader;
+}
+
+ComputeShader Assets::loadComputeShader(const std::string &cShaderFile, const std::string &name)
+{
+    computeShaders[name] = loadComputeShaderFromFile(cShaderFile);
+    computeShaders[name].setFilePath(cShaderFile);
+    computeShaders[name].setName(name);
+    return computeShaders[name];
+}
+
+ComputeShader &Assets::getComputeShader(const std::string &name)
+{
+    return computeShaders[name];
 }
 
 Mesh Assets::loadMeshFromFile(const std::string &filename)
