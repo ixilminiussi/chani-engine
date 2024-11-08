@@ -12,9 +12,31 @@ layout(r32f, binding = 1) writeonly uniform image3D members_out;
 
 uniform vec3 uCellSize;
 
+float sqr(float x)
+{
+    return x * x;
+}
+
 void main()
 {
     uvec3 globalID = gl_GlobalInvocationID;
 
-    imageStore(members_out, ivec3(globalID), vec4(1.0));
+    float maxDistance = sqr(uCellSize.x) + sqr(uCellSize.y);
+    float bestDistance = maxDistance;
+
+    float outValue;
+
+    for (int i = 0; i < position.length(); i++)
+    {
+        float distance = (sqr(position[i].x - globalID.x)) + (sqr(position[i].y - globalID.y));
+
+        if (distance < bestDistance)
+        {
+            bestDistance = distance;
+        }
+    }
+
+    outValue = bestDistance / maxDistance;
+
+    imageStore(members_out, ivec3(globalID), vec4(outValue));
 }

@@ -58,7 +58,6 @@ void PerlinNoise::reload()
 void PerlinNoise::generate()
 {
     perlinNoiseCS = Assets::getComputeShader("CS_PerlinNoise");
-
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, inputBuffer);
     glBindImageTexture(1, outputTexture, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_R32F);
 
