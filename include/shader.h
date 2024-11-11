@@ -40,9 +40,9 @@ class Shader
     void setFloat(const GLchar *name, GLfloat value);
     void setInteger(const GLchar *name, GLint value);
     void setVector2f(const GLchar *name, GLfloat x, GLfloat y);
-    void setVector2f(const GLchar *name, const Vector2 &value);
+    void setVector2f(const GLchar *name, const Vector2<float> &value);
     void setVector3f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z);
-    void setVector3f(const GLchar *name, const Vector3 &value);
+    void setVector3f(const GLchar *name, const Vector3<float> &value);
     void setSampler2D(const GLchar *name, GLint value);
     void setSampler3D(const GLchar *name, GLint value);
     void setBufferObject(const GLchar *name, GLint value);
@@ -50,7 +50,7 @@ class Shader
     void setVector4f(const GLchar* name, GLfloat x, GLfloat y, GLfloat z,
     GLfloat w); void setVector4f(const GLchar* name, const Vector4& value);
     */
-    void setMatrix4(const GLchar *name, const Matrix4 &matrix);
+    void setMatrix4f(const GLchar *name, const Matrix4<float> &matrix);
 
   protected:
     GLuint vs;

@@ -3,14 +3,15 @@
 #include "rendererOGL.h"
 
 Material::Material()
-    : shaderName(""), view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)),
-      projection(Matrix4::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT,
-                                               RendererOGL::nearPlane, RendererOGL::farPlane)),
-      spriteViewProj(Matrix4::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT))
+    : shaderName(""),
+      view(Matrix4<float>::createLookAt(Vector3<float>::zero(), Vector3<float>::unitX(), Vector3<float>::unitZ())),
+      projection(Matrix4<float>::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT,
+                                                      RendererOGL::nearPlane, RendererOGL::farPlane)),
+      spriteViewProj(Matrix4<float>::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT))
 {
 }
 
-void Material::setView(const Matrix4 &viewP)
+void Material::setView(const Matrix4<float> &viewP)
 {
     view = viewP;
 }
@@ -25,10 +26,10 @@ Shader &Material::getShader()
     return Assets::getShader(shaderName);
 }
 
-void Material::setWorldTransform(const Matrix4 &wt)
+void Material::setWorldTransform(const Matrix4<float> &wt)
 {
     getShader().use();
-    getShader().setMatrix4("uWorldTransform", wt);
+    getShader().setMatrix4f("uWorldTransform", wt);
 }
 
 Material *Material::selected = nullptr;

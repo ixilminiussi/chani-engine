@@ -6,8 +6,8 @@
 
 struct PerlinSettings
 {
-    Vector3 subDivisions;
-    Vector3 dimensions;
+    uint cellScale;
+    Vector3<uint> gridSize;
 };
 
 class PerlinNoise
@@ -19,15 +19,14 @@ class PerlinNoise
     void reload();
     void generate();
     GLuint getNoiseTexture() const;
-    const Vector3 &getDimensions() const;
-    const Vector3 &getSubDivisions() const;
+    const PerlinSettings &getSettings() const;
+    const Vector3<uint> &getTextureDimensions() const;
 
     ~PerlinNoise() = default;
 
   private:
-    Vector3 dimensions;
-    Vector3 subDivisions;
-    Vector3 cellSize;
+    Vector3<uint> textureDimensions;
+    PerlinSettings settings;
     ComputeShader perlinNoiseCS;
     GLuint inputBuffer, outputTexture;
 };

@@ -69,7 +69,7 @@ void InputSystem::preUpdate()
     memcpy(inputState.keyboard.previousState, inputState.keyboard.currentState, SDL_SCANCODE_COUNT);
     // Mouse
     inputState.mouse.previousButtons = inputState.mouse.currentButtons;
-    inputState.mouse.scrollWheel = Vector2::zero;
+    inputState.mouse.scrollWheel = Vector2<float>::zero();
     // gamepad
     memcpy(inputState.gamepad.previousButtons, inputState.gamepad.currentButtons, SDL_GAMEPAD_BUTTON_COUNT);
 }
@@ -157,20 +157,20 @@ float InputSystem::filter1D(int input)
     return retVal;
 }
 
-Vector2 InputSystem::filter2D(int inputX, int inputY)
+Vector2<int> InputSystem::filter2D(int inputX, int inputY)
 {
     const float deadZone = GAMEPAD_DEAD_ZONE_2D;
     const float maxValue = GAMEPAD_MAX_VALUE;
 
-    Vector2 dir;
-    dir.x = static_cast<float>(inputX);
-    dir.y = static_cast<float>(inputY);
+    Vector2<int> dir;
+    dir.x = inputX;
+    dir.y = inputY;
     float length = dir.length();
 
     // If length < deadZone, should be no input
     if (length < deadZone)
     {
-        dir = Vector2::zero;
+        dir = Vector2<int>::zero();
     }
     else
     {

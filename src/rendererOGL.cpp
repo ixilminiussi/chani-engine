@@ -18,9 +18,10 @@ float RendererOGL::nearPlane = 10.0f;
 float RendererOGL::farPlane = 1500.0f;
 
 RendererOGL::RendererOGL()
-    : window(nullptr), context(nullptr), spriteVertexArray(nullptr), ambientLight(Vector3(1.0f, 1.0f, 1.0f)),
-      dirLight({Vector3::zero, Vector3::zero, Vector3::zero}), clearColor(0.0f, 0.0f, 0.0f),
-      view(Matrix4::createLookAt(Vector3::zero, Vector3::unitX, Vector3::unitZ)), framebuffer(0)
+    : window(nullptr), context(nullptr), spriteVertexArray(nullptr), ambientLight(Vector3<float>(1.0f, 1.0f, 1.0f)),
+      dirLight({Vector3<float>::zero(), Vector3<float>::zero(), Vector3<float>::zero()}), clearColor(0.0f, 0.0f, 0.0f),
+      view(Matrix4<float>::createLookAt(Vector3<float>::zero(), Vector3<float>::unitX(), Vector3<float>::unitZ())),
+      framebuffer(0)
 {
 }
 
@@ -216,10 +217,11 @@ void RendererOGL::drawSprites()
 // void RendererOGL::drawSprite(const Actor &actor, const Texture &tex,
 //                              Rectangle srcRect, Vector2 origin,
 //                              Flip flip) const {
-//     Matrix4 scaleMat = Matrix4::createScale((float)tex.getWidth(),
+//     Matrix4<float> scaleMat =
+//     Matrix4<float>::createScale((float)tex.getWidth(),
 //                                             (float)tex.getHeight(), 1.0f);
-//     Matrix4 world = scaleMat * actor.getWorldTransform();
-//     Assets::getShader("Sprite").setMatrix4("uWorldTransform", world);
+//     Matrix4<float> world = scaleMat * actor.getWorldTransform();
+//     Assets::getShader("Sprite").setMatrix4<float>("uWorldTransform", world);
 //     tex.setActive();
 //     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 // }
@@ -272,7 +274,7 @@ DirectionalLight &RendererOGL::getDirectionalLight()
     return dirLight;
 }
 
-void RendererOGL::setViewMatrix(const Matrix4 &viewP)
+void RendererOGL::setViewMatrix(const Matrix4<float> &viewP)
 {
     view = viewP;
     for (auto &[materialName, material] : Assets::materials)
@@ -285,7 +287,7 @@ void RendererOGL::setLightUniforms(Shader &shader)
 {
     shader.use();
     // Camera position is from inverted view
-    Matrix4 invertedView = view;
+    Matrix4<float> invertedView = view;
     invertedView.invert();
     shader.setVector3f("uCameraPos", invertedView.getTranslation());
     // Ambient
@@ -296,12 +298,12 @@ void RendererOGL::setLightUniforms(Shader &shader)
     shader.setVector3f("uDirLight.specColor", dirLight.specColor);
 }
 
-void RendererOGL::setAmbientLight(const Vector3 &ambientP)
+void RendererOGL::setAmbientLight(const Vector3<float> &ambientP)
 {
     ambientLight = ambientP;
 }
 
-void RendererOGL::setClearColor(const Vector3 &color)
+void RendererOGL::setClearColor(const Vector3<float> &color)
 {
     clearColor = color;
 }

@@ -32,7 +32,7 @@ void CloudMaterial::use()
     getShader().setSampler3D("uPerlinNoise", 4);
     getShader().setVector3f("uAreaCorner", area->corner);
     getShader().setVector3f("uAreaSize", area->size);
-    getShader().setMatrix4("uViewProj", view * projection);
+    getShader().setMatrix4f("uViewProj", view * projection);
     getShader().setSampler2D("uScreenTexture", 1);
     getShader().setSampler2D("uDepthTexture", 2);
     getShader().setFloat("uNearPlane", RendererOGL::nearPlane);
@@ -51,7 +51,7 @@ void CloudMaterial::reload()
 
 Material *CloudMaterial::makeUnique()
 {
-    PerlinSettings settings = {noise.getSubDivisions(), noise.getDimensions()};
+    PerlinSettings settings = noise.getSettings();
     CloudMaterial *newMat = new CloudMaterial(settings);
 
     newMat->view = view;

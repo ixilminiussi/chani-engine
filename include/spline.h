@@ -7,10 +7,10 @@
 
 struct Spline
 {
-    std::vector<Vector3> controlPoints;
+    std::vector<Vector3<float>> controlPoints;
 
     size_t getNbPoints() const;
-    Vector3 compute(size_t index, float t) const;
+    Vector3<float> compute(size_t index, float t) const;
 };
 
 #endif

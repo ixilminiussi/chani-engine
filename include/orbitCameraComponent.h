@@ -24,9 +24,9 @@ class OrbitCameraComponent : public CameraComponent
 
   private:
     // Offset from target
-    Vector3 offset;
+    Vector3<float> offset;
     // Up vector of camera
-    Vector3 up;
+    Vector3<float> up;
 
     float pitchSpeed;
     float yawSpeed;

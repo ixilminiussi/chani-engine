@@ -48,6 +48,6 @@ void OrbitActor::updateActor(float dt)
 {
     if (targetActor != nullptr)
     {
-        setPosition(Vector3::lerp(getPosition(), targetActor->getPosition(), 0.2f));
+        setPosition(Vector3<float>::lerp(getPosition(), targetActor->getPosition(), 0.2f));
     }
 }

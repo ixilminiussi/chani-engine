@@ -7,7 +7,7 @@ Quaternion::Quaternion(float xP, float yP, float zP, float wP)
     set(xP, yP, zP, wP);
 }
 
-Quaternion::Quaternion(const Vector3 &axis, float angle)
+Quaternion::Quaternion(const Vector3<float> &axis, float angle)
 {
     float scalar = Maths::sin(angle / 2.0f);
     x = axis.x * scalar;

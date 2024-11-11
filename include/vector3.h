@@ -1,34 +1,44 @@
 #if !defined(VECTOR_3_H)
 #define VECTOR_3_H
 
-class Vector3
+#include <cmath>
+#include <type_traits>
+
+template <typename T> class Matrix4;
+
+template <typename T = float> class Vector3
 {
+    static_assert(std::is_arithmetic_v<T>, "Vector3 can only be instantiated with arithmetic types");
 
   public:
-    float x;
-    float y;
-    float z;
+    T x;
+    T y;
+    T z;
 
     Vector3() : x(0.0f), y(0.0f), z(0.0f)
     {
     }
 
-    Vector3(float single) : x(single), y(single), z(single)
+    Vector3(T single) : x(single), y(single), z(single)
     {
     }
 
-    explicit Vector3(float xP, float yP, float zP) : x(xP), y(yP), z(zP)
+    Vector3(T xP, T yP, T zP) : x(xP), y(yP), z(zP)
     {
     }
 
-    void set(float xP, float yP, float zP);
-    float lengthSq() const;
-    float length() const;
+    template <typename N> Vector3(Vector3<N> other) : x(T(other.x)), y(T(other.y)), z(T(other.z))
+    {
+    }
+
+    void set(T xP, T yP, T zP);
+    T lengthSq() const;
+    T length() const;
     void normalize();
 
-    const float *getAsFloatPtr() const
+    const T *getAsFloatPtr() const
     {
-        return reinterpret_cast<const float *>(&x);
+        return reinterpret_cast<const T *>(&x);
     }
 
     // Vector addition (a + b)
@@ -50,13 +60,13 @@ class Vector3
     }
 
     // Scalar multiplication
-    friend Vector3 operator*(const Vector3 &vec, float scalar)
+    friend Vector3 operator*(const Vector3 &vec, T scalar)
     {
         return Vector3(vec.x * scalar, vec.y * scalar, vec.z * scalar);
     }
 
     // Scalar multiplication
-    friend Vector3 operator*(float scalar, const Vector3 &vec)
+    friend Vector3 operator*(T scalar, const Vector3 &vec)
     {
         return Vector3(vec.x * scalar, vec.y * scalar, vec.z * scalar);
     }
@@ -68,19 +78,19 @@ class Vector3
     }
 
     // Scalar division
-    friend Vector3 operator/(const Vector3 &vec, float scalar)
+    friend Vector3 operator/(const Vector3 &vec, T scalar)
     {
         return Vector3(vec.x / scalar, vec.y / scalar, vec.z / scalar);
     }
 
     // Scalar division
-    friend Vector3 operator/(float scalar, const Vector3 &vec)
+    friend Vector3 operator/(T scalar, const Vector3 &vec)
     {
         return Vector3(vec.x / scalar, vec.y / scalar, vec.z / scalar);
     }
 
     // Scalar *=
-    Vector3 &operator*=(float scalar)
+    Vector3 &operator*=(T scalar)
     {
         x *= scalar;
         y *= scalar;
@@ -89,7 +99,7 @@ class Vector3
     }
 
     // Scalar /=
-    Vector3 &operator/=(float scalar)
+    Vector3 &operator/=(T scalar)
     {
         x /= scalar;
         y /= scalar;
@@ -124,7 +134,7 @@ class Vector3
     }
 
     // Dot product between two vectors (a dot b)
-    static float dot(const Vector3 &a, const Vector3 &b)
+    static T dot(const Vector3 &a, const Vector3 &b)
     {
         return (a.x * b.x + a.y * b.y + a.z * b.z);
     }
@@ -140,7 +150,7 @@ class Vector3
     }
 
     // Lerp from A to B by f
-    static Vector3 lerp(const Vector3 &a, const Vector3 &b, float f)
+    static Vector3 lerp(const Vector3 &a, const Vector3 &b, T f)
     {
         return Vector3(a + f * (b - a));
     }
@@ -151,23 +161,21 @@ class Vector3
         return v - 2.0f * Vector3::dot(v, n) * n;
     }
 
-    static Vector3 transform(const Vector3 &vec, const class Matrix4 &mat, float w = 1.0f);
-
-    // This will transform the vector and renormalize the w component
-    static Vector3 transformWithPerspDiv(const Vector3 &vec, const class Matrix4 &mat, float w = 1.0f);
+    static Vector3 transform(const Vector3 &vec, const Matrix4<T> &mat, T w = 1.0f);
 
     // Transform a Vector3 by a quaternion
     static Vector3 transform(const Vector3 &v, const class Quaternion &q);
 
-    static const Vector3 zero;
-    static const Vector3 unitX;
-    static const Vector3 unitY;
-    static const Vector3 unitZ;
-    static const Vector3 negUnitX;
-    static const Vector3 negUnitY;
-    static const Vector3 negUnitZ;
-    static const Vector3 infinity;
-    static const Vector3 negInfinity;
+    // This will transform the vector and renormalize the w component
+    static Vector3 transformWithPerspDiv(const Vector3 &vec, const Matrix4<T> &mat, T w = 1.0f);
+
+    static Vector3 zero();
+    static Vector3 unitX();
+    static Vector3 unitY();
+    static Vector3 unitZ();
+    static Vector3 negUnitX();
+    static Vector3 negUnitY();
+    static Vector3 negUnitZ();
 };
 
 #endif

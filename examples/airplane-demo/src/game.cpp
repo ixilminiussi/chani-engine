@@ -29,7 +29,7 @@ void Game::load()
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    PerlinSettings perlinSettings = {Vector3(9, 9, 1), Vector3(WINDOW_WIDTH, WINDOW_HEIGHT, 1)};
+    PerlinSettings perlinSettings = {50u, Vector3(10u, 10u, 1u)};
 
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 
@@ -48,7 +48,7 @@ void Game::load()
     orbit = new OrbitActor();
     orbit->snapToActor(sphere);
 
-    Cuboid *area = new Cuboid({Vector3(-200.0f, -200.0f, -50.0f), Vector3(400.0f, 400.0f, 100.0f)});
+    Cuboid *area = new Cuboid({Vector3<float>(-200.0f, -200.0f, -50.0f), Vector3<float>(400.0f, 400.0f, 100.0f)});
     cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);

@@ -9,7 +9,7 @@ bool MouseState::getButtonValue(int button) const
     return (SDL_BUTTON(button) & currentButtons) == 1;
 }
 
-const Vector2 &MouseState::getPosition() const
+const Vector2<float> &MouseState::getPosition() const
 {
     return position;
 }
@@ -41,7 +41,7 @@ ButtonState MouseState::getButtonState(int button) const
     }
 }
 
-const Vector2 &MouseState::getScrollWheel() const
+const Vector2<float> &MouseState::getScrollWheel() const
 {
     return scrollWheel;
 }

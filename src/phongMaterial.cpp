@@ -4,9 +4,13 @@
 #include "shader.h"
 #include <chani/shader.h>
 
-PhongMaterial::PhongMaterial() : Material() { shaderName = "Phong"; }
+PhongMaterial::PhongMaterial() : Material()
+{
+    shaderName = "Phong";
+}
 
-void PhongMaterial::use() {
+void PhongMaterial::use()
+{
     // Enable depth buffering/disable alpha blend
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
@@ -15,10 +19,11 @@ void PhongMaterial::use() {
 
     getShader().setFloat("uSpecular", specular);
     getShader().setSampler2D("uTexture", 0);
-    getShader().setMatrix4("uViewProj", view * projection);
+    getShader().setMatrix4f("uViewProj", view * projection);
 }
 
-Material *PhongMaterial::makeUnique() {
+Material *PhongMaterial::makeUnique()
+{
     PhongMaterial *newMat = new PhongMaterial();
 
     newMat->view = view;
@@ -32,6 +37,7 @@ Material *PhongMaterial::makeUnique() {
     return newMat;
 }
 
-void PhongMaterial::setSpecular(const float &specularP) {
+void PhongMaterial::setSpecular(const float &specularP)
+{
     specular = specularP;
 }

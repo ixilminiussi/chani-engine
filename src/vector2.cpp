@@ -1,30 +1,45 @@
 #include "vector2.h"
-
 #include "maths.h"
 
-const Vector2 Vector2::zero(0, 0);
-const Vector2 Vector2::unitX(1.0f, 0.0f);
-const Vector2 Vector2::unitY(0.0f, 1.0f);
+template <typename T> Vector2<T> Vector2<T>::zero()
+{
+    return {T(0), T(0)};
+}
 
-void Vector2::set(float xP, float yP)
+template <typename T> Vector2<T> Vector2<T>::unitX()
+{
+    return {T(1), T(0)};
+}
+
+template <typename T> Vector2<T> Vector2<T>::unitY()
+{
+    return {T(0), T(1)};
+}
+
+template <typename T> void Vector2<T>::set(T xP, T yP)
 {
     x = xP;
     y = yP;
 }
 
-float Vector2::lengthSq() const
+template <typename T> T Vector2<T>::lengthSq() const
 {
     return x * x + y * y;
 }
 
-float Vector2::length() const
+template <typename T> T Vector2<T>::length() const
 {
     return Maths::sqrt(lengthSq());
 }
 
-void Vector2::normalize()
+template <typename T> void Vector2<T>::normalize()
 {
-    float len = length();
+    T len = length();
     x /= len;
     y /= len;
 }
+
+template class Vector2<float>;
+template class Vector2<int>;
+template class Vector2<uint>;
+template class Vector2<double>;

@@ -48,7 +48,7 @@ class AudioSystem
     void update(float dt);
 
     // For positional audio
-    void setListener(const Matrix4 &viewMatrix);
+    void setListener(const Matrix4<float> &viewMatrix);
     // Control buses
     float getBusVolume(const std::string &name) const;
     bool getBusPaused(const std::string &name) const;

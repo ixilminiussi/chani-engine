@@ -5,9 +5,9 @@
 
 struct DirectionalLight
 {
-    Vector3 direction;
-    Vector3 diffuseColor;
-    Vector3 specColor;
+    Vector3<float> direction;
+    Vector3<float> diffuseColor;
+    Vector3<float> specColor;
 };
 
 #endif

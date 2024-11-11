@@ -28,10 +28,15 @@ class ComputeShader
 
     void setFloat(const GLchar *name, GLfloat value);
     void setInteger(const GLchar *name, GLint value);
+    void setUnsigned(const GLchar *name, GLuint value);
     void setVector2f(const GLchar *name, GLfloat x, GLfloat y);
-    void setVector2f(const GLchar *name, const Vector2 &value);
+    void setVector2f(const GLchar *name, const Vector2<float> &value);
     void setVector3f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z);
-    void setVector3f(const GLchar *name, const Vector3 &value);
+    void setVector3f(const GLchar *name, const Vector3<float> &value);
+    void setVector2ui(const GLchar *name, GLuint x, GLuint y);
+    void setVector2ui(const GLchar *name, const Vector2<uint> &value);
+    void setVector3ui(const GLchar *name, GLuint x, GLuint y, GLuint z);
+    void setVector3ui(const GLchar *name, const Vector3<uint> &value);
     void setSampler2D(const GLchar *name, GLint value);
     void setSampler3D(const GLchar *name, GLint value);
 

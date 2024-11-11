@@ -143,7 +143,7 @@ bool SoundEvent::is3D() const
 
 namespace
 {
-FMOD_VECTOR VecToFMOD(const Vector3 &in)
+FMOD_VECTOR VecToFMOD(const Vector3<float> &in)
 {
     // Convert from our coordinates (+x forward, +y right, +z up)
     // to FMOD (+z forward, +x right, +y up)
@@ -155,7 +155,7 @@ FMOD_VECTOR VecToFMOD(const Vector3 &in)
 }
 } // namespace
 
-void SoundEvent::set3DAttributes(const Matrix4 &worldTrans)
+void SoundEvent::set3DAttributes(const Matrix4<float> &worldTrans)
 {
     auto event = system ? system->getEventInstance(id) : nullptr;
     if (event)

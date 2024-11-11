@@ -18,8 +18,8 @@ class GamepadState
     bool getButtonValue(SDL_GamepadButton button) const;
     ButtonState getButtonState(SDL_GamepadButton button) const;
 
-    const Vector2 &getLeftStick() const;
-    const Vector2 &getRightStick() const;
+    const Vector2<float> &getLeftStick() const;
+    const Vector2<float> &getRightStick() const;
     float getLeftTrigger() const;
     float getRightTrigger() const;
     bool getIsConnected() const;
@@ -27,8 +27,8 @@ class GamepadState
   private:
     Uint8 currentButtons[SDL_GAMEPAD_BUTTON_COUNT];
     Uint8 previousButtons[SDL_GAMEPAD_BUTTON_COUNT];
-    Vector2 leftStick;
-    Vector2 rightStick;
+    Vector2<float> leftStick;
+    Vector2<float> rightStick;
     float leftTrigger;
     float rightTrigger;
     bool isConnected;

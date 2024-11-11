@@ -17,10 +17,10 @@ class FollowCameraComponent : public CameraComponent
     void setSpringConstant(float springConstantP);
 
   private:
-    Vector3 computeCameraPosition() const;
+    Vector3<float> computeCameraPosition() const;
 
-    Vector3 actualPosition;
-    Vector3 velocity;
+    Vector3<float> actualPosition;
+    Vector3<float> velocity;
     float horizontalDistance;
     float verticalDistance;
     float targetDistance;

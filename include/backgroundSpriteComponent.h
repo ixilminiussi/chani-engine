@@ -17,7 +17,7 @@ class BackgroundSpriteComponent : public SpriteComponent
 
     float getScrollSpeed() const;
     void setTextures(const std::vector<Texture *> &textures);
-    void setScreenSize(const Vector2 &screenSizeP);
+    void setScreenSize(const Vector2<int> &screenSizeP);
     void setScrollSpeed(float scrollSpeedP);
 
     void update(float dt) override;
@@ -27,14 +27,14 @@ class BackgroundSpriteComponent : public SpriteComponent
     // Struct to encapsulate each bg image and its offset
     struct BGTexture
     {
-        BGTexture(Texture &t, Vector2 o) : texture(t), offset(o)
+        BGTexture(Texture &t, Vector2<float> o) : texture(t), offset(o)
         {
         }
         Texture &texture;
-        Vector2 offset;
+        Vector2<float> offset;
     };
     std::vector<BGTexture> textures;
-    Vector2 screenSize;
+    Vector2<int> screenSize;
     float scrollSpeed;
 };
 

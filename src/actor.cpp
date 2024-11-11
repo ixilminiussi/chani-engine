@@ -6,7 +6,7 @@
 #include <algorithm>
 
 Actor::Actor()
-    : state(Actor::ActorState::Active), position(Vector3::zero), scale(1.0f), rotation(Quaternion::identity),
+    : state(Actor::ActorState::Active), position(Vector3<float>::zero()), scale(1.0f), rotation(Quaternion::identity),
       mustRecomputeWorldTransform(true), game(Game::instance())
 {
     game.addActor(this);
@@ -33,12 +33,12 @@ const Actor::ActorState Actor::getState() const
     return state;
 }
 
-const Vector3 Actor::getPosition() const
+const Vector3<float> Actor::getPosition() const
 {
     return position;
 }
 
-void Actor::setPosition(Vector3 positionP)
+void Actor::setPosition(Vector3<float> positionP)
 {
     position = positionP;
     mustRecomputeWorldTransform = true;
@@ -66,7 +66,7 @@ void Actor::setRotation(Quaternion rotationP)
     mustRecomputeWorldTransform = true;
 }
 
-void Actor::rotate(const Vector3 &axis, float angle)
+void Actor::rotate(const Vector3<float> &axis, float angle)
 {
     Quaternion newRotation = rotation;
     Quaternion increment(axis, angle);
@@ -74,7 +74,7 @@ void Actor::rotate(const Vector3 &axis, float angle)
     setRotation(newRotation);
 }
 
-void Actor::setAngle(const Vector3 &axis, float angle)
+void Actor::setAngle(const Vector3<float> &axis, float angle)
 {
     Quaternion newRotation(axis, angle);
     setRotation(newRotation);
@@ -85,17 +85,17 @@ void Actor::setState(ActorState stateP)
     state = stateP;
 }
 
-Vector3 Actor::getForward() const
+Vector3<float> Actor::getForward() const
 {
-    return Vector3::transform(Vector3::unitX, rotation);
+    return Vector3<float>::transform(Vector3<float>::unitX(), rotation);
 }
 
-Vector3 Actor::getRight() const
+Vector3<float> Actor::getRight() const
 {
-    return Vector3::transform(Vector3::unitY, rotation);
+    return Vector3<float>::transform(Vector3<float>::unitY(), rotation);
 }
 
-const Matrix4 &Actor::getWorldTransform() const
+const Matrix4<float> &Actor::getWorldTransform() const
 {
     return worldTransform;
 }
@@ -105,9 +105,9 @@ void Actor::computeWorldTransform()
     if (mustRecomputeWorldTransform)
     {
         mustRecomputeWorldTransform = false;
-        worldTransform = Matrix4::createScale(scale);
-        worldTransform *= Matrix4::createFromQuaternion(rotation);
-        worldTransform *= Matrix4::createTranslation(position);
+        worldTransform = Matrix4<float>::createScale(scale);
+        worldTransform *= Matrix4<float>::createFromQuaternion(rotation);
+        worldTransform *= Matrix4<float>::createTranslation(position);
 
         for (auto component : components)
         {

@@ -268,7 +268,7 @@ void AudioSystem::update(float dt)
 
 namespace
 {
-FMOD_VECTOR VecToFMOD(const Vector3 &in)
+FMOD_VECTOR VecToFMOD(const Vector3<float> &in)
 {
     // Convert from our coordinates (+x forward, +y right, +z up)
     // to FMOD (+z forward, +x right, +y up)
@@ -280,10 +280,10 @@ FMOD_VECTOR VecToFMOD(const Vector3 &in)
 }
 } // namespace
 
-void AudioSystem::setListener(const Matrix4 &viewMatrix)
+void AudioSystem::setListener(const Matrix4<float> &viewMatrix)
 {
     // Invert the view matrix to get the correct vectors
-    Matrix4 invView = viewMatrix;
+    Matrix4<float> invView = viewMatrix;
     invView.invert();
     FMOD_3D_ATTRIBUTES listener;
     // Set position, forward, up

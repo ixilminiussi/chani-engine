@@ -16,7 +16,7 @@ class OrbitActor : public Actor
   private:
     Actor *targetActor;
     OrbitCameraComponent *orbitCameraComponent;
-    Vector2 prevMousePosition;
+    Vector2<float> prevMousePosition;
 };
 
 #endif

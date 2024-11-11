@@ -35,7 +35,7 @@ class SoundEvent
     float getParameter(const std::string &name);
     // Positional
     bool is3D() const;
-    void set3DAttributes(const Matrix4 &worldTrans);
+    void set3DAttributes(const Matrix4<float> &worldTrans);
 
   protected:
     // Make this constructor protected and AudioSystem a friend

@@ -1,9 +1,9 @@
-#include <chani/shader.h>
 #if !defined(POST_PROCESS_COMPONENT_H)
 #define POST_PROCESS_COMPONENT_H
 
 #include "component.h"
 #include "material.h"
+#include <chani/shader.h>
 
 class PostProcessComponent : public Component
 {

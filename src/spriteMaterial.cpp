@@ -27,6 +27,6 @@ void SpriteMaterial::use()
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 
     Shader &shader = getShader();
-    shader.setMatrix4("uViewProj", spriteViewProj);
+    shader.setMatrix4f("uViewProj", spriteViewProj);
     shader.use();
 }

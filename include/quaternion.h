@@ -24,7 +24,7 @@ class Quaternion
     // Construct the quaternion from an axis and angle
     // It is assumed that axis is already normalized,
     // and the angle is in radians
-    explicit Quaternion(const Vector3 &axis, float angle);
+    explicit Quaternion(const Vector3<float> &axis, float angle);
 
     void set(float inX, float inY, float inZ, float inW);
     void conjugate();
@@ -115,16 +115,16 @@ class Quaternion
 
         // Vector component is:
         // ps * qv + qs * pv + pv x qv
-        Vector3 qv(q.x, q.y, q.z);
-        Vector3 pv(p.x, p.y, p.z);
-        Vector3 newVec = p.w * qv + q.w * pv + Vector3::cross(pv, qv);
+        Vector3<float> qv(q.x, q.y, q.z);
+        Vector3<float> pv(p.x, p.y, p.z);
+        Vector3<float> newVec = p.w * qv + q.w * pv + Vector3<float>::cross(pv, qv);
         retVal.x = newVec.x;
         retVal.y = newVec.y;
         retVal.z = newVec.z;
 
         // Scalar component is:
         // ps * qs - pv . qv
-        retVal.w = p.w * q.w - Vector3::dot(pv, qv);
+        retVal.w = p.w * q.w - Vector3<float>::dot(pv, qv);
 
         return retVal;
     }

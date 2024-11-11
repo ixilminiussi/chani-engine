@@ -44,7 +44,7 @@ void MoveComponent::update(float dt)
     {
         Quaternion newRotation = owner.getRotation();
         float angle = angularSpeed * dt;
-        Quaternion increment(Vector3::unitZ, angle);
+        Quaternion increment(Vector3<float>::unitZ(), angle);
         newRotation = Quaternion::concatenate(newRotation, increment);
         owner.setRotation(newRotation);
     }

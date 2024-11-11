@@ -8,16 +8,16 @@ SplineActor::SplineActor() : Actor(), cameraComponent(nullptr)
 
     // Create a spline
     Spline spline;
-    spline.controlPoints.emplace_back(Vector3::zero);
+    spline.controlPoints.emplace_back(Vector3<float>::zero());
     for (int i = 0; i < 5; i++)
     {
         if (i % 2 == 0)
         {
-            spline.controlPoints.emplace_back(Vector3(300.0f * (i + 1), 300.0f, 300.0f));
+            spline.controlPoints.emplace_back(Vector3<float>(300.0f * (i + 1), 300.0f, 300.0f));
         }
         else
         {
-            spline.controlPoints.emplace_back(Vector3(300.0f * (i + 1), 0.0f, 0.0f));
+            spline.controlPoints.emplace_back(Vector3<float>(300.0f * (i + 1), 0.0f, 0.0f));
         }
     }
 

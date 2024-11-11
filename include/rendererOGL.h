@@ -38,10 +38,10 @@ class RendererOGL : public IRenderer
 
     DirectionalLight &getDirectionalLight();
 
-    void setViewMatrix(const Matrix4 &viewP);
+    void setViewMatrix(const Matrix4<float> &viewP);
     void setLightUniforms(Shader &shader);
-    void setAmbientLight(const Vector3 &ambientP);
-    void setClearColor(const Vector3 &colorP);
+    void setAmbientLight(const Vector3<float> &ambientP);
+    void setClearColor(const Vector3<float> &colorP);
 
     static float nearPlane, farPlane;
 
@@ -56,15 +56,15 @@ class RendererOGL : public IRenderer
     SDL_GLContext context;
     GLuint framebuffer, colorTexture, depthTexture;
     VertexArray *spriteVertexArray;
-    Vector3 clearColor;
+    Vector3<float> clearColor;
 
-    Matrix4 view;
+    Matrix4<float> view;
 
     std::vector<class MeshComponent *> meshes;
     std::vector<class SpriteComponent *> sprites;
     std::vector<class PostProcessComponent *> postProcesses;
 
-    Vector3 ambientLight;
+    Vector3<float> ambientLight;
     DirectionalLight dirLight;
 };
 

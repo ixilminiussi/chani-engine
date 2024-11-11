@@ -5,7 +5,8 @@
 
 #include <random>
 
-class Random {
+class Random
+{
   public:
     static void init();
 
@@ -23,7 +24,7 @@ class Random {
     static int getIntRange(int min, int max);
 
     // Get a random vector given the min/max bounds
-    static Vector2 getVector(const Vector2 &min, const Vector2 &max);
+    template <typename T> static Vector2<T> getVector2(const Vector2<T> &min, const Vector2<T> &max);
 
     // Generate a uuid-like number for the sake of it
     static std::string getUUID();

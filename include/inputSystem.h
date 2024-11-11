@@ -42,7 +42,7 @@ class InputSystem
 
   private:
     float filter1D(int input);
-    Vector2 filter2D(int inputX, int inputY);
+    Vector2<int> filter2D(int inputX, int inputY);
 
     InputState inputState;
     bool isCursorDisplayed;

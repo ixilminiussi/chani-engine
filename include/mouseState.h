@@ -12,17 +12,17 @@ class MouseState
     friend class InputSystem;
 
   public:
-    const Vector2 &getPosition() const;
+    const Vector2<float> &getPosition() const;
     bool getButtonValue(int button) const;
     ButtonState getButtonState(int button) const;
-    const Vector2 &getScrollWheel() const;
+    const Vector2<float> &getScrollWheel() const;
     bool isRelativeModeOn() const;
 
   private:
-    Vector2 position;
+    Vector2<float> position;
     Uint32 currentButtons;
     Uint32 previousButtons;
-    Vector2 scrollWheel;
+    Vector2<float> scrollWheel;
     bool isRelativeMode;
 };
 

@@ -15,7 +15,7 @@ class CircleCollisionComponent : public Component
     float getRadius() const;
     void setRadius(float radiusP);
 
-    const Vector2 getCenter() const;
+    const Vector2<float> getCenter() const;
 
   private:
     float radius;

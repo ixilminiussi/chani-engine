@@ -3,62 +3,80 @@
 #include "actor.h"
 
 OrbitCameraComponent::OrbitCameraComponent(Actor *ownerP)
-    : CameraComponent(ownerP), offset(-400.0f, 0.0f, 0.0f), up(Vector3::unitZ),
-      pitchSpeed(0.0f), yawSpeed(0.0f) {}
+    : CameraComponent(ownerP), offset(-400.0f, 0.0f, 0.0f), up(Vector3<float>::unitZ()), pitchSpeed(0.0f),
+      yawSpeed(0.0f)
+{
+}
 
-void OrbitCameraComponent::update(float dt) {
+void OrbitCameraComponent::update(float dt)
+{
     CameraComponent::update(dt);
 
-    Quaternion yaw{Vector3::unitZ, yawSpeed * dt};
-    offset = Vector3::transform(offset, yaw);
-    up = Vector3::transform(up, yaw);
+    Quaternion yaw{Vector3<float>::unitZ(), yawSpeed * dt};
+    offset = Vector3<float>::transform(offset, yaw);
+    up = Vector3<float>::transform(up, yaw);
 
     // Compute camera forward/right from these vectors
     // Forward owner.position - (owner.position + offset) = -offset
-    Vector3 forward = -1.0f * offset;
+    Vector3<float> forward = -1.0f * offset;
     forward.normalize();
-    Vector3 right = Vector3::cross(up, forward);
+    Vector3<float> right = Vector3<float>::cross(up, forward);
     right.normalize();
 
     Quaternion pitch{right, pitchSpeed * dt};
-    offset = Vector3::transform(offset, pitch);
-    up = Vector3::transform(up, pitch);
+    offset = Vector3<float>::transform(offset, pitch);
+    up = Vector3<float>::transform(up, pitch);
 
-    Vector3 target = owner.getPosition();
-    Vector3 cameraPosition = target + offset;
-    Matrix4 view = Matrix4::createLookAt(cameraPosition, target, up);
+    Vector3<float> target = owner.getPosition();
+    Vector3<float> cameraPosition = target + offset;
+    Matrix4<float> view = Matrix4<float>::createLookAt(cameraPosition, target, up);
     setViewMatrix(view);
 }
 
-float OrbitCameraComponent::getDistance() {
+float OrbitCameraComponent::getDistance()
+{
     return (offset - owner.getPosition()).length();
 }
 
-void OrbitCameraComponent::setDistance(float newDistance) {
+void OrbitCameraComponent::setDistance(float newDistance)
+{
     float currentDistance = getDistance();
     unzoom(newDistance - getDistance());
 }
 
-void OrbitCameraComponent::zoom(float factor) {
-    if (factor > getDistance()) {
+void OrbitCameraComponent::zoom(float factor)
+{
+    if (factor > getDistance())
+    {
         setDistance(0.0f);
         return;
     }
-    Vector3 forward = -1.0f * offset;
+    Vector3<float> forward = -1.0f * offset;
     forward.normalize();
     offset += forward * factor;
 }
 
-void OrbitCameraComponent::unzoom(float factor) { zoom(-factor); }
+void OrbitCameraComponent::unzoom(float factor)
+{
+    zoom(-factor);
+}
 
-float OrbitCameraComponent::getPitchSpeed() const { return pitchSpeed; }
+float OrbitCameraComponent::getPitchSpeed() const
+{
+    return pitchSpeed;
+}
 
-void OrbitCameraComponent::setPitchSpeed(float pitchSpeedP) {
+void OrbitCameraComponent::setPitchSpeed(float pitchSpeedP)
+{
     pitchSpeed = pitchSpeedP;
 }
 
-float OrbitCameraComponent::getYawSpeed() const { return yawSpeed; }
+float OrbitCameraComponent::getYawSpeed() const
+{
+    return yawSpeed;
+}
 
-void OrbitCameraComponent::setYawSpeed(float yawSpeedP) {
+void OrbitCameraComponent::setYawSpeed(float yawSpeedP)
+{
     yawSpeed = yawSpeedP;
 }
