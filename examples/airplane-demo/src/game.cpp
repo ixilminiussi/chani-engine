@@ -37,7 +37,7 @@ void Game::load()
 
     shift = Vector3(0.0f, 0.0f, 0.0f);
 
-    PerlinSettings perlinSettings = {50u, Vector3(20u, 20u, 1u), &shift};
+    PerlinSettings perlinSettings = {50u, Vector3(10u, 10u, 1u), &shift};
 
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 

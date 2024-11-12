@@ -37,6 +37,10 @@ void CloudMaterial::use()
     getShader().setSampler2D("uDepthTexture", 2);
     getShader().setFloat("uNearPlane", RendererOGL::nearPlane);
     getShader().setFloat("uFarPlane", RendererOGL::farPlane);
+    getShader().setInteger("uScreenWidth", WINDOW_WIDTH);
+    getShader().setInteger("uScreenHeight", WINDOW_HEIGHT);
+    getShader().setInteger("uTextureWidth", noise.getTextureDimensions().x);
+    getShader().setInteger("uTextureHeight", noise.getTextureDimensions().y);
 }
 
 void CloudMaterial::setArea(Cuboid *cuboid)

@@ -39,6 +39,12 @@ uniform vec3 uCameraPos;
 // Near and Far planes (in world space)
 uniform float uNearPlane;
 uniform float uFarPlane;
+// Screen resolution
+uniform int uScreenWidth;
+uniform int uScreenHeight;
+// Perlin texture resolution
+uniform int uTextureWidth;
+uniform int uTextureHeight;
 // Ambient light level
 uniform vec3 uAmbientLight;
 // Directional Light
@@ -75,5 +81,8 @@ void main()
         outColor = vec3(0.0);
     }
 
-    outColor = vec3(texture(uPerlinNoise, vec3((texCoords.xy + uShift.xy), uShift.z)).r);
+    vec2 relativeCoords = vec2(float(uTextureWidth) * texCoords.x / float(uScreenWidth),
+                               float(uTextureHeight) * texCoords.y / float(uScreenHeight));
+
+    outColor = vec3(texture(uPerlinNoise, vec3((relativeCoords.xy + uShift.xy), uShift.z)).r);
 }
