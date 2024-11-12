@@ -12,9 +12,8 @@
 #include <texture.h>
 #include <window.h>
 
-CloudMaterial::CloudMaterial(PerlinSettings perlinSettings) : Material()
+CloudMaterial::CloudMaterial(PerlinSettings perlinSettings) : Material(), noise(PerlinNoise(perlinSettings))
 {
-    noise = PerlinNoise(perlinSettings);
     noise.generate();
 }
 
@@ -32,6 +31,7 @@ void CloudMaterial::use()
     getShader().setSampler3D("uPerlinNoise", 4);
     getShader().setVector3f("uAreaCorner", area->corner);
     getShader().setVector3f("uAreaSize", area->size);
+    getShader().setVector3f("uShift", *noise.getSettings().shift);
     getShader().setMatrix4f("uViewProj", view * projection);
     getShader().setSampler2D("uScreenTexture", 1);
     getShader().setSampler2D("uDepthTexture", 2);

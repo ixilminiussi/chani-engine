@@ -8,12 +8,18 @@ struct PerlinSettings
 {
     uint cellScale;
     Vector3<uint> gridSize;
+    Vector3<float> *shift;
+};
+
+struct PaddedVector3
+{
+    uint x, y, z, padding;
 };
 
 class PerlinNoise
 {
   public:
-    PerlinNoise() = default;
+    PerlinNoise() = delete;
     PerlinNoise(const PerlinSettings &settings);
 
     void reload();

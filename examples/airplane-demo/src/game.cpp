@@ -1,14 +1,18 @@
 #include <chani.h>
 
+#include "SDL_scancode.h"
 #include "cloudMaterial.h"
 #include <actor.h>
 #include <assets.h>
 #include <cloudComponent.h>
 #include <inputSystem.h>
+#include <log.h>
 #include <maths.h>
+#include <mouseState.h>
 #include <orbitActor.h>
 #include <phongMaterial.h>
 #include <sphere.h>
+#include <string>
 #include <window.h>
 
 Sphere *sphere, *sphere2;
@@ -16,6 +20,8 @@ OrbitActor *orbit;
 CloudComponent *cloudComponent;
 
 int x, y = 0;
+
+Vector3 shift;
 
 void Game::load()
 {
@@ -29,7 +35,9 @@ void Game::load()
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    PerlinSettings perlinSettings = {50u, Vector3(10u, 10u, 1u)};
+    shift = Vector3(0.0f, 0.0f, 0.0f);
+
+    PerlinSettings perlinSettings = {50u, Vector3(20u, 20u, 1u), &shift};
 
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 
@@ -84,6 +92,28 @@ void Game::processInput()
     {
         cloudComponent->reloadNoiseShader();
     }
+
+    if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Held)
+    {
+        shift.x -= 0.01f;
+    }
+
+    if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Held)
+    {
+        shift.x += 0.01f;
+    }
+
+    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Held)
+    {
+        shift.y -= 0.01f;
+    }
+
+    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Held)
+    {
+        shift.y += 0.01f;
+    }
+
+    shift.z += (float)input.mouse.getScrollWheel().y * 0.01;
 
     // Actor input
     isUpdatingActors = true;

@@ -15,6 +15,9 @@ uniform sampler2D uScreenTexture;
 uniform sampler2D uDepthTexture;
 uniform sampler3D uPerlinNoise;
 
+// shift
+uniform vec3 uShift;
+
 // bounds of cloud area
 uniform vec3 uAreaCorner;
 uniform vec3 uAreaSize;
@@ -72,5 +75,5 @@ void main()
         outColor = vec3(0.0);
     }
 
-    outColor = vec3(texture(uPerlinNoise, vec3(texCoords.xy, 0.0)).r);
+    outColor = vec3(texture(uPerlinNoise, vec3((texCoords.xy + uShift.xy), uShift.z)).r);
 }
