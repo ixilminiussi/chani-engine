@@ -19,9 +19,10 @@ struct PaddedVector3
 class PerlinNoise
 {
   public:
-    PerlinNoise() = delete;
+    PerlinNoise() = default;
     PerlinNoise(const PerlinSettings &settings);
 
+    void load(const PerlinSettings &settings);
     void reload();
     void generate();
     GLuint getNoiseTexture() const;
@@ -35,6 +36,7 @@ class PerlinNoise
     PerlinSettings settings;
     ComputeShader perlinNoiseCS;
     GLuint inputBuffer, outputTexture;
+    bool initialized = false;
 };
 
 #endif

@@ -60,8 +60,8 @@ void main()
     uvec3 globalID = gl_GlobalInvocationID;
     uvec3 gridID = globalID.xyz / uCellScale;
 
-    int maxDistance = int(uCellScale * (3 * uCellScale));
-    int bestDistance = maxDistance;
+    int maxDistance = int((uCellScale / 2) * (3 * (uCellScale / 2)));
+    int bestDistance = maxDistance * 2;
 
     float outValue;
 
@@ -83,7 +83,7 @@ void main()
         }
     }
 
-    outValue = float(bestDistance) / float(maxDistance);
+    outValue = sqrt(float(bestDistance) / float(maxDistance));
 
     imageStore(members_out, ivec3(globalID), vec4(1.0 - outValue));
 }

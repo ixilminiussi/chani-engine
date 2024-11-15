@@ -35,15 +35,13 @@ void Game::load()
 
     Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
-    shift = Vector3(0.0f, 0.0f, 0.0f);
-
-    PerlinSettings perlinSettings = {50u, Vector3(10u, 10u, 1u), &shift};
-
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 
-    Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat", perlinSettings),
-                               "Material_Cloud");
+    Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
+
+    shift = Vector3(0.0f, 0.0f, 0.0f);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setShift(&shift);
 
     sphere = new Sphere();
     sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -95,12 +93,12 @@ void Game::processInput()
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Held)
     {
-        shift.x -= 0.01f;
+        shift.x += 0.01f;
     }
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Held)
     {
-        shift.x += 0.01f;
+        shift.x -= 0.01f;
     }
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Held)
@@ -113,7 +111,7 @@ void Game::processInput()
         shift.y += 0.01f;
     }
 
-    shift.z += (float)input.mouse.getScrollWheel().y * 0.01;
+    shift.z += (float)input.mouse.getScrollWheel().y * 0.1;
 
     // Actor input
     isUpdatingActors = true;

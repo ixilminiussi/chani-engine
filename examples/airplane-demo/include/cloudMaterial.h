@@ -10,22 +10,25 @@
 class CloudMaterial : public Material
 {
   public:
-    CloudMaterial() = delete;
-    CloudMaterial(PerlinSettings perlinSettings);
+    CloudMaterial();
     ~CloudMaterial() = default;
 
     void use() override;
 
     Material *makeUnique() override;
 
-    static Material *loadFromFile(const std::string &filename, const PerlinSettings &perlinSettings);
+    static Material *loadFromFile(const std::string &filename);
     void setArea(Cuboid *cuboid);
     void reload();
+    void setShift(Vector3<float> *shiftP);
 
   protected:
     Cuboid *area;
     Actor *camera;
-    PerlinNoise noise;
+    Vector3<float> *shift;
+    PerlinNoise noise1;
+    PerlinNoise noise2;
+    PerlinNoise noise3;
 };
 
 #endif

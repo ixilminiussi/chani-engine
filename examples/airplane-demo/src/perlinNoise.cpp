@@ -7,8 +7,15 @@
 #include <shader.h>
 #include <string>
 
-PerlinNoise::PerlinNoise(const PerlinSettings &settingsP) : settings(settingsP)
+PerlinNoise::PerlinNoise(const PerlinSettings &settingsP)
 {
+    settings = settingsP;
+    load(settingsP);
+}
+
+void PerlinNoise::load(const PerlinSettings &settingsP)
+{
+    settings = settingsP;
     perlinNoiseCS = Assets::getComputeShader("CS_PerlinNoise");
 
     glGenBuffers(1, &inputBuffer);
@@ -30,63 +37,79 @@ PerlinNoise::PerlinNoise(const PerlinSettings &settingsP) : settings(settingsP)
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+
+    initialized = true;
 }
 
 void PerlinNoise::reload()
 {
-    perlinNoiseCS.reload();
-    generate();
+    if (initialized)
+    {
+        perlinNoiseCS.reload();
+        generate();
+    }
+    else
+    {
+        Log::error(LogCategory::Error, "Forgot to initialize PerlinNoise");
+    }
 }
 
 void PerlinNoise::generate()
 {
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, inputBuffer);
-    PaddedVector3 *coords = reinterpret_cast<PaddedVector3 *>(
-        glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0,
-                         settings.gridSize.x * settings.gridSize.y * settings.gridSize.z * sizeof(PaddedVector3),
-                         GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-
-    Random::seed(Random::getIntRange(0, 1000));
-
-    // generate the input buffer data
-    for (uint z = 0; z < settings.gridSize.z; z++)
+    if (initialized)
     {
-        for (uint y = 0; y < settings.gridSize.y; y++)
-        {
-            for (uint x = 0; x < settings.gridSize.x; x++)
-            {
-                uint index = (z * settings.gridSize.y * settings.gridSize.x) + (y * settings.gridSize.x) + x;
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, inputBuffer);
+        PaddedVector3 *coords = reinterpret_cast<PaddedVector3 *>(
+            glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0,
+                             settings.gridSize.x * settings.gridSize.y * settings.gridSize.z * sizeof(PaddedVector3),
+                             GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
 
-                coords[index] = {(uint)Random::getIntRange(0, settings.cellScale),
-                                 (uint)Random::getIntRange(0, settings.cellScale),
-                                 (uint)Random::getIntRange(0, settings.cellScale), 0u};
+        Random::seed(Random::getIntRange(0, 1000));
+
+        // generate the input buffer data
+        for (uint z = 0; z < settings.gridSize.z; z++)
+        {
+            for (uint y = 0; y < settings.gridSize.y; y++)
+            {
+                for (uint x = 0; x < settings.gridSize.x; x++)
+                {
+                    uint index = (z * settings.gridSize.y * settings.gridSize.x) + (y * settings.gridSize.x) + x;
+
+                    coords[index] = {(uint)Random::getIntRange(0, settings.cellScale),
+                                     (uint)Random::getIntRange(0, settings.cellScale),
+                                     (uint)Random::getIntRange(0, settings.cellScale), 0u};
+                }
             }
         }
+
+        glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+        perlinNoiseCS = Assets::getComputeShader("CS_PerlinNoise");
+        glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, inputBuffer);
+        glBindImageTexture(1, outputTexture, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_R32F);
+
+        perlinNoiseCS.use();
+        perlinNoiseCS.setUnsigned("uCellScale", settings.cellScale);
+        perlinNoiseCS.setVector3ui("uGridSize", settings.gridSize.x, settings.gridSize.y, settings.gridSize.z);
+        glDispatchCompute(textureDimensions.x, textureDimensions.y, textureDimensions.z);
+        glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+        glBindTexture(GL_TEXTURE_3D, outputTexture);
+
+        // Create a buffer to store the texture data
+        std::vector<float> textureData(textureDimensions.x * textureDimensions.y * textureDimensions.z);
+
+        // Read the texture data into the buffer
+        glGetTexImage(GL_TEXTURE_3D, 0, GL_RED, GL_FLOAT, textureData.data());
+
+        // Unbind the texture
+        glBindTexture(GL_TEXTURE_3D, 0);
     }
-
-    glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
-    glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-
-    perlinNoiseCS = Assets::getComputeShader("CS_PerlinNoise");
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, inputBuffer);
-    glBindImageTexture(1, outputTexture, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_R32F);
-
-    perlinNoiseCS.use();
-    perlinNoiseCS.setUnsigned("uCellScale", settings.cellScale);
-    perlinNoiseCS.setVector3ui("uGridSize", settings.gridSize.x, settings.gridSize.y, settings.gridSize.z);
-    glDispatchCompute(textureDimensions.x, textureDimensions.y, textureDimensions.z);
-    glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-
-    glBindTexture(GL_TEXTURE_3D, outputTexture);
-
-    // Create a buffer to store the texture data
-    std::vector<float> textureData(textureDimensions.x * textureDimensions.y * textureDimensions.z);
-
-    // Read the texture data into the buffer
-    glGetTexImage(GL_TEXTURE_3D, 0, GL_RED, GL_FLOAT, textureData.data());
-
-    // Unbind the texture
-    glBindTexture(GL_TEXTURE_3D, 0);
+    else
+    {
+        Log::error(LogCategory::Error, "Forgot to initialize PerlinNoise");
+    }
 }
 
 GLuint PerlinNoise::getNoiseTexture() const
