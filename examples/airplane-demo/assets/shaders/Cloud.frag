@@ -34,6 +34,7 @@ uniform int uTexture3Height;
 
 // shift
 uniform vec3 uShift;
+uniform float uPersistence;
 uniform float uTime;
 
 // bounds of cloud area
@@ -114,7 +115,7 @@ void main()
                           float(uScreenWidth) * uShift.z / float(uTexture2Width));
     float color3 = texture(uPerlinNoise3, relativeCoords).r - 0.5;
 
-    float range = 1.6;
-    float finalColor = (color1 + (color2 * 0.30) + (color3 * 0.30)) / range + 0.5;
+    float range = 1.0 + uPersistence * 2.0;
+    float finalColor = (color1 + (color2 * uPersistence) + (color3 * uPersistence)) / range + 0.5;
     outColor = vec3(finalColor);
 }

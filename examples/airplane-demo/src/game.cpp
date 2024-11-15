@@ -22,6 +22,7 @@ CloudComponent *cloudComponent;
 int x, y = 0;
 
 Vector3 shift;
+float persistence = 0.0f;
 
 void Game::load()
 {
@@ -42,6 +43,7 @@ void Game::load()
 
     shift = Vector3(0.0f, 0.0f, 0.0f);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setShift(&shift);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
 
     sphere = new Sphere();
     sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -111,7 +113,19 @@ void Game::processInput()
         shift.y += 0.01f;
     }
 
-    shift.z += (float)input.mouse.getScrollWheel().y * 0.1;
+    if (input.keyboard.getKeyState(SDL_SCANCODE_LSHIFT) == ButtonState::Held)
+    {
+        float pre = persistence;
+        persistence += (float)input.mouse.getScrollWheel().y * 0.01f;
+        persistence = (persistence > 1.0f) ? persistence = 1.0f : persistence;
+        persistence = (persistence < -1.0f) ? persistence = -1.0f : persistence;
+        if (pre != persistence)
+            Log::info(std::to_string(persistence));
+    }
+    else
+    {
+        shift.z += (float)input.mouse.getScrollWheel().y * 0.01f;
+    }
 
     // Actor input
     isUpdatingActors = true;

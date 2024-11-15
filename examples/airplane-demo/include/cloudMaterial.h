@@ -20,12 +20,14 @@ class CloudMaterial : public Material
     static Material *loadFromFile(const std::string &filename);
     void setArea(Cuboid *cuboid);
     void reload();
-    void setShift(Vector3<float> *shiftP);
+    void setShift(Vector3<float> *shift);
+    void setPersistence(float *persistence);
 
   protected:
     Cuboid *area;
     Actor *camera;
     Vector3<float> *shift;
+    float *persistence;
     PerlinNoise noise1;
     PerlinNoise noise2;
     PerlinNoise noise3;
