@@ -43,7 +43,7 @@ class RendererOGL : public IRenderer
     void setAmbientLight(const Vector3<float> &ambientP);
     void setClearColor(const Vector3<float> &colorP);
 
-    static float nearPlane, farPlane;
+    static float nearPlane, farPlane, FOV;
 
   private:
     void drawMeshes();

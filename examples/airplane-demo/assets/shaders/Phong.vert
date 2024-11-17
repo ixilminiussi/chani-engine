@@ -16,6 +16,8 @@ out vec2 fragTexCoord;
 out vec3 fragNormal;
 // Position (in world space)
 out vec3 fragWorldPos;
+// Depth (in clip space)
+out float fragClipDepth;
 
 void main()
 {

@@ -5,7 +5,7 @@
 Material::Material()
     : shaderName(""),
       view(Matrix4<float>::createLookAt(Vector3<float>::zero(), Vector3<float>::unitX(), Vector3<float>::unitZ())),
-      projection(Matrix4<float>::createPerspectiveFOV(Maths::toRadians(70.0f), WINDOW_WIDTH, WINDOW_HEIGHT,
+      projection(Matrix4<float>::createPerspectiveFOV(Maths::toRadians(RendererOGL::FOV), WINDOW_WIDTH, WINDOW_HEIGHT,
                                                       RendererOGL::nearPlane, RendererOGL::farPlane)),
       spriteViewProj(Matrix4<float>::createSimpleViewProj(WINDOW_WIDTH, WINDOW_HEIGHT))
 {

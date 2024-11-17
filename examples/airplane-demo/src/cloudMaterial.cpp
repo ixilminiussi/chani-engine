@@ -19,11 +19,11 @@ clock_t clock_start = clock();
 CloudMaterial::CloudMaterial() : Material()
 {
     noise1.load(PerlinSettings({200u, Vector3(5u, 5u, 1u)}));
-    noise1.generate();
+    // noise1.generate();
     noise2.load(PerlinSettings({50u, Vector3(10u, 10u, 4u)}));
-    noise2.generate();
+    // noise2.generate();
     noise3.load(PerlinSettings({10u, Vector3(10u, 10u, 5u)}));
-    noise3.generate();
+    // noise3.generate();
 }
 
 void CloudMaterial::use()
@@ -60,10 +60,13 @@ void CloudMaterial::use()
     getShader().setVector3f("uShift", *shift);
     getShader().setFloat("uTime", float(clock_start - clock()) / CLOCKS_PER_SEC);
     getShader().setMatrix4f("uViewProj", view * projection);
+    getShader().setMatrix4f("uView", view);
+    getShader().setMatrix4f("uProj", projection);
     getShader().setSampler2D("uScreenTexture", 1);
     getShader().setSampler2D("uDepthTexture", 2);
     getShader().setFloat("uNearPlane", RendererOGL::nearPlane);
     getShader().setFloat("uFarPlane", RendererOGL::farPlane);
+    getShader().setFloat("uFOV", RendererOGL::FOV);
     getShader().setInteger("uScreenWidth", WINDOW_WIDTH);
     getShader().setInteger("uScreenHeight", WINDOW_HEIGHT);
 }

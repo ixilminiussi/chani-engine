@@ -15,7 +15,8 @@
 #include <SDL_image.h>
 
 float RendererOGL::nearPlane = 10.0f;
-float RendererOGL::farPlane = 1500.0f;
+float RendererOGL::farPlane = 2000.0f;
+float RendererOGL::FOV = 70.0f;
 
 RendererOGL::RendererOGL()
     : window(nullptr), context(nullptr), spriteVertexArray(nullptr), ambientLight(Vector3<float>(1.0f, 1.0f, 1.0f)),
