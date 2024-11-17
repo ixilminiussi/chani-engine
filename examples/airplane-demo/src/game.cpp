@@ -15,8 +15,9 @@
 #include <string>
 #include <window.h>
 
-Sphere *sphere, *sphere2;
+// Sphere *sphere, *sphere2;
 OrbitActor *orbit;
+Actor *center;
 CloudComponent *cloudComponent;
 
 int x, y = 0;
@@ -30,31 +31,37 @@ void Game::load()
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
     Assets::loadShader("assets/shaders/Cloud.vert", "assets/shaders/Cloud.frag", "", "", "", "Shader_Cloud");
-    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
+    // Assets::loadShader("assets/shaders/Phong.vert",
+    // "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
 
-    Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Texture_Sphere");
+    // Assets::loadTexture(renderer, "assets/textures/Sphere.png",
+    // "Texture_Sphere");
 
-    Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
+    // Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 
     Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
-    Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
+    // Assets::loadPhongMaterial("assets/materials/Phong.mat",
+    // "Material_Phong");
 
     shift = Vector3(0.0f, 0.0f, 0.0f);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setShift(&shift);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
 
-    sphere = new Sphere();
-    sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
-    sphere->setScale(10.0f);
+    // sphere = new Sphere();
+    // sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
+    // sphere->setScale(10.0f);
 
-    sphere2 = new Sphere();
-    sphere2->setPosition(Vector3(200.0f, 200.0f, 0.0f));
-    sphere2->setScale(10.0f);
+    // sphere2 = new Sphere();
+    // sphere2->setPosition(Vector3(200.0f, 200.0f, 0.0f));
+    // sphere2->setScale(10.0f);
+
+    center = new Actor();
+    center->setPosition(Vector3(0.0f, 0.0f, 0.0f));
 
     orbit = new OrbitActor();
-    orbit->snapToActor(sphere);
+    orbit->snapToActor(center);
 
     Cuboid *area = new Cuboid({Vector3<float>(-200.0f, -200.0f, -50.0f), Vector3<float>(400.0f, 400.0f, 100.0f)});
     cloudComponent = new CloudComponent(orbit, area);

@@ -1,5 +1,7 @@
-#version 400
+// Request GLSL 3.3
+#version 330
 
+// Inputs from vertex shader
 // Position (in world space)
 in vec3 rayDirection;
 // Position (in screen space)
@@ -101,57 +103,46 @@ float samplePerlinNoise(vec3 coords)
     return (color1 + (color2 * uPersistence) + (color3 * uPersistence)) / range + 0.5;
 }
 
-bool rayIntersectsBox(vec3 rayOrigin, vec3 rayDir, vec3 boxMin, vec3 boxMax, out float distanceToBox,
-                      out float distanceInsideBox)
+bool rayHitsBox(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir, out float distanceToBox,
+                out float distanceInsideBox)
 {
-    vec3 t0 = (boxMin - rayOrigin) / rayDir;
-    vec3 t1 = (boxMax - rayOrigin) / rayDir;
+    vec3 t0 = (boundsMin - rayOrigin) / rayDir;
+    vec3 t1 = (boundsMax - rayOrigin) / rayDir;
+    vec3 tmin = min(t0, t1);
+    vec3 tmax = max(t0, t1);
 
-    vec3 tMin = min(t0, t1);
-    vec3 tMax = max(t0, t1);
-
-    float tNear = max(max(tMin.x, tMin.y), tMin.z);
-    float tFar = min(min(tMax.x, tMax.y), tMax.z);
-
-    if (tNear > tFar || tFar < 0.0)
-    {
-        distanceToBox = -1.0;
+    float dstA = max(max(tmin.x, tmin.y), tmin.z);
+    float dstB = min(tmax.x, min(tmax.y, tmax.z));
+    if (dstB < dstA)
         return false;
-    }
 
-    float ratio = remap(tNear, 0, uFarPlane, 1.65, 0.95); // this is stupid, but it works, let's move on
+    distanceToBox = max(0, dstA);
+    distanceInsideBox = max(0, dstB) - distanceToBox;
 
-    distanceToBox = max(0.0, tNear) * ratio;
-    distanceInsideBox = (max(0.0, tFar) - distanceToBox) * ratio;
     return true;
 }
 
 float linearDepth(float depth)
 {
-    float z_ndc = depth * 2.0 - 1.0; // Convert [0, 1] depth to [-1, 1] clip space
-    float linearDepth = (2.0 * uNearPlane * uFarPlane) / (uFarPlane + uNearPlane - z_ndc * (uFarPlane - uNearPlane));
-    return linearDepth - uNearPlane;
+    float z = (2.0 * depth - 1.0);
+    float worldDepth = (2.0 * uNearPlane * uFarPlane) / (uFarPlane + uNearPlane - z * (uFarPlane - uNearPlane));
+
+    return uNearPlane + worldDepth;
 }
 
 void main()
 {
-    vec3 normalizedRay = normalize(rayDirection);
 
-    float depth = texture(uDepthTexture, texCoords).r;
+    // float depth = texture(uDepthTexture, texCoords).r;
     vec3 screen = texture(uScreenTexture, texCoords).rgb;
 
-    depth = linearDepth(depth);
-
+    // depth = linearDepth(depth); // comparison just doesnt work
     outColor = screen;
 
-    float distanceToBox;
     float distanceInsideBox;
-    if (rayIntersectsBox(uCameraPos, normalizedRay, uAreaCorner, uAreaCorner + uAreaSize, distanceToBox,
-                         distanceInsideBox))
+    float distanceToBox;
+    if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, rayDirection, distanceToBox, distanceInsideBox))
     {
-        if (distanceToBox < depth)
-        {
-            outColor = vec3(distanceToBox / uFarPlane);
-        }
+        outColor = vec3(0);
     }
 }

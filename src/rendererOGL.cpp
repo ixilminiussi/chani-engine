@@ -15,7 +15,7 @@
 #include <SDL_image.h>
 
 float RendererOGL::nearPlane = 10.0f;
-float RendererOGL::farPlane = 2000.0f;
+float RendererOGL::farPlane = 5000.0f;
 float RendererOGL::FOV = 70.0f;
 
 RendererOGL::RendererOGL()
