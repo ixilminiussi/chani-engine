@@ -128,7 +128,7 @@ void main()
     float distanceToBox;
     if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, normalizedRay, distanceToBox, distanceInsideBox))
     {
-        float stepSize = distanceInsideBox / 5.0f;
+        float stepSize = distanceInsideBox / 10.0f;
         float currentStep = 0.0f;
         float maxStep = min(distanceInsideBox, depth - distanceToBox);
 

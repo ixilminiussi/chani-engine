@@ -1,14 +1,13 @@
 #if !defined(GAME_H)
 #define GAME_H
 
-#include "racingCarActor.h"
 #include "FPSActor.h"
+#include "racingCarActor.h"
 
-#include <spriteComponent.h>
 #include <orbitActor.h>
+#include <soundEvent.h>
 #include <splineActor.h>
 #include <spriteComponent.h>
-#include <soundEvent.h>
 
 void changeCamera(int mode);
 

@@ -61,7 +61,7 @@ void main()
     uvec3 gridID = globalID.xyz / uCellScale;
 
     int maxDistance = int((uCellScale / 2) * (3 * (uCellScale / 2)));
-    int bestDistance = maxDistance * 2;
+    int bestDistance = maxDistance * 3;
 
     float outValue;
 

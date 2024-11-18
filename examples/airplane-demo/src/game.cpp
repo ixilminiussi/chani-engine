@@ -22,9 +22,9 @@ CloudComponent *cloudComponent;
 
 int x, y = 0;
 
-float cloudScale = 0.2;
-float persistence = 0.2f;
-float cloudStrength = 50.0;
+float cloudScale = 0.8;
+float persistence = 0.14f;
+float cloudStrength = 7.0;
 
 void Game::load()
 {
@@ -61,7 +61,7 @@ void Game::load()
     orbit = new OrbitActor();
     orbit->snapToActor(center);
 
-    Cuboid *area = new Cuboid({Vector3<float>(-2000.0f, -2000.0f, -100.0f), Vector3<float>(4000.0f, 4000.0f, 200.0f)});
+    Cuboid *area = new Cuboid({Vector3<float>(-200.0f, -200.0f, -10.0f), Vector3<float>(400.0f, 400.0f, 20.0f)});
     cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);
@@ -123,7 +123,7 @@ void Game::processInput()
     {
         float pre = cloudScale;
         cloudScale *= 1.0f + ((float)input.mouse.getScrollWheel().y * 0.1f);
-        cloudScale = (cloudScale < 0.1f) ? cloudScale = 0.2f : cloudScale;
+        cloudScale = (cloudScale < 0.05f) ? cloudScale = 0.05f : cloudScale;
         if (pre != cloudScale)
             Log::info(std::to_string(cloudScale));
     }
