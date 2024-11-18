@@ -19,11 +19,11 @@ clock_t clock_start = clock();
 CloudMaterial::CloudMaterial() : Material()
 {
     noise1.load(PerlinSettings({200u, Vector3(5u, 5u, 1u)}));
-    // noise1.generate();
+    noise1.generate();
     noise2.load(PerlinSettings({50u, Vector3(10u, 10u, 4u)}));
-    // noise2.generate();
+    noise2.generate();
     noise3.load(PerlinSettings({10u, Vector3(10u, 10u, 5u)}));
-    // noise3.generate();
+    noise3.generate();
 }
 
 void CloudMaterial::use()
@@ -38,26 +38,24 @@ void CloudMaterial::use()
     glActiveTexture(GL_TEXTURE4);
     glBindTexture(GL_TEXTURE_3D, noise1.getNoiseTexture());
     getShader().setSampler3D("uPerlinNoise1", 4);
-    getShader().setInteger("uTexture1Width", noise1.getTextureDimensions().x);
-    getShader().setInteger("uTexture1Height", noise1.getTextureDimensions().y);
+    getShader().setVector3f("uTexture1Dimensions", noise1.getTextureDimensions());
 
     glActiveTexture(GL_TEXTURE5);
     glBindTexture(GL_TEXTURE_3D, noise2.getNoiseTexture());
     getShader().setSampler3D("uPerlinNoise2", 5);
-    getShader().setInteger("uTexture2Width", noise2.getTextureDimensions().x);
-    getShader().setInteger("uTexture2Height", noise2.getTextureDimensions().y);
+    getShader().setVector3f("uTexture2Dimensions", noise2.getTextureDimensions());
 
     glActiveTexture(GL_TEXTURE6);
     glBindTexture(GL_TEXTURE_3D, noise3.getNoiseTexture());
     getShader().setSampler3D("uPerlinNoise3", 6);
-    getShader().setInteger("uTexture3Width", noise3.getTextureDimensions().x);
-    getShader().setInteger("uTexture3Height", noise3.getTextureDimensions().y);
+    getShader().setVector3f("uTexture3Dimensions", noise3.getTextureDimensions());
 
     getShader().setFloat("uPersistence", *persistence);
 
     getShader().setVector3f("uAreaCorner", area->corner);
     getShader().setVector3f("uAreaSize", area->size);
-    getShader().setVector3f("uShift", *shift);
+    getShader().setFloat("uScale", *scale);
+    getShader().setFloat("uStrength", *strength);
     getShader().setFloat("uTime", float(clock_start - clock()) / CLOCKS_PER_SEC);
     getShader().setMatrix4f("uViewProj", view * projection);
     getShader().setMatrix4f("uView", view);
@@ -76,9 +74,14 @@ void CloudMaterial::setArea(Cuboid *cuboid)
     area = cuboid;
 }
 
-void CloudMaterial::setShift(Vector3<float> *shiftP)
+void CloudMaterial::setScale(float *scaleP)
 {
-    shift = shiftP;
+    scale = scaleP;
+}
+
+void CloudMaterial::setStrength(float *strengthP)
+{
+    strength = strengthP;
 }
 
 void CloudMaterial::setPersistence(float *persistenceP)

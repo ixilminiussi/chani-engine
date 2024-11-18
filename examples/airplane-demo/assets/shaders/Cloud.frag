@@ -16,23 +16,20 @@ uniform sampler2D uDepthTexture;
 // First PerlinNoise
 uniform sampler3D uPerlinNoise1;
 // Perlin texture resolution
-uniform int uTexture1Width;
-uniform int uTexture1Height;
+uniform vec3 uTexture1Dimensions;
 
 // Second PerlinNoise
 uniform sampler3D uPerlinNoise2;
 // Perlin texture resolution
-uniform int uTexture2Width;
-uniform int uTexture2Height;
+uniform vec3 uTexture2Dimensions;
 
 // Third PerlinNoise
 uniform sampler3D uPerlinNoise3;
 // Perlin texture resolution
-uniform int uTexture3Width;
-uniform int uTexture3Height;
+uniform vec3 uTexture3Dimensions;
 
-// shift
-uniform vec3 uShift;
+uniform float uScale;
+uniform float uStrength;
 uniform float uPersistence;
 uniform float uTime;
 
@@ -81,23 +78,10 @@ float remap01(float v, float low, float high)
 
 float samplePerlinNoise(vec3 coords)
 {
-    float timeShift = uTime;
-    vec3 relativeCoords = vec3(float(uScreenWidth) * (coords.x + timeShift) / float(uTexture1Width),
-                               float(uScreenHeight) * coords.y / float(uTexture1Height),
-                               float(uScreenWidth) * coords.z / float(uTexture1Width));
-    float color1 = texture(uPerlinNoise1, relativeCoords).r - 0.5;
-
-    timeShift = uTime * 1.1;
-    relativeCoords = vec3(float(uScreenWidth) * (coords.x + timeShift) / float(uTexture2Width),
-                          float(uScreenHeight) * coords.y / float(uTexture2Height),
-                          float(uScreenWidth) * coords.z / float(uTexture2Width));
-    float color2 = texture(uPerlinNoise2, relativeCoords).r - 0.5;
-
-    timeShift = uTime * .1;
-    relativeCoords = vec3(float(uScreenWidth) * (coords.x + timeShift) / float(uTexture2Width),
-                          float(uScreenHeight) * coords.y / float(uTexture2Height),
-                          float(uScreenWidth) * coords.z / float(uTexture2Width));
-    float color3 = texture(uPerlinNoise3, relativeCoords).r - 0.5;
+    coords *= uScale;
+    float color1 = texture(uPerlinNoise1, coords / uTexture1Dimensions).r - 0.5;
+    float color2 = texture(uPerlinNoise2, coords / uTexture2Dimensions).r - 0.5;
+    float color3 = texture(uPerlinNoise3, coords / uTexture3Dimensions).r - 0.5;
 
     float range = 1.0 + uPersistence * 2.0;
     return (color1 + (color2 * uPersistence) + (color3 * uPersistence)) / range + 0.5;
@@ -124,25 +108,38 @@ bool rayHitsBox(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir, out
 
 float linearDepth(float depth)
 {
-    float z = (2.0 * depth - 1.0);
-    float worldDepth = (2.0 * uNearPlane * uFarPlane) / (uFarPlane + uNearPlane - z * (uFarPlane - uNearPlane));
+    float z = (2.0f * depth - 1.0f);
+    float worldDepth = (2.0f * uNearPlane * uFarPlane) / (uFarPlane + uNearPlane - z * (uFarPlane - uNearPlane));
 
     return uNearPlane + worldDepth;
 }
 
 void main()
 {
-
-    // float depth = texture(uDepthTexture, texCoords).r;
+    float depth = texture(uDepthTexture, texCoords).r;
     vec3 screen = texture(uScreenTexture, texCoords).rgb;
 
-    // depth = linearDepth(depth); // comparison just doesnt work
+    depth = linearDepth(depth); // comparison just doesnt work
     outColor = screen;
+
+    vec3 normalizedRay = normalize(rayDirection);
 
     float distanceInsideBox;
     float distanceToBox;
-    if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, rayDirection, distanceToBox, distanceInsideBox))
+    if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, normalizedRay, distanceToBox, distanceInsideBox))
     {
-        outColor = vec3(0);
+        float stepSize = distanceInsideBox / 5.0f;
+        float currentStep = 0.0f;
+        float maxStep = min(distanceInsideBox, depth - distanceToBox);
+
+        float totalDensity = 0.0f;
+        while (currentStep < maxStep)
+        {
+            vec3 currentSamplingPoint = uCameraPos + (normalizedRay * (distanceToBox + currentStep));
+            totalDensity += samplePerlinNoise(currentSamplingPoint) * stepSize;
+            currentStep += stepSize;
+        }
+
+        outColor *= exp(-totalDensity / uStrength);
     }
 }

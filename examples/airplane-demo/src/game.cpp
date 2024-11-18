@@ -22,8 +22,9 @@ CloudComponent *cloudComponent;
 
 int x, y = 0;
 
-Vector3 shift;
-float persistence = 0.0f;
+float cloudScale = 10.0;
+float persistence = 0.2f;
+float cloudStrength = 2.0;
 
 void Game::load()
 {
@@ -45,8 +46,8 @@ void Game::load()
     // Assets::loadPhongMaterial("assets/materials/Phong.mat",
     // "Material_Phong");
 
-    shift = Vector3(0.0f, 0.0f, 0.0f);
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setShift(&shift);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setScale(&cloudScale);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setStrength(&cloudStrength);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
 
     // sphere = new Sphere();
@@ -63,7 +64,7 @@ void Game::load()
     orbit = new OrbitActor();
     orbit->snapToActor(center);
 
-    Cuboid *area = new Cuboid({Vector3<float>(-200.0f, -200.0f, -50.0f), Vector3<float>(400.0f, 400.0f, 100.0f)});
+    Cuboid *area = new Cuboid({Vector3<float>(-2000.0f, -2000.0f, -100.0f), Vector3<float>(4000.0f, 4000.0f, 200.0f)});
     cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);
@@ -100,24 +101,14 @@ void Game::processInput()
         cloudComponent->reloadNoiseShader();
     }
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Held)
+    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Released)
     {
-        shift.x += 0.01f;
+        cloudStrength -= (cloudStrength > 1) ? 1 : 0;
     }
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_LEFT) == ButtonState::Held)
+    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Released)
     {
-        shift.x -= 0.01f;
-    }
-
-    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Held)
-    {
-        shift.y -= 0.01f;
-    }
-
-    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Held)
-    {
-        shift.y += 0.01f;
+        cloudStrength += 1;
     }
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_LSHIFT) == ButtonState::Held)
@@ -129,9 +120,13 @@ void Game::processInput()
         if (pre != persistence)
             Log::info(std::to_string(persistence));
     }
-    else
+    if (input.keyboard.getKeyState(SDL_SCANCODE_LCTRL) == ButtonState::Held)
     {
-        shift.z += (float)input.mouse.getScrollWheel().y * 0.01f;
+        float pre = cloudScale;
+        cloudScale += (float)input.mouse.getScrollWheel().y;
+        cloudScale = (cloudScale < 1.0f) ? cloudScale = 1.0f : cloudScale;
+        if (pre != cloudScale)
+            Log::info(std::to_string(cloudScale));
     }
 
     // Actor input

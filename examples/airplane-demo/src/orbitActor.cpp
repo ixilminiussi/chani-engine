@@ -1,4 +1,6 @@
 #include "orbitActor.h"
+#include "SDL_scancode.h"
+#include <inputSystem.h>
 #include <orbitCameraComponent.h>
 
 OrbitActor::OrbitActor() : Actor(), orbitCameraComponent(nullptr), targetActor(nullptr), prevMousePosition(0.0f, 0.0f)
@@ -34,7 +36,11 @@ void OrbitActor::actorInput(const InputState &inputState)
         orbitCameraComponent->setPitchSpeed(pitchSpeed);
     }
 
-    orbitCameraComponent->zoom((float)inputState.mouse.getScrollWheel().y * 100.0f);
+    if (inputState.keyboard.getKeyState(SDL_SCANCODE_LSHIFT) != ButtonState::Held &&
+        inputState.keyboard.getKeyState(SDL_SCANCODE_LCTRL) != ButtonState::Held)
+    {
+        orbitCameraComponent->zoom((float)inputState.mouse.getScrollWheel().y * 100.0f);
+    }
 
     prevMousePosition += relativeMousePosition;
 }
