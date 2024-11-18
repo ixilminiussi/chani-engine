@@ -14,7 +14,7 @@ void OrbitActor::actorInput(const InputState &inputState)
     float x = relativeMousePosition.x;
     float y = relativeMousePosition.y;
 
-    if (inputState.mouse.getButtonState(1) == ButtonState::Held)
+    if (inputState.mouse.getButtonState(3) == ButtonState::Held)
     {
         const float maxMouseSpeed = 200.0f;
         const float maxOrbitSpeed = Maths::pi * 8;

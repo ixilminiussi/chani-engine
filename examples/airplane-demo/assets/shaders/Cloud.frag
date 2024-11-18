@@ -28,7 +28,13 @@ uniform sampler3D uPerlinNoise3;
 // Perlin texture resolution
 uniform vec3 uTexture3Dimensions;
 
+// Fourth PerlinNoise
+uniform sampler3D uPerlinNoise4;
+// Perlin texture resolution
+uniform vec3 uTexture4Dimensions;
+
 uniform float uScale;
+uniform float uFloor;
 uniform float uStrength;
 uniform float uPersistence;
 uniform float uTime;
@@ -78,13 +84,31 @@ float remap01(float v, float low, float high)
 
 float samplePerlinNoise(vec3 coords)
 {
-    coords *= uScale;
-    float color1 = texture(uPerlinNoise1, coords / uTexture1Dimensions).r - 0.5;
-    float color2 = texture(uPerlinNoise2, coords / uTexture2Dimensions).r - 0.5;
-    float color3 = texture(uPerlinNoise3, coords / uTexture3Dimensions).r - 0.5;
+    coords /= uScale;
+    float[4] color;
 
-    float range = 1.0 + uPersistence * 2.0;
-    return (color1 + (color2 * uPersistence) + (color3 * uPersistence)) / range + 0.5;
+    color[0] = texture(uPerlinNoise1, coords / uTexture1Dimensions).r - 0.2f;
+    color[1] = texture(uPerlinNoise2, coords / uTexture2Dimensions).r - 0.2f;
+    color[2] = texture(uPerlinNoise3, coords / uTexture3Dimensions).r - 0.2f;
+    color[3] = texture(uPerlinNoise4, coords / uTexture4Dimensions).r - 0.2f;
+
+    float range = 1.0f;
+    float total = 0.0f;
+    float combined = 0.0f;
+    float persistence = uPersistence;
+
+    for (int i = 0; i < 4; i++)
+    {
+        total += persistence;
+        combined += color[i] * persistence;
+        persistence *= uPersistence;
+    }
+
+    combined /= total;
+    combined += 0.2;
+
+    combined = remap01(combined, uFloor, 1);
+    return (combined < 0) ? 0 : combined;
 }
 
 bool rayHitsBox(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir, out float distanceToBox,
@@ -140,6 +164,6 @@ void main()
             currentStep += stepSize;
         }
 
-        outColor *= exp(-totalDensity / uStrength);
+        outColor *= exp(-totalDensity * uStrength);
     }
 }

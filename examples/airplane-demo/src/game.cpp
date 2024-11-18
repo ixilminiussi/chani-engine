@@ -5,6 +5,10 @@
 #include <actor.h>
 #include <assets.h>
 #include <cloudComponent.h>
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
 #include <inputSystem.h>
 #include <log.h>
 #include <maths.h>
@@ -18,13 +22,33 @@
 // Sphere *sphere, *sphere2;
 OrbitActor *orbit;
 Actor *center;
+Cuboid *area = new Cuboid({Vector3<float>(0.0f, 0.0f, 0.0f), Vector3<float>(100.0f, 100.0f, 100.0f)});
 CloudComponent *cloudComponent;
 
 int x, y = 0;
 
-float cloudScale = 0.8;
+float cloudFloor = 0.1f;
+float cloudScale = 1.2f;
 float persistence = 0.14f;
-float cloudStrength = 7.0;
+float cloudStrength = 0.5f;
+
+void tooling()
+{
+    // TODO: IMGUI for tooling
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
+
+    ImGui::Begin("Settings");
+    ImGui::Text("Cloud parameters");
+    ImGui::SliderFloat("floor", &cloudFloor, 0.0f, 1.0f);
+    ImGui::SliderFloat("scale", &cloudScale, 0.1f, 10.0f);
+    ImGui::SliderFloat("strength", &cloudStrength, 0.0f, 1.0f);
+    ImGui::SliderFloat("persistence", &persistence, 0.0f, 1.0f);
+    float *sizes[3] = {&area->size.x, &area->size.y, &area->size.z};
+    ImGui::SliderFloat3("Scale", *sizes, 10.0f, 1000.0f);
+    ImGui::End();
+}
 
 void Game::load()
 {
@@ -44,6 +68,7 @@ void Game::load()
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
 
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setScale(&cloudScale);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setFloor(&cloudFloor);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setStrength(&cloudStrength);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
 
@@ -61,7 +86,6 @@ void Game::load()
     orbit = new OrbitActor();
     orbit->snapToActor(center);
 
-    Cuboid *area = new Cuboid({Vector3<float>(-200.0f, -200.0f, -10.0f), Vector3<float>(400.0f, 400.0f, 20.0f)});
     cloudComponent = new CloudComponent(orbit, area);
 
     orbit->addComponent(cloudComponent);
@@ -82,6 +106,8 @@ void Game::processInput()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        // TODO:
+        ImGui_ImplSDL3_ProcessEvent(&event); // Forward the event to ImGui
         isRunning = inputSystem.processEvent(event);
     }
 
@@ -139,6 +165,8 @@ void Game::processInput()
 
 void Game::update(float dt)
 {
+    tooling();
+
     // Update actors
     isUpdatingActors = true;
     for (auto actor : actors)
@@ -169,4 +197,11 @@ void Game::update(float dt)
     {
         delete deadActor;
     }
+}
+
+void Game::exit()
+{
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
+    ImGui::DestroyContext();
 }

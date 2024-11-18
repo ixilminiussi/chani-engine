@@ -14,6 +14,11 @@
 #include <GL/glew.h>
 #include <SDL_image.h>
 
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
+
 float RendererOGL::nearPlane = 10.0f;
 float RendererOGL::farPlane = 5000.0f;
 float RendererOGL::FOV = 70.0f;
@@ -117,6 +122,31 @@ bool RendererOGL::initialize(Window &windowP)
     }
 
     spriteVertexArray = new VertexArray(spriteVertices, 4, indices, 6);
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+
+    // Initialize ImGui SDL3 backend
+    if (!ImGui_ImplSDL3_InitForOpenGL(windowP.getSDLWindow(), context))
+    {
+        Log::error(LogCategory::Video, "Failed to initialize ImGui SDL3 backend.");
+        return false;
+    }
+
+    // Initialize ImGui OpenGL backend
+    const char *glsl_version = "#version 330 core"; // GLSL version used
+    if (!ImGui_ImplOpenGL3_Init(glsl_version))
+    {
+        Log::error(LogCategory::Video, "Failed to initialize ImGui OpenGL backend.");
+        return false;
+    }
+
     return true;
 }
 
@@ -157,6 +187,9 @@ void RendererOGL::draw()
 
 void RendererOGL::endDraw()
 {
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
     SDL_GL_SwapWindow(window->getSDLWindow());
 }
 

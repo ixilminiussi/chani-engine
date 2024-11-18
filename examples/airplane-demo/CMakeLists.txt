@@ -10,9 +10,12 @@ find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
 find_package(FMOD REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(IMGUI REQUIRED)
 
 file(GLOB SOURCE_FILES CONFIGURE_DEPENDS "src/*.cpp")
 
 add_executable(game ${SOURCE_FILES})
+
 include_directories(include ${CHANI_INCLUDE_DIR} ${SDL3_INCLUDE_DIRS})
-target_link_libraries(game Chani FMOD::Core FMOD::Studio OpenGL::GL SDL3 SDL3_image GLEW::GLEW)
+target_link_libraries(game Chani FMOD::Core FMOD::Studio OpenGL::GL SDL3 SDL3_image GLEW::GLEW ${IMGUI_LIBRARIES})
+

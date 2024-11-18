@@ -44,6 +44,7 @@ class Game
     void processInput();
     void update(float dt);
     void render();
+    void exit();
 
     bool isRunning;
     Window window;
