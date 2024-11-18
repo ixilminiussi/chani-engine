@@ -22,9 +22,9 @@ CloudComponent *cloudComponent;
 
 int x, y = 0;
 
-float cloudScale = 10.0;
+float cloudScale = 0.2;
 float persistence = 0.2f;
-float cloudStrength = 2.0;
+float cloudStrength = 50.0;
 
 void Game::load()
 {
@@ -32,19 +32,16 @@ void Game::load()
     inputSystem.setMouseRelativeMode(window.getSDLWindow(), false);
 
     Assets::loadShader("assets/shaders/Cloud.vert", "assets/shaders/Cloud.frag", "", "", "", "Shader_Cloud");
-    // Assets::loadShader("assets/shaders/Phong.vert",
-    // "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
+    Assets::loadShader("assets/shaders/Phong.vert", "assets/shaders/Phong.frag", "", "", "", "Shader_Phong");
 
-    // Assets::loadTexture(renderer, "assets/textures/Sphere.png",
-    // "Texture_Sphere");
+    Assets::loadTexture(renderer, "assets/textures/Sphere.png", "Texture_Sphere");
 
-    // Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
+    Assets::loadMesh("assets/meshes/Sphere.gpmesh", "Mesh_Sphere");
 
     Assets::loadComputeShader("assets/shaders/PerlinNoise.glsl", "CS_PerlinNoise");
 
     Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
-    // Assets::loadPhongMaterial("assets/materials/Phong.mat",
-    // "Material_Phong");
+    Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
 
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setScale(&cloudScale);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setStrength(&cloudStrength);
@@ -104,11 +101,13 @@ void Game::processInput()
     if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Released)
     {
         cloudStrength -= (cloudStrength > 1) ? 1 : 0;
+        Log::info(std::to_string(cloudStrength));
     }
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Released)
     {
         cloudStrength += 1;
+        Log::info(std::to_string(cloudStrength));
     }
 
     if (input.keyboard.getKeyState(SDL_SCANCODE_LSHIFT) == ButtonState::Held)
@@ -123,8 +122,8 @@ void Game::processInput()
     if (input.keyboard.getKeyState(SDL_SCANCODE_LCTRL) == ButtonState::Held)
     {
         float pre = cloudScale;
-        cloudScale += (float)input.mouse.getScrollWheel().y;
-        cloudScale = (cloudScale < 1.0f) ? cloudScale = 1.0f : cloudScale;
+        cloudScale *= 1.0f + ((float)input.mouse.getScrollWheel().y * 0.1f);
+        cloudScale = (cloudScale < 0.1f) ? cloudScale = 0.2f : cloudScale;
         if (pre != cloudScale)
             Log::info(std::to_string(cloudScale));
     }

@@ -18,11 +18,11 @@ clock_t clock_start = clock();
 
 CloudMaterial::CloudMaterial() : Material()
 {
-    noise1.load(PerlinSettings({200u, Vector3(5u, 5u, 1u)}));
+    noise1.load(PerlinSettings({50u, Vector3(10u, 10u, 4u)}));
     noise1.generate();
-    noise2.load(PerlinSettings({50u, Vector3(10u, 10u, 4u)}));
+    noise2.load(PerlinSettings({40u, Vector3(10u, 10u, 4u)}));
     noise2.generate();
-    noise3.load(PerlinSettings({10u, Vector3(10u, 10u, 5u)}));
+    noise3.load(PerlinSettings({4u, Vector3(100u, 100u, 40u)}));
     noise3.generate();
 }
 
