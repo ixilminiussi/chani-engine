@@ -149,6 +149,27 @@ vec3 applyRGB(vec3 new, vec3 old, float alpha)
     return alpha * new + (1.0f - alpha) * old;
 }
 
+float lightMarch(vec3 startPoint)
+{
+    float distanceInsideBox;
+    float distanceToBox;
+    rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, startPoint, uDirLight.direction, distanceToBox, distanceInsideBox);
+
+    float stepSize = distanceInsideBox / 5.0f;
+    float totalDensity = 0.0f;
+    vec3 currentSamplingPoint = startPoint + (uDirLight.direction * stepSize);
+
+    totalDensity = 0.0f;
+
+    for (int i = 0; i < 4; i++)
+    {
+        totalDensity += samplePerlinNoise(currentSamplingPoint) * stepSize;
+        currentSamplingPoint += uDirLight.direction * stepSize;
+    }
+
+    return exp(-totalDensity);
+}
+
 void main()
 {
     float depth = texture(uDepthTexture, texCoords).r;
@@ -167,14 +188,31 @@ void main()
         float currentStep = 0.0f;
         float maxStep = min(distanceInsideBox, depth - distanceToBox);
 
-        float totalDensity = 0.0f;
+        float transmittance = 1.0f;
+        float lightEnergy = 0.0f;
+
         while (currentStep < maxStep)
         {
             vec3 currentSamplingPoint = uCameraPos + (normalizedRay * (distanceToBox + currentStep));
-            totalDensity += samplePerlinNoise(currentSamplingPoint) * stepSize;
+            float density = samplePerlinNoise(currentSamplingPoint);
+
+            if (density > 0)
+            {
+                float lightTransmittance = lightMarch(currentSamplingPoint);
+
+                lightEnergy += density * stepSize * transmittance * lightTransmittance;
+                transmittance *= exp(-density * stepSize * 2.0f);
+
+                if (transmittance < 0.01)
+                {
+                    break;
+                }
+            }
             currentStep += stepSize;
         }
 
-        outColor = applyRGB(vec3(1), outColor, 1.0 - exp(-totalDensity));
+        vec3 cloudCol = lightEnergy * vec3(1.0);
+
+        outColor = outColor * transmittance + cloudCol;
     }
 }
