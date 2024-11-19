@@ -144,6 +144,11 @@ float linearDepth(float depth)
     return uNearPlane + worldDepth;
 }
 
+vec3 applyRGB(vec3 new, vec3 old, float alpha)
+{
+    return alpha * new + (1.0f - alpha) * old;
+}
+
 void main()
 {
     float depth = texture(uDepthTexture, texCoords).r;
@@ -170,6 +175,6 @@ void main()
             currentStep += stepSize;
         }
 
-        outColor *= exp(-totalDensity);
+        outColor = applyRGB(vec3(1), outColor, 1.0 - exp(-totalDensity));
     }
 }
