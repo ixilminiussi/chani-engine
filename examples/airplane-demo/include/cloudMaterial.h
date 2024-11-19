@@ -24,13 +24,13 @@ class CloudMaterial : public Material
     void setFloor(float *floor);
     void setStrength(float *strength);
     void setPersistence(float *persistence);
-    void setSize(float **size);
+    void setTimeScale(int *timeScale);
 
   protected:
     Cuboid *area;
     Actor *camera;
     float *persistence, *scale, *strength, *floor;
-    float **size;
+    int *timeScale;
     PerlinNoise noise1;
     PerlinNoise noise2;
     PerlinNoise noise3;

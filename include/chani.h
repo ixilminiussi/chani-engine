@@ -1,3 +1,4 @@
+#include <chrono>
 #if !defined(CHANI_H)
 #define CHANI_H
 
@@ -40,12 +41,15 @@ class Game
     RendererOGL &getRenderer();
     AudioSystem &getAudioSystem();
 
+    float time() const;
+
   private:
     void processInput();
     void update(float dt);
     void render();
     void exit();
 
+    std::chrono::high_resolution_clock::time_point startTime;
     bool isRunning;
     Window window;
     RendererOGL renderer;

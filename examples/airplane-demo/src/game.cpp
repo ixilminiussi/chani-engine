@@ -22,15 +22,16 @@
 // Sphere *sphere, *sphere2;
 OrbitActor *orbit;
 Actor *center;
-Cuboid *area = new Cuboid({Vector3<float>(0.0f, 0.0f, 0.0f), Vector3<float>(100.0f, 100.0f, 100.0f)});
+Cuboid *area = new Cuboid({Vector3<float>(0.0f, 0.0f, 0.0f), Vector3<float>(400.0f, 400.0f, 100.0f)});
 CloudComponent *cloudComponent;
 
 int x, y = 0;
 
-float cloudFloor = 0.1f;
+float cloudFloor = 0.2f;
 float cloudScale = 1.2f;
-float persistence = 0.14f;
-float cloudStrength = 0.5f;
+float persistence = 0.5f;
+float cloudStrength = 0.6f;
+int timeScale = 0;
 
 void tooling()
 {
@@ -40,6 +41,7 @@ void tooling()
     ImGui::NewFrame();
 
     ImGui::Begin("Settings");
+    ImGui::SliderInt("time scale", &timeScale, 0, 100);
     ImGui::Text("Cloud parameters");
     ImGui::SliderFloat("floor", &cloudFloor, 0.0f, 1.0f);
     ImGui::SliderFloat("scale", &cloudScale, 0.1f, 10.0f);
@@ -71,6 +73,7 @@ void Game::load()
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setFloor(&cloudFloor);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setStrength(&cloudStrength);
     static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
+    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setTimeScale(&timeScale);
 
     // sphere = new Sphere();
     // sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));

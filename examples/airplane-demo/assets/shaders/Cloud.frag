@@ -84,18 +84,26 @@ float remap01(float v, float low, float high)
 
 float samplePerlinNoise(vec3 coords)
 {
+    // edge falloff
+    vec3 distance1 = abs(coords - uAreaCorner);
+    vec3 distance2 = abs(coords - (uAreaCorner + uAreaSize));
+
+    float smallestDistance =
+        min(min(min(distance1.x, distance2.x), min(distance1.y, distance2.y)), min(distance1.z, distance2.z));
+    float edgeFalloff = (smallestDistance < 100.0f) ? remap01(smallestDistance, 0.0f, 100.0f) : 1.0f;
+
     coords /= uScale;
     float[4] color;
 
-    color[0] = texture(uPerlinNoise1, coords / uTexture1Dimensions).r - 0.2f;
-    color[1] = texture(uPerlinNoise2, coords / uTexture2Dimensions).r - 0.2f;
-    color[2] = texture(uPerlinNoise3, coords / uTexture3Dimensions).r - 0.2f;
-    color[3] = texture(uPerlinNoise4, coords / uTexture4Dimensions).r - 0.2f;
+    color[0] = texture(uPerlinNoise1, vec3(coords.x + uTime * 0.5f, coords.yz) / uTexture1Dimensions).r;
+    color[1] = texture(uPerlinNoise2, vec3(coords.x + uTime * 1.0f, coords.yz) / uTexture2Dimensions).r;
+    color[2] = texture(uPerlinNoise3, vec3(coords.x + uTime * 1.2f, coords.yz) / uTexture3Dimensions).r;
+    color[3] = texture(uPerlinNoise4, vec3(coords.x + uTime * 2.0f, coords.yz) / uTexture4Dimensions).r;
 
     float range = 1.0f;
-    float total = 0.0f;
+    float total = 1.0f;
     float combined = 0.0f;
-    float persistence = uPersistence;
+    float persistence = 1.0f;
 
     for (int i = 0; i < 4; i++)
     {
@@ -105,10 +113,8 @@ float samplePerlinNoise(vec3 coords)
     }
 
     combined /= total;
-    combined += 0.2;
-
-    combined = remap01(combined, uFloor, 1);
-    return (combined < 0) ? 0 : combined;
+    combined -= uFloor;
+    return (combined < 0) ? 0 : combined * uStrength * edgeFalloff;
 }
 
 bool rayHitsBox(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir, out float distanceToBox,
@@ -164,6 +170,6 @@ void main()
             currentStep += stepSize;
         }
 
-        outColor *= exp(-totalDensity * uStrength);
+        outColor *= exp(-totalDensity);
     }
 }

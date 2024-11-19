@@ -6,6 +6,7 @@
 #include "timer.h"
 
 #include <algorithm>
+#include <chrono>
 #include <iostream>
 
 void GL_DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message,
@@ -18,6 +19,8 @@ void GL_DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GL
 
 bool Game::initialize()
 {
+    startTime = std::chrono::high_resolution_clock::now();
+
     SDL_SetLogPriorities(SDL_LOG_PRIORITY_INFO);
 
     bool isWindowInit = window.initialize();
@@ -71,6 +74,15 @@ RendererOGL &Game::getRenderer()
 AudioSystem &Game::getAudioSystem()
 {
     return audioSystem;
+}
+
+float Game::time() const
+{
+    auto currentTime = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<float> elapsed = currentTime - startTime;
+
+    return elapsed.count();
 }
 
 void Game::render()

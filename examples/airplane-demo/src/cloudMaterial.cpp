@@ -1,7 +1,9 @@
 #include "cloudMaterial.h"
 
 #include "perlinNoise.h"
+#include <actor.h>
 #include <assets.h>
+#include <chani.h>
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -11,16 +13,13 @@
 #include <shader.h>
 #include <sstream>
 #include <texture.h>
-#include <time.h>
 #include <window.h>
-
-clock_t clock_start = clock();
 
 CloudMaterial::CloudMaterial() : Material()
 {
-    noise1.load(PerlinSettings({50u, Vector3(10u, 10u, 4u)}));
+    noise1.load(PerlinSettings({100u, Vector3(6u, 6u, 4u)}));
     noise1.generate();
-    noise2.load(PerlinSettings({30u, Vector3(20u, 20u, 8u)}));
+    noise2.load(PerlinSettings({40u, Vector3(10u, 10u, 8u)}));
     noise2.generate();
     noise3.load(PerlinSettings({10u, Vector3(10u, 10u, 4u)}));
     noise3.generate();
@@ -64,7 +63,8 @@ void CloudMaterial::use()
     getShader().setFloat("uScale", *scale);
     getShader().setFloat("uFloor", *floor);
     getShader().setFloat("uStrength", *strength);
-    getShader().setFloat("uTime", float(clock_start - clock()) / CLOCKS_PER_SEC);
+    Game &gameInstance = Game::instance();
+    getShader().setFloat("uTime", *timeScale * gameInstance.time());
     getShader().setMatrix4f("uViewProj", view * projection);
     getShader().setMatrix4f("uView", view);
     getShader().setMatrix4f("uProj", projection);
@@ -100,6 +100,11 @@ void CloudMaterial::setStrength(float *strengthP)
 void CloudMaterial::setPersistence(float *persistenceP)
 {
     persistence = persistenceP;
+}
+
+void CloudMaterial::setTimeScale(int *timeScaleP)
+{
+    timeScale = timeScaleP;
 }
 
 void CloudMaterial::reload()
