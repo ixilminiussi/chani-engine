@@ -61,9 +61,13 @@ void CloudMaterial::use()
 
     getShader().setVector3f("uAreaCorner", area->center - area->size / 2.0f);
     getShader().setVector3f("uAreaSize", area->size);
-    getShader().setFloat("uScale", *scale);
+    getShader().setVector3f("uScale", *scale * *squish);
     getShader().setFloat("uFloor", *floor);
     getShader().setFloat("uStrength", *strength);
+    getShader().setFloat("uTransmittanceScale", *transmittance);
+    getShader().setFloat("uLightAbsorption", *lightAbsorption);
+    getShader().setFloat("uDarknessThreshold", *darknessThreshold);
+    getShader().setVector3f("uCloudColor", cloudColor[0], cloudColor[1], cloudColor[2]);
     Game &gameInstance = Game::instance();
     getShader().setFloat("uTime", *timeScale * gameInstance.time());
     getShader().setMatrix4f("uViewProj", view * projection);
@@ -88,6 +92,11 @@ void CloudMaterial::setScale(float *scaleP)
     scale = scaleP;
 }
 
+void CloudMaterial::setSquish(Vector3<float> *squishP)
+{
+    squish = squishP;
+}
+
 void CloudMaterial::setFloor(float *floorP)
 {
     floor = floorP;
@@ -98,14 +107,29 @@ void CloudMaterial::setStrength(float *strengthP)
     strength = strengthP;
 }
 
-void CloudMaterial::setPersistence(float *persistenceP)
+void CloudMaterial::setDarknessThreshold(float *darknessThresholdP)
 {
-    persistence = persistenceP;
+    darknessThreshold = darknessThresholdP;
+}
+
+void CloudMaterial::setLightAbsorption(float *lightAbsorptionP)
+{
+    lightAbsorption = lightAbsorptionP;
 }
 
 void CloudMaterial::setTimeScale(int *timeScaleP)
 {
     timeScale = timeScaleP;
+}
+
+void CloudMaterial::setTransmittance(float *transmittanceP)
+{
+    transmittance = transmittanceP;
+}
+
+void CloudMaterial::setColor(float *cloudColorP)
+{
+    cloudColor = cloudColorP;
 }
 
 Material *CloudMaterial::makeUnique()
@@ -179,7 +203,7 @@ void CloudMaterial::makeUI()
         int *sizes[3] = {&noise[i].getSettings().gridSize.x, &noise[i].getSettings().gridSize.y,
                          &noise[i].getSettings().gridSize.z};
         std::sprintf(buffer, "Grid Size %d", i);
-        ImGui::SliderInt3(buffer, *sizes, 3, 500);
+        ImGui::SliderInt3(buffer, *sizes, 3, 100);
         std::sprintf(buffer, "Regenerate %d", i);
         if (ImGui::Button(buffer))
         {

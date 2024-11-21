@@ -15,7 +15,7 @@ uniform sampler2D uDepthTexture;
 
 // Perlin noise uniforms =====
 // == BEGIN ==================
-layout(binding = 3) uniform sampler3D uPerlinTexture[4];
+layout(binding = 3) uniform sampler3D uPerlinTexture[10];
 
 struct PerlinSettings
 {
@@ -28,26 +28,30 @@ struct PerlinSettings
 
 layout(std140, binding = 0) uniform perlinNoiseMetaData
 {
-    PerlinSettings uPerlinSettings[4];
+    PerlinSettings uPerlinSettings[10];
 };
 
 layout(std140, binding = 1) uniform perlinNoiseDims
 {
-    ivec3 uTextureDimensions[4];
+    ivec3 uTextureDimensions[10];
 };
 
 uniform int uNoiseCount;
 
 // == END ====================
 
-uniform float uScale;
+uniform vec3 uScale;
 uniform float uFloor;
 uniform float uStrength;
 uniform float uTime;
+uniform float uTransmittanceScale;
+uniform float uDarknessThreshold;
+uniform float uLightAbsorption;
 
 // bounds of cloud area
 uniform vec3 uAreaCorner;
 uniform vec3 uAreaSize;
+uniform vec3 uCloudColor;
 
 // Create a struct for directional light
 struct DirectionalLight
@@ -102,6 +106,8 @@ float samplePerlinNoise(vec3 coords)
     float density = 0.0;
     float total = 0.0;
 
+    coords /= uScale;
+
     for (int i = 0; i < uNoiseCount; i++)
     {
         density += texture(uPerlinTexture[i], vec3(coords.x + uTime * uPerlinSettings[i].timeScale, coords.yz) /
@@ -152,22 +158,21 @@ float lightMarch(vec3 startPoint)
 {
     float distanceInsideBox;
     float distanceToBox;
-    rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, startPoint, uDirLight.direction, distanceToBox, distanceInsideBox);
+    rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, startPoint, -uDirLight.direction, distanceToBox,
+               distanceInsideBox);
 
-    // TODO: Consider a max stepSize;
     float stepSize = distanceInsideBox / 5.0f;
     float totalDensity = 0.0f;
-    vec3 currentSamplingPoint = startPoint + (uDirLight.direction * stepSize);
 
     totalDensity = 0.0f;
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
-        totalDensity += samplePerlinNoise(currentSamplingPoint) * stepSize;
-        currentSamplingPoint += uDirLight.direction * stepSize;
+        startPoint += -uDirLight.direction * stepSize;
+        totalDensity += samplePerlinNoise(startPoint) * stepSize;
     }
 
-    return exp(-totalDensity);
+    return uDarknessThreshold + exp(-totalDensity * uLightAbsorption) * (1 - uDarknessThreshold);
 }
 
 void main()
@@ -184,14 +189,14 @@ void main()
     float distanceToBox;
     if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, normalizedRay, distanceToBox, distanceInsideBox))
     {
-        float stepSize = distanceInsideBox / 10.0f;
+        float stepSize = min(max(dot(normalizedRay, uScale) * 10.0f, 10.0f), distanceInsideBox / 10.0f);
         float currentStep = 0.0f;
         float maxStep = min(distanceInsideBox, depth - distanceToBox);
 
         float transmittance = 1.0f;
         float lightEnergy = 0.0f;
 
-        while (currentStep < maxStep)
+        while (currentStep < maxStep && transmittance > 0.01)
         {
             vec3 currentSamplingPoint = uCameraPos + (normalizedRay * (distanceToBox + currentStep));
             float density = samplePerlinNoise(currentSamplingPoint);
@@ -201,17 +206,12 @@ void main()
                 float lightTransmittance = lightMarch(currentSamplingPoint);
 
                 lightEnergy += density * stepSize * transmittance * lightTransmittance;
-                transmittance *= exp(-density * stepSize * 2.0f);
-
-                if (transmittance < 0.01)
-                {
-                    break;
-                }
+                transmittance *= exp(-density * stepSize * uTransmittanceScale);
             }
             currentStep += stepSize;
         }
 
-        vec3 cloudCol = lightEnergy * vec3(1.0);
+        vec3 cloudCol = lightEnergy * uCloudColor;
 
         outColor = outColor * transmittance + cloudCol;
     }

@@ -46,8 +46,15 @@ void PerlinNoise::load(const PerlinSettings &settingsP)
 
 void PerlinNoise::reload()
 {
-    load(settings);
+    if (initialized)
+    {
+        glDeleteBuffers(1, &inputBuffer);
+        glDeleteTextures(1, &outputTexture);
+    }
+
     perlinNoiseCS.reload();
+
+    load(settings);
     generate();
 }
 

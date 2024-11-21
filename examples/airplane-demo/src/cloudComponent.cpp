@@ -20,15 +20,19 @@ CloudComponent::CloudComponent(Actor *ownerP, Cuboid *cuboid) : PostProcessCompo
     setMaterial(cloudMaterial);
 
     cloudMaterial->setScale(&cloudScale);
+    cloudMaterial->setSquish(&cloudSquish);
     cloudMaterial->setFloor(&cloudFloor);
     cloudMaterial->setStrength(&cloudStrength);
-    cloudMaterial->setPersistence(&persistence);
     cloudMaterial->setTimeScale(&timeScale);
+    cloudMaterial->setTransmittance(&cloudTransmittanceScale);
+    cloudMaterial->setDarknessThreshold(&cloudDarknessThreshold);
+    cloudMaterial->setLightAbsorption(&cloudLightAbsorption);
+    cloudMaterial->setColor(cloudColor);
 
-    cloudMaterial->addNoise({Vector3(6, 6, 4), 100, 1.2f, 1.0});
-    cloudMaterial->addNoise({Vector3(10, 10, 8), 40, 1.0f, 0.9});
-    cloudMaterial->addNoise({Vector3(30, 30, 20), 10, 0.5f, 1.2});
-    cloudMaterial->addNoise({Vector3(50, 50, 20), 5, 0.3f, 1.5});
+    cloudMaterial->addNoise({Vector3(6, 6, 4), 100, 2.0f, 1.0});
+    cloudMaterial->addNoise({Vector3(10, 10, 8), 40, 1.2f, 0.9});
+    cloudMaterial->addNoise({Vector3(30, 30, 20), 10, 0.2f, 1.2});
+    cloudMaterial->addNoise({Vector3(50, 50, 20), 5, 0.1f, 1.5});
 }
 
 void CloudComponent::update(float dt)
@@ -42,17 +46,23 @@ void CloudComponent::makeUI()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
-    ImGui::Begin("Time");
-    ImGui::SliderInt("Speed", &timeScale, 0, 100);
+    ImGui::Begin("Cloud Settings");
 
+    ImGui::Text("Time");
+    ImGui::SliderInt("Speed", &timeScale, 0, 100);
     ImGui::Text("Cloud Shape");
     ImGui::SliderFloat("floor", &cloudFloor, 0.0f, 1.0f);
-    ImGui::SliderFloat("scale", &cloudScale, 0.1f, 10.0f);
     ImGui::SliderFloat("strength", &cloudStrength, 0.0f, 1.0f);
-    ImGui::SliderFloat("persistence", &persistence, 0.0f, 1.0f);
+    ImGui::SliderFloat("transmittance", &cloudTransmittanceScale, 0.0f, 2.0f);
+    ImGui::SliderFloat("darkness threshold", &cloudDarknessThreshold, 0.0f, 1.0f);
+    ImGui::SliderFloat("light absorption", &cloudLightAbsorption, 0.0f, 3.0f);
+    ImGui::ColorEdit3("color", cloudColor);
 
+    float *squish[3] = {&cloudSquish.x, &cloudSquish.y, &cloudSquish.z};
+    ImGui::SliderFloat3("squish", *squish, 0.01f, 1.0f);
+    ImGui::SliderFloat("scale", &cloudScale, 0.1f, 10.0f);
     float *sizes[3] = {&area->size.x, &area->size.y, &area->size.z};
-    ImGui::SliderFloat3("coverage", *sizes, 10.0f, 1000.0f);
+    ImGui::SliderFloat3("coverage", *sizes, 10.0f, 2000.0f);
 
     ImGui::End();
 

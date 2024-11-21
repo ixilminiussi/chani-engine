@@ -20,17 +20,23 @@ class CloudMaterial : public Material
     static Material *loadFromFile(const std::string &filename);
     void setArea(Cuboid *cuboid);
     void setScale(float *scale);
+    void setSquish(Vector3<float> *squash);
     void setFloor(float *floor);
     void setStrength(float *strength);
-    void setPersistence(float *persistence);
+    void setTransmittance(float *transmittance);
+    void setLightAbsorption(float *lightAbsorption);
+    void setDarknessThreshold(float *darknessThreshold);
     void setTimeScale(int *timeScale);
+    void setColor(float *cloudColor);
     void addNoise(const PerlinSettings &perlinSettings);
     void makeUI();
 
   protected:
     Cuboid *area;
     Actor *camera;
-    float *persistence, *scale, *strength, *floor;
+    float *scale, *strength, *floor, *transmittance, *lightAbsorption, *darknessThreshold;
+    float *cloudColor;
+    Vector3<float> *squish;
     int *timeScale;
     PerlinNoise noise[10];
     uint noiseCount = 0u;
