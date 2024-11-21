@@ -209,6 +209,8 @@ void CloudMaterial::makeUI()
         {
             noise[i].generate();
         }
+        std::sprintf(buffer, "Subtractor %d", i);
+        ImGui::SliderFloat(buffer, &noise[i].getSettings().subtractor, 0.0f, 1.0f);
         std::sprintf(buffer, "Weight %d", i);
         ImGui::SliderFloat(buffer, &noise[i].getSettings().weight, 0.0f, 2.0f);
         std::sprintf(buffer, "Time Scale %d", i);

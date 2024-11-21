@@ -20,11 +20,11 @@ class CloudComponent : public PostProcessComponent
     ComputeShader perlinNoiseCS;
     CloudMaterial *cloudMaterial;
 
-    float cloudTransmittanceScale = 1.3f;
+    float cloudTransmittanceScale = 1.4f;
     float cloudFloor = 0.3f;
-    float cloudScale = 1.2f;
-    float cloudStrength = 0.78f;
-    float cloudLightAbsorption = 1.0f;
+    float cloudScale = 3.7f;
+    float cloudStrength = 0.7f;
+    float cloudLightAbsorption = 1.45f;
     float cloudDarknessThreshold = 0.2f;
     Vector3<float> cloudSquish = Vector3(1.0f, 1.0f, 0.7f);
     float cloudColor[3] = {0.9f, 0.95f, 1.0f};

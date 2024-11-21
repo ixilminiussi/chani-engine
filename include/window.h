@@ -3,8 +3,8 @@
 
 #include <SDL.h>
 
-inline int WINDOW_WIDTH = 1024;
-inline int WINDOW_HEIGHT = 768;
+inline int WINDOW_WIDTH = 1920;
+inline int WINDOW_HEIGHT = 1080;
 
 class Window
 {

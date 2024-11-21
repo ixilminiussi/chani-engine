@@ -10,6 +10,7 @@ struct PerlinSettings
     int cellScale;
     float weight;
     float timeScale;
+    float subtractor;
 };
 
 struct PaddedVector3

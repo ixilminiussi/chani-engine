@@ -29,10 +29,10 @@ CloudComponent::CloudComponent(Actor *ownerP, Cuboid *cuboid) : PostProcessCompo
     cloudMaterial->setLightAbsorption(&cloudLightAbsorption);
     cloudMaterial->setColor(cloudColor);
 
-    cloudMaterial->addNoise({Vector3(6, 6, 4), 100, 2.0f, 1.0});
-    cloudMaterial->addNoise({Vector3(10, 10, 8), 40, 1.2f, 0.9});
-    cloudMaterial->addNoise({Vector3(30, 30, 20), 10, 0.2f, 1.2});
-    cloudMaterial->addNoise({Vector3(50, 50, 20), 5, 0.1f, 1.5});
+    cloudMaterial->addNoise({Vector3(4, 4, 2), 150, 2.0f, 050, 1.0});
+    cloudMaterial->addNoise({Vector3(6, 6, 4), 100, 2.0f, 1.0, 0.0});
+    cloudMaterial->addNoise({Vector3(10, 10, 8), 40, 1.2f, 1.6, 0.0});
+    cloudMaterial->addNoise({Vector3(30, 30, 20), 10, 0.3f, 2.0, 0.0});
 }
 
 void CloudComponent::update(float dt)

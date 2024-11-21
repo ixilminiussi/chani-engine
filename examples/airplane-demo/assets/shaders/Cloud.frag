@@ -23,7 +23,7 @@ struct PerlinSettings
     uint cellScale;
     float weight;
     float timeScale;
-    uint a, b;
+    float subtractor;
 };
 
 layout(std140, binding = 0) uniform perlinNoiseMetaData
@@ -110,9 +110,10 @@ float samplePerlinNoise(vec3 coords)
 
     for (int i = 0; i < uNoiseCount; i++)
     {
-        density += texture(uPerlinTexture[i], vec3(coords.x + uTime * uPerlinSettings[i].timeScale, coords.yz) /
-                                                  vec3(uTextureDimensions[i]))
-                       .r *
+        density += (texture(uPerlinTexture[i], vec3(coords.x + uTime * uPerlinSettings[i].timeScale, coords.yz) /
+                                                   vec3(uTextureDimensions[i]))
+                        .r -
+                    uPerlinSettings[i].subtractor) *
                    uPerlinSettings[i].weight;
         total += uPerlinSettings[i].weight;
     }
@@ -189,7 +190,7 @@ void main()
     float distanceToBox;
     if (rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, uCameraPos, normalizedRay, distanceToBox, distanceInsideBox))
     {
-        float stepSize = min(max(dot(normalizedRay, uScale) * 10.0f, 10.0f), distanceInsideBox / 10.0f);
+        float stepSize = min(10.0f, distanceInsideBox / 10.0f);
         float currentStep = 0.0f;
         float maxStep = min(distanceInsideBox, depth - distanceToBox);
 
