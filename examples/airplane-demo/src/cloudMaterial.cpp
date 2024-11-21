@@ -1,9 +1,12 @@
 #include "cloudMaterial.h"
 
+#include "imgui.h"
 #include "perlinNoise.h"
 #include <actor.h>
 #include <assets.h>
 #include <chani.h>
+#include <computeShader.h>
+#include <cstdio>
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -17,14 +20,6 @@
 
 CloudMaterial::CloudMaterial() : Material()
 {
-    noise1.load(PerlinSettings({100u, Vector3(6u, 6u, 4u)}));
-    noise1.generate();
-    noise2.load(PerlinSettings({40u, Vector3(10u, 10u, 8u)}));
-    noise2.generate();
-    noise3.load(PerlinSettings({10u, Vector3(10u, 10u, 4u)}));
-    noise3.generate();
-    noise4.load(PerlinSettings({5u, Vector3(100u, 100u, 40u)}));
-    noise4.generate();
 }
 
 void CloudMaterial::use()
@@ -36,27 +31,33 @@ void CloudMaterial::use()
 
     GLenum e = glGetError();
 
-    glActiveTexture(GL_TEXTURE4);
-    glBindTexture(GL_TEXTURE_3D, noise1.getNoiseTexture());
-    getShader().setSampler3D("uPerlinNoise1", 4);
-    getShader().setVector3f("uTexture1Dimensions", noise1.getTextureDimensions());
+    PerlinSettings perlinSettings[noiseCount];
+    PaddedVector3 dimensions[noiseCount];
 
-    glActiveTexture(GL_TEXTURE5);
-    glBindTexture(GL_TEXTURE_3D, noise2.getNoiseTexture());
-    getShader().setSampler3D("uPerlinNoise2", 5);
-    getShader().setVector3f("uTexture2Dimensions", noise2.getTextureDimensions());
+    for (int i = 0; i < noiseCount; i++)
+    {
+        perlinSettings[i] = noise[i].getSettings();
+        dimensions[i].x = noise[i].getTextureDimensions().x;
+        dimensions[i].y = noise[i].getTextureDimensions().y;
+        dimensions[i].z = noise[i].getTextureDimensions().z;
 
-    glActiveTexture(GL_TEXTURE6);
-    glBindTexture(GL_TEXTURE_3D, noise3.getNoiseTexture());
-    getShader().setSampler3D("uPerlinNoise3", 6);
-    getShader().setVector3f("uTexture3Dimensions", noise3.getTextureDimensions());
+        glActiveTexture(GL_TEXTURE3 + i);
+        glBindTexture(GL_TEXTURE_3D, noise[i].getNoiseTexture());
+    }
 
-    glActiveTexture(GL_TEXTURE7);
-    glBindTexture(GL_TEXTURE_3D, noise4.getNoiseTexture());
-    getShader().setSampler3D("uPerlinNoise4", 7);
-    getShader().setVector3f("uTexture3Dimensions", noise4.getTextureDimensions());
+    GLuint settingsUbo;
+    glGenBuffers(1, &settingsUbo);
+    glBindBuffer(GL_UNIFORM_BUFFER, settingsUbo);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(PerlinSettings) * noiseCount, perlinSettings, GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, settingsUbo);
 
-    getShader().setFloat("uPersistence", *persistence);
+    GLuint dimensionsUbo;
+    glGenBuffers(1, &dimensionsUbo);
+    glBindBuffer(GL_UNIFORM_BUFFER, dimensionsUbo);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(PaddedVector3) * noiseCount, dimensions, GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 1, dimensionsUbo);
+
+    getShader().setInteger("uNoiseCount", int(noiseCount));
 
     getShader().setVector3f("uAreaCorner", area->center - area->size / 2.0f);
     getShader().setVector3f("uAreaSize", area->size);
@@ -107,20 +108,10 @@ void CloudMaterial::setTimeScale(int *timeScaleP)
     timeScale = timeScaleP;
 }
 
-void CloudMaterial::reload()
-{
-    noise1.reload();
-    noise2.reload();
-    noise3.reload();
-}
-
 Material *CloudMaterial::makeUnique()
 {
     CloudMaterial *newMat = new CloudMaterial();
 
-    newMat->noise1 = noise1;
-    newMat->noise2 = noise2;
-    newMat->noise3 = noise3;
     newMat->view = view;
     newMat->projection = projection;
     newMat->spriteViewProj = spriteViewProj;
@@ -161,4 +152,50 @@ Material *CloudMaterial::loadFromFile(const std::string &filename)
     Log::info("Loaded cloud material " + filename + " with shader " + doc["shader"].GetString());
 
     return material;
+}
+
+void CloudMaterial::addNoise(const PerlinSettings &perlinSettings)
+{
+    if (noiseCount >= 10)
+        return;
+
+    noise[noiseCount] = PerlinNoise(perlinSettings);
+    noise[noiseCount].generate();
+
+    noiseCount++;
+}
+
+void CloudMaterial::makeUI()
+{
+    ImGui::Begin("Noise Settings");
+
+    for (int i = 0; i < noiseCount; i++)
+    {
+        char buffer[50];
+        ImGui::Text("Perlin Noise %d", i);
+        std::sprintf(buffer, "Cell Scale %d", i);
+        ImGui::SliderInt(buffer, &noise[i].getSettings().cellScale, 4, 500);
+
+        int *sizes[3] = {&noise[i].getSettings().gridSize.x, &noise[i].getSettings().gridSize.y,
+                         &noise[i].getSettings().gridSize.z};
+        std::sprintf(buffer, "Grid Size %d", i);
+        ImGui::SliderInt3(buffer, *sizes, 3, 500);
+        std::sprintf(buffer, "Regenerate %d", i);
+        if (ImGui::Button(buffer))
+        {
+            noise[i].generate();
+        }
+        std::sprintf(buffer, "Weight %d", i);
+        ImGui::SliderFloat(buffer, &noise[i].getSettings().weight, 0.0f, 2.0f);
+        std::sprintf(buffer, "Time Scale %d", i);
+        ImGui::SliderFloat(buffer, &noise[i].getSettings().timeScale, 0.0f, 2.0f);
+        ImGui::Spacing();
+    }
+
+    if (ImGui::Button("Add new"))
+    {
+        addNoise({Vector3(3, 3, 3), 5, 1.0f, 1.0f});
+    }
+
+    ImGui::End();
 }

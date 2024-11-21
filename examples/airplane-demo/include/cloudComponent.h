@@ -13,11 +13,19 @@ class CloudComponent : public PostProcessComponent
   public:
     CloudComponent(Actor *owner, Cuboid *cuboid);
 
-    void reloadNoiseShader();
+    void update(float dt) override;
+    void makeUI();
 
   private:
     ComputeShader perlinNoiseCS;
     CloudMaterial *cloudMaterial;
+
+    float cloudFloor = 0.2f;
+    float cloudScale = 1.2f;
+    float persistence = 0.5f;
+    float cloudStrength = 0.6f;
+    int timeScale = 0;
+    class Cuboid *area;
 };
 
 #endif

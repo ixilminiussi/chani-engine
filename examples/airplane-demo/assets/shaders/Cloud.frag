@@ -1,5 +1,5 @@
 // Request GLSL 3.3
-#version 330
+#version 450
 
 // Inputs from vertex shader
 // Position (in world space)
@@ -13,30 +13,36 @@ out vec3 outColor;
 uniform sampler2D uScreenTexture;
 uniform sampler2D uDepthTexture;
 
-// First PerlinNoise
-uniform sampler3D uPerlinNoise1;
-// Perlin texture resolution
-uniform vec3 uTexture1Dimensions;
+// Perlin noise uniforms =====
+// == BEGIN ==================
+layout(binding = 3) uniform sampler3D uPerlinTexture[4];
 
-// Second PerlinNoise
-uniform sampler3D uPerlinNoise2;
-// Perlin texture resolution
-uniform vec3 uTexture2Dimensions;
+struct PerlinSettings
+{
+    uvec3 gridSize;
+    uint cellScale;
+    float weight;
+    float timeScale;
+    uint a, b;
+};
 
-// Third PerlinNoise
-uniform sampler3D uPerlinNoise3;
-// Perlin texture resolution
-uniform vec3 uTexture3Dimensions;
+layout(std140, binding = 0) uniform perlinNoiseMetaData
+{
+    PerlinSettings uPerlinSettings[4];
+};
 
-// Fourth PerlinNoise
-uniform sampler3D uPerlinNoise4;
-// Perlin texture resolution
-uniform vec3 uTexture4Dimensions;
+layout(std140, binding = 1) uniform perlinNoiseDims
+{
+    ivec3 uTextureDimensions[4];
+};
+
+uniform int uNoiseCount;
+
+// == END ====================
 
 uniform float uScale;
 uniform float uFloor;
 uniform float uStrength;
-uniform float uPersistence;
 uniform float uTime;
 
 // bounds of cloud area
@@ -92,29 +98,22 @@ float samplePerlinNoise(vec3 coords)
         min(min(min(distance1.x, distance2.x), min(distance1.y, distance2.y)), min(distance1.z, distance2.z));
     float edgeFalloff = (smallestDistance < 100.0f) ? remap01(smallestDistance, 0.0f, 100.0f) : 1.0f;
 
-    coords /= uScale;
-    float[4] color;
+    // sample all textures
+    float density = 0.0;
+    float total = 0.0;
 
-    color[0] = texture(uPerlinNoise1, vec3(coords.x + uTime * 0.5f, coords.yz) / uTexture1Dimensions).r;
-    color[1] = texture(uPerlinNoise2, vec3(coords.x + uTime * 1.0f, coords.yz) / uTexture2Dimensions).r;
-    color[2] = texture(uPerlinNoise3, vec3(coords.x + uTime * 1.2f, coords.yz) / uTexture3Dimensions).r;
-    color[3] = texture(uPerlinNoise4, vec3(coords.x + uTime * 2.0f, coords.yz) / uTexture4Dimensions).r;
-
-    float range = 1.0f;
-    float total = 1.0f;
-    float combined = 0.0f;
-    float persistence = 1.0f;
-
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < uNoiseCount; i++)
     {
-        total += persistence;
-        combined += color[i] * persistence;
-        persistence *= uPersistence;
+        density += texture(uPerlinTexture[i], vec3(coords.x + uTime * uPerlinSettings[i].timeScale, coords.yz) /
+                                                  vec3(uTextureDimensions[i]))
+                       .r *
+                   uPerlinSettings[i].weight;
+        total += uPerlinSettings[i].weight;
     }
 
-    combined /= total;
-    combined -= uFloor;
-    return (combined < 0) ? 0 : combined * uStrength * edgeFalloff;
+    density /= total;
+    density -= uFloor;
+    return (density < 0) ? 0 : density * uStrength * edgeFalloff;
 }
 
 bool rayHitsBox(vec3 boundsMin, vec3 boundsMax, vec3 rayOrigin, vec3 rayDir, out float distanceToBox,
@@ -155,6 +154,7 @@ float lightMarch(vec3 startPoint)
     float distanceToBox;
     rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, startPoint, uDirLight.direction, distanceToBox, distanceInsideBox);
 
+    // TODO: Consider a max stepSize;
     float stepSize = distanceInsideBox / 5.0f;
     float totalDensity = 0.0f;
     vec3 currentSamplingPoint = startPoint + (uDirLight.direction * stepSize);

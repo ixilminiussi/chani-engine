@@ -33,25 +33,6 @@ float persistence = 0.5f;
 float cloudStrength = 0.6f;
 int timeScale = 0;
 
-void tooling()
-{
-    // TODO: IMGUI for tooling
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
-    ImGui::NewFrame();
-
-    ImGui::Begin("Settings");
-    ImGui::SliderInt("time scale", &timeScale, 0, 100);
-    ImGui::Text("Cloud parameters");
-    ImGui::SliderFloat("floor", &cloudFloor, 0.0f, 1.0f);
-    ImGui::SliderFloat("scale", &cloudScale, 0.1f, 10.0f);
-    ImGui::SliderFloat("strength", &cloudStrength, 0.0f, 1.0f);
-    ImGui::SliderFloat("persistence", &persistence, 0.0f, 1.0f);
-    float *sizes[3] = {&area->size.x, &area->size.y, &area->size.z};
-    ImGui::SliderFloat3("Scale", *sizes, 10.0f, 1000.0f);
-    ImGui::End();
-}
-
 void Game::load()
 {
     renderer.setClearColor(Vector3(0.6f, 0.8f, 1.0f));
@@ -68,20 +49,6 @@ void Game::load()
 
     Assets::loadCustomMaterial(CloudMaterial::loadFromFile("assets/materials/Cloud.mat"), "Material_Cloud");
     Assets::loadPhongMaterial("assets/materials/Phong.mat", "Material_Phong");
-
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setScale(&cloudScale);
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setFloor(&cloudFloor);
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setStrength(&cloudStrength);
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setPersistence(&persistence);
-    static_cast<CloudMaterial *>(Assets::getMaterial("Material_Cloud"))->setTimeScale(&timeScale);
-
-    // sphere = new Sphere();
-    // sphere->setPosition(Vector3(0.0f, 0.0f, 0.0f));
-    // sphere->setScale(10.0f);
-
-    // sphere2 = new Sphere();
-    // sphere2->setPosition(Vector3(200.0f, 200.0f, 0.0f));
-    // sphere2->setScale(10.0f);
 
     center = new Actor();
     center->setPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -122,41 +89,6 @@ void Game::processInput()
         isRunning = false;
     }
 
-    if (input.keyboard.getKeyState(SDL_SCANCODE_R) == ButtonState::Released)
-    {
-        cloudComponent->reloadNoiseShader();
-    }
-
-    if (input.keyboard.getKeyState(SDL_SCANCODE_UP) == ButtonState::Released)
-    {
-        cloudStrength -= (cloudStrength > 1) ? 1 : 0;
-        Log::info(std::to_string(cloudStrength));
-    }
-
-    if (input.keyboard.getKeyState(SDL_SCANCODE_DOWN) == ButtonState::Released)
-    {
-        cloudStrength += 1;
-        Log::info(std::to_string(cloudStrength));
-    }
-
-    if (input.keyboard.getKeyState(SDL_SCANCODE_LSHIFT) == ButtonState::Held)
-    {
-        float pre = persistence;
-        persistence += (float)input.mouse.getScrollWheel().y * 0.01f;
-        persistence = (persistence > 1.0f) ? persistence = 1.0f : persistence;
-        persistence = (persistence < -1.0f) ? persistence = -1.0f : persistence;
-        if (pre != persistence)
-            Log::info(std::to_string(persistence));
-    }
-    if (input.keyboard.getKeyState(SDL_SCANCODE_LCTRL) == ButtonState::Held)
-    {
-        float pre = cloudScale;
-        cloudScale *= 1.0f + ((float)input.mouse.getScrollWheel().y * 0.1f);
-        cloudScale = (cloudScale < 0.05f) ? cloudScale = 0.05f : cloudScale;
-        if (pre != cloudScale)
-            Log::info(std::to_string(cloudScale));
-    }
-
     // Actor input
     isUpdatingActors = true;
     for (auto actor : actors)
@@ -168,8 +100,6 @@ void Game::processInput()
 
 void Game::update(float dt)
 {
-    tooling();
-
     // Update actors
     isUpdatingActors = true;
     for (auto actor : actors)

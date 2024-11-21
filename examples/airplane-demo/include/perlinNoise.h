@@ -6,9 +6,10 @@
 
 struct PerlinSettings
 {
-    uint cellScale;
-    Vector3<uint> gridSize;
-    Vector3<float> *shift;
+    alignas(16) Vector3<int> gridSize;
+    int cellScale;
+    float weight;
+    float timeScale;
 };
 
 struct PaddedVector3
@@ -26,7 +27,7 @@ class PerlinNoise
     void reload();
     void generate();
     GLuint getNoiseTexture() const;
-    const PerlinSettings &getSettings() const;
+    PerlinSettings &getSettings();
     const Vector3<uint> &getTextureDimensions() const;
 
     ~PerlinNoise() = default;

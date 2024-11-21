@@ -2,8 +2,11 @@
 
 #include <assets.h>
 #include <computeShader.h>
+#include <iostream>
 #include <log.h>
+#include <ostream>
 #include <random.h>
+#include <set>
 #include <shader.h>
 #include <string>
 
@@ -43,15 +46,9 @@ void PerlinNoise::load(const PerlinSettings &settingsP)
 
 void PerlinNoise::reload()
 {
-    if (initialized)
-    {
-        perlinNoiseCS.reload();
-        generate();
-    }
-    else
-    {
-        Log::error(LogCategory::Error, "Forgot to initialize PerlinNoise");
-    }
+    load(settings);
+    perlinNoiseCS.reload();
+    generate();
 }
 
 void PerlinNoise::generate()
@@ -122,7 +119,7 @@ const Vector3<uint> &PerlinNoise::getTextureDimensions() const
     return textureDimensions;
 }
 
-const PerlinSettings &PerlinNoise::getSettings() const
+PerlinSettings &PerlinNoise::getSettings()
 {
     return settings;
 }
