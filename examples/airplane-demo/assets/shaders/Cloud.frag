@@ -162,7 +162,7 @@ float lightMarch(vec3 startPoint)
     rayHitsBox(uAreaCorner, uAreaCorner + uAreaSize, startPoint, -uDirLight.direction, distanceToBox,
                distanceInsideBox);
 
-    float stepSize = distanceInsideBox / 5.0f;
+    float stepSize = min(10.0f, distanceInsideBox / 5.0f);
     float totalDensity = 0.0f;
 
     totalDensity = 0.0f;
